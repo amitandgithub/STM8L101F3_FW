@@ -8,6 +8,8 @@ void Gpio_1_Callback();
 void main(void)
 {
    __disable_interrupt();
+   CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
+   CLK->CKDIVR = (uint8_t)0;
     GpioSetOutputOpenDrainPushPull(LED);
     GpioSetInputPullupInterrupt(B1);
     Gpio1SetInterrupt(FALLING,Gpio_1_Callback);
@@ -17,6 +19,7 @@ void main(void)
 
     while (1)
     {
+        Gpio_Off(LED);
         I2cTests();
     }
 

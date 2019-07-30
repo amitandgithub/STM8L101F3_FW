@@ -13,13 +13,11 @@ I2CLogs_t I2CStates[I2C_LOG_STATES_SIZE];
 #endif
 
 void I2c_HwInit()
-{
-  I2cPinsInit();
-  I2C_Cmd(ENABLE);
+{ 
   I2cClockEnable();
- 
-  I2C_Init(100000, 0x08, 0,
-           0, 0);
+  I2C_Init(100000,0x08,0,0,0);  
+  I2cPinsInit(); 
+  I2C_Cmd(ENABLE);
 }
 
 void I2cClockEnable()
@@ -57,9 +55,9 @@ void I2cScanBus(uint8_t* pFoundDevices, uint8_t size)
     else
     {
       ClearAF();
-      GenerateStop();
+      //GenerateStop();
     }
-    
+    GenerateStop();
     if(i == size) i=0;
   }
 }
@@ -67,7 +65,7 @@ void I2cScanBus(uint8_t* pFoundDevices, uint8_t size)
 I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress)
 {
   /* Wait while BUSY flag is set */
-  if (WaitOnFlag(&I2C->SR3, I2C_SR3_BUSY, 1, I2C_TIMEOUT))
+  if (WaitOnFlag(&I2C->SR3, I2C_SR3_BUSY, I2C_SR3_BUSY, I2C_TIMEOUT))
   {
     I2C_LOG_STATES(I2C_LOG_BUSY_TIMEOUT);
     return I2C_BUSY_TIMEOUT; 
@@ -323,9 +321,10 @@ I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen) // 309
   return I2C_OK;
 }
 
-uint8_t WaitOnFlag(volatile uint8_t* reg, uint8_t bitmask, uint8_t status, uint16_t timeout) // 35 bytes
+uint8_t WaitOnFlag(volatile uint8_t* reg, uint8_t bitmask, uint8_t status, uint16_t timeout) // 35(0x25)bytes , 62(0x3e)
 {
-  while( ((*reg & bitmask) == status) && timeout-- ); 
+  while( ((*reg & bitmask) == status) && timeout-- );    // 35(0x25) bytes 
+ // while( (((*reg & bitmask)?1:0) == status) && timeout-- );  //62(0x3e) bytes
   return ((*reg & bitmask) == status);
 }
 
@@ -404,6 +403,58 @@ void ClearADDR()
 
 #endif //FORCED_INLINE
 
+
+
+void I2cTests(void)
+{
+  static uint8_t FoundDevices[10];
+  I2cScanBus(FoundDevices, 10);  
+}
+
+
+
+
+
+#if 0
+void I2C_Init1()
+{
+  //STM8L SCL : C1
+  //      SDA : C0
+  GPIOC->DDR &= ~1;// 0: Input - 1: Output
+  GPIOC->CR1_C10 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
+  PC_DDR_DDR1 = 0;// 0: Input - 1: Output
+  PC_CR1_C11 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
+  
+  //Enable I2C1 Peripheral Clock
+  CLK_PCKENR1_PCKEN13 = 1;
+  //if at this step the bus is busy, that means it was let busy and uC restarted
+  if(I2C1_SR3_BUSY)//now we have to stop it
+  {
+    PC_DDR_DDR0 = 1;// 0: Input - 1: Output
+    PC_CR1_C10 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
+    PC_DDR_DDR1 = 1;// 0: Input - 1: Output
+    PC_CR1_C11 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
+    
+    BYTE count = 0;
+    while((I2C1_SR3_BUSY)&&(count <= 10) )//first recovery level - clock the i2c
+    {
+      PC_ODR_ODR1 = 0;
+      delay_ms(1);
+      PC_ODR_ODR1 = 1;
+      delay_ms(1);
+      count++;
+    }
+    
+    PC_DDR_DDR0 = 0;// 0: Input - 1: Output
+    PC_CR1_C10 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
+    PC_DDR_DDR1 = 0;// 0: Input - 1: Output
+    PC_CR1_C11 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
+  }
+  
+#endif
+  
+  
+
 #if 0
 /* Wait while BUSY flag is set */
 if (WaitOnFlag(&I2C->SR3, I2C_SR3_BUSY, 1, I2C_TIMEOUT))
@@ -440,8 +491,3 @@ I2C_LOG_EVENTS(I2C_LOG_ADDR);
 #endif 
 
 
-void I2cTests(void)
-{
-  static uint8_t FoundDevices[10];
-  I2cScanBus(FoundDevices, 10);  
-}

@@ -177,7 +177,7 @@ void I2C_Init(uint32_t OutputClockFrequency, uint16_t OwnAddress,
   /* Clear frequency bits */
   I2C->FREQR &= (uint8_t)(~I2C_FREQR_FREQ);
   /* Write new value */
-  I2C->FREQR |= input_clock;
+  I2C->FREQR |= (uint8_t)16;//input_clock;
 
   /*--------------------------- I2C CCR Configuration ------------------------*/
   /* Disable I2C to configure TRISER */
