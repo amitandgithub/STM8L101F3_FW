@@ -1630,6 +1630,9 @@
     <group>
         <name>std_peripheral_lib</name>
         <file>
+            <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c</name>
         </file>
     </group>

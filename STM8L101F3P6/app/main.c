@@ -13,13 +13,11 @@ void main(void)
     Gpio1SetInterrupt(FALLING,Gpio_1_Callback);
     __enable_interrupt();
     Gpio_On(LED);
-    I2cTxPoll(1,0,1);
-    I2cRxPoll(1,0,1);
+    I2c_HwInit();
+
     while (1)
     {
-      //Gpio_Toggle(LED);
-      //Gpio_On(LED);
-      Gpio_Off(LED);
+        I2cTests();
     }
 
 }

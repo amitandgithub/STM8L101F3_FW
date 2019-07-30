@@ -14,7 +14,12 @@ I2CLogs_t I2CStates[I2C_LOG_STATES_SIZE];
 
 void I2c_HwInit()
 {
-  
+  I2cPinsInit();
+  I2C_Cmd(ENABLE);
+  I2cClockEnable();
+ 
+  I2C_Init(100000, 0x08, 0,
+           0, 0);
 }
 
 void I2cClockEnable()
@@ -29,8 +34,8 @@ void I2cClockDisable()
   CLK->PCKENR &= (uint8_t)(~(uint8_t)CLK_Peripheral_I2C);
 }
 /*  
-SCL = C1
-SDA = C0
+SCL = C1 - 19
+SDA = C0 - 18
 */
 void I2cPinsInit()
 {
@@ -38,9 +43,30 @@ void I2cPinsInit()
   GpioSetOutputOpenDrainFast(C1);  
 }
 
+void I2cScanBus(uint8_t* pFoundDevices, uint8_t size)
+{
+  uint8_t slave, i=0;
+  
+  for(slave = 0; slave < 255; slave++)
+  {
+    if(SendSlaveAddress(slave) == I2C_OK)
+    {
+      pFoundDevices[i++] = slave;
+     // printf("Slave Dectected at Address = 0x%x \n",slave);
+    }
+    else
+    {
+      ClearAF();
+      GenerateStop();
+    }
+    
+    if(i == size) i=0;
+  }
+}
+
 I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress)
 {
-   /* Wait while BUSY flag is set */
+  /* Wait while BUSY flag is set */
   if (WaitOnFlag(&I2C->SR3, I2C_SR3_BUSY, 1, I2C_TIMEOUT))
   {
     I2C_LOG_STATES(I2C_LOG_BUSY_TIMEOUT);
@@ -76,7 +102,7 @@ I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress)
 I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen) // 104 bytes
 {
   if(!TxBuf) return I2C_INVALID_PARAMS;
-
+  
   /* Send Slave address */
   if(SendSlaveAddress(SlaveAddress & I2C_DIR_WRITE) != I2C_OK)
     return I2C_ADDR_TIMEOUT;
@@ -130,8 +156,8 @@ I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen) // 309
     software sequence must complete before the current byte end of transfer */
     __disable_interrupt();
     
-   /* Clear ADDR flag */
-   ClearADDR();
+    /* Clear ADDR flag */
+    ClearADDR();
     
     /* Generate Stop */
     GenerateStop();
@@ -144,7 +170,7 @@ I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen) // 309
   else if(RxLen == 2)
   {
     /* Enable Pos */
-   EnablePOS();
+    EnablePOS();
     
     /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
     software sequence must complete before the current byte end of transfer */
@@ -320,18 +346,18 @@ void GenerateStop()
 void EnableACK()
 {
   /* Enable the acknowledgement */
-    I2C->CR2 |= I2C_CR2_ACK;
+  I2C->CR2 |= I2C_CR2_ACK;
 }
 
 void DisableACK()
 {
   /* Disable the acknowledgement */
-    I2C->CR2 &= (uint8_t)(~I2C_CR2_ACK);
+  I2C->CR2 &= (uint8_t)(~I2C_CR2_ACK);
 }
 
 void EnablePOS()
 {
- /* Enable POS*/
+  /* Enable POS*/
   I2C->CR2 |= (uint8_t)I2C_CR2_POS; 
 }
 
@@ -364,8 +390,8 @@ void Softreset()
 
 void TxData(uint8_t* pdata, uint8_t len)
 {
-    I2C->DR = *pdata++;
-    len--;
+  I2C->DR = *pdata++;
+  len--;
 }
 
 void ClearADDR()
@@ -379,37 +405,43 @@ void ClearADDR()
 #endif //FORCED_INLINE
 
 #if 0
-  /* Wait while BUSY flag is set */
-  if (WaitOnFlag(&I2C->SR3, I2C_SR3_BUSY, 1, I2C_TIMEOUT))
-  {
-    DGB_PRINT("TxPoll : Busy Flag Timeout \n");
-    return I2C_BUSY_TIMEOUT; 
-  }
-  
-  /* Disable Pos */
-  DisablePOS();
-  
-  /* Enable Acknowledge, Generate Start */
-  I2C->CR2 |= I2C_CR2_START | I2C_CR2_ACK;
-  
-  /* Wait while SB flag is 0 */
-  if (WaitOnFlag(&I2C->SR1, I2C_SR1_SB, 0, I2C_TIMEOUT))
-  {         
-    DGB_PRINT("TxPoll : Start Condition Flag Timeout \n");
-    return I2C_START_TIMEOUT;                 
-  } 
-  
-  I2C_LOG_EVENTS(I2C_LOG_START);
-  
-  I2C->DR = SlaveAddress & I2C_DIR_WRITE;
-  
-  /* Wait while ADDR flag is 0 */
-  if (WaitOnFlag(&I2C->SR1, I2C_SR1_ADDR, 0, I2C_TIMEOUT))
-  {          
-    DGB_PRINT("TxPoll : Address Flag Timeout \n");
-    return I2C_ADDR_TIMEOUT;                
-  }
-  
-  I2C_LOG_EVENTS(I2C_LOG_ADDR);
+/* Wait while BUSY flag is set */
+if (WaitOnFlag(&I2C->SR3, I2C_SR3_BUSY, 1, I2C_TIMEOUT))
+{
+  DGB_PRINT("TxPoll : Busy Flag Timeout \n");
+  return I2C_BUSY_TIMEOUT; 
+}
+
+/* Disable Pos */
+DisablePOS();
+
+/* Enable Acknowledge, Generate Start */
+I2C->CR2 |= I2C_CR2_START | I2C_CR2_ACK;
+
+/* Wait while SB flag is 0 */
+if (WaitOnFlag(&I2C->SR1, I2C_SR1_SB, 0, I2C_TIMEOUT))
+{         
+  DGB_PRINT("TxPoll : Start Condition Flag Timeout \n");
+  return I2C_START_TIMEOUT;                 
+} 
+
+I2C_LOG_EVENTS(I2C_LOG_START);
+
+I2C->DR = SlaveAddress & I2C_DIR_WRITE;
+
+/* Wait while ADDR flag is 0 */
+if (WaitOnFlag(&I2C->SR1, I2C_SR1_ADDR, 0, I2C_TIMEOUT))
+{          
+  DGB_PRINT("TxPoll : Address Flag Timeout \n");
+  return I2C_ADDR_TIMEOUT;                
+}
+
+I2C_LOG_EVENTS(I2C_LOG_ADDR);
 #endif 
 
+
+void I2cTests(void)
+{
+  static uint8_t FoundDevices[10];
+  I2cScanBus(FoundDevices, 10);  
+}

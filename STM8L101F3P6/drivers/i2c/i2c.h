@@ -51,15 +51,14 @@ I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen);
 I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen);
 I2CStatus_t XferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint8_t* RxBuf, uint8_t RxLen,uint8_t RepeatedStart);
 I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress);
-
-
+void I2cPinsInit();
+void I2cScanBus(uint8_t* pFoundDevices, uint8_t size);
+void I2cTests(void);
 
 /* I2c local functions */
 
 //static inline 
 uint8_t WaitOnFlag(volatile uint8_t* reg, uint8_t bitmask, uint8_t status, uint16_t timeout);
-
-#if FORCED_INLINE
 
 #pragma inline=forced
 void GenerateStart()
@@ -136,20 +135,12 @@ void ClearADDR()
   (void) dummy;
 }
 
-#else
+#pragma inline=forced
+void ClearAF()
+{
+  I2C->SR2 &= (uint8_t)(~I2C_SR2_AF);
+}
 
-void GenerateStart();
-void GenerateStop();
-void EnableACK();
-void DisableACK();
-void EnablePOS();
-void DisablePOS();
-void EnableI2c();
-void DisableI2c();
-void Softreset();
-void ClearADDR();
-
-#endif //FORCED_INLINE
 
 #define DBG_LOG_CREATE_ID(__MODULE_ID,__X) __X
 
