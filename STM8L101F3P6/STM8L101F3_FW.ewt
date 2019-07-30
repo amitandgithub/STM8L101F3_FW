@@ -2111,11 +2111,17 @@
                 <name>$PROJ_DIR$\drivers\gpio\Gpio.c</name>
             </file>
         </group>
+        <group>
+            <name>i2c</name>
+            <file>
+                <name>$PROJ_DIR$\drivers\i2c\i2c.c</name>
+            </file>
+        </group>
     </group>
     <group>
         <name>std_peripheral_lib</name>
         <file>
-            <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_exti.c</name>
+            <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c</name>
         </file>
     </group>
     <group>

@@ -1,6 +1,5 @@
 
-#include "stm8l10x.h"
-#include "Gpio.h"
+#include"system.h"
 
 #define LED B0
 
@@ -14,6 +13,8 @@ void main(void)
     Gpio1SetInterrupt(FALLING,Gpio_1_Callback);
     __enable_interrupt();
     Gpio_On(LED);
+    I2cTxPoll(1,0,1);
+    I2cRxPoll(1,0,1);
     while (1)
     {
       //Gpio_Toggle(LED);

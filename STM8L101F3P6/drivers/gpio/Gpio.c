@@ -1,7 +1,5 @@
 
-
-#include"Gpio.h"
-#include"stm8l10x_exti.h"
+#include"system.h"
 
 /* Array of EXTI interrupts*/
 GpioFptr_t EXTI_ISRs[8] = {Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR};
@@ -226,6 +224,4 @@ void GpioSetOutputOpenDrainPushPullFast(Port_t port,Pin_t pin)
   port->CR2 |=  (uint8_t)(pin); // 1
 }
 
-void Dummy_ISR()
-{
-}
+void Dummy_ISR(){}

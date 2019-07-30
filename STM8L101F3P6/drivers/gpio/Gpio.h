@@ -11,9 +11,7 @@
 #ifndef Gpio_h
 #define Gpio_h
 
-
-#include "stm8l10x.h"
-//#include "stm8l10x_gpio.h"
+#include"system.h"
 
 typedef enum
 {

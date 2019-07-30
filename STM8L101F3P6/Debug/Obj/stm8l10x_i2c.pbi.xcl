@@ -1,4 +1,4 @@
-"C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\app\main.c"
+"C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c"
 -std=c99
 -ferror-limit=0
 -I
