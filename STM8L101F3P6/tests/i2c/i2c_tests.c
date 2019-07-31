@@ -16,13 +16,14 @@ uint8_t SlaveAddress = 0x0010;
 uint8_t TxBuf[TX_BUF_SIZE];
 uint8_t RxBuf[RX_BUF_SIZE];
 uint8_t TxLen,RxLen;
-
+I2c_tests_t I2c_test_id;
 
 void I2c_Poll_Tests()
 {
-  uint8_t I2c_test_id = 0;
   
-  I2c_HwInit();
+  I2c_HwInit();  
+ 
+  //I2cScanBus(TxBuf, TX_BUF_SIZE);  
   
   SlaveAddress = 0x68<<1;
   I2c_test_id = I2C_POLL_TX_1_RX_1;
@@ -32,7 +33,7 @@ void I2c_Poll_Tests()
   
   TxBuf[0] = 8;
   
-  for(uint8_t i = 1; i<70; i++) TxBuf[i] = i;
+  for(uint8_t i = 1; i<TX_BUF_SIZE; i++) TxBuf[i] = i;
   
   while(1)
   {
@@ -79,11 +80,11 @@ void I2c_Poll_Tests()
       I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
       I2cRxPoll(SlaveAddress,RxBuf,RxLen);  
       Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_3_RX_3 = Pass"), STR("I2C_POLL_TX_3_RX_3 = Fail"));
-      I2c_test_id = I2C_INT_POLL_40_RX_40;
+      I2c_test_id = I2C_INT_POLL_10_RX_10;
       break;
       
-    case I2C_INT_POLL_40_RX_40: 
-      TxLen = RxLen = 40;           
+    case I2C_INT_POLL_10_RX_10: 
+      TxLen = RxLen = 9;           
       I2cTxPoll(SlaveAddress,TxBuf,TxLen+1,0);
       I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
       I2cRxPoll(SlaveAddress,RxBuf,RxLen);            
@@ -105,23 +106,25 @@ void I2c_Poll_Tests()
     }
     
     MemSet(RxBuf,0,RX_BUF_SIZE);
-    //LL_mDelay(50);
+    delay_ms(2000);
   }
 }
 
-
+uint8_t pass,fail;
 uint8_t Test_Condition(uint8_t condition, char* PassStr, char* FailStr)
 {
   if(condition)
   {
     //printf(PassStr);
     // printf("\n");
+    pass++;
     return 0;
   }
   else
   {
     // printf(FailStr);
     // printf("\n");
+    fail++;
     return 1;
   }   
   

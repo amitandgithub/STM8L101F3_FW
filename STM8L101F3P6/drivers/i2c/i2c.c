@@ -86,7 +86,7 @@ I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress)
   
   I2C_LOG_EVENTS(I2C_LOG_START);
   
-  I2C->DR = SlaveAddress & I2C_DIR_WRITE;
+  I2C->DR = SlaveAddress;
   
   /* Wait while ADDR flag is 0 */
   if(WaitOnFlag(&I2C->SR1, I2C_SR1_ADDR, 0, I2C_TIMEOUT))
@@ -337,12 +337,6 @@ uint8_t WaitOnFlag(volatile uint8_t* reg, uint8_t bitmask, uint8_t status, uint1
 {
   while( ((*reg & bitmask) == status) && timeout-- );    // 35(0x25) bytes 
   return ((*reg & bitmask) == status);
-}
-
-void I2cTests(void)
-{
-  static uint8_t FoundDevices[10];
-  I2cScanBus(FoundDevices, 10);  
 }
 
 

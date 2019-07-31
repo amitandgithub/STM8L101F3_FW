@@ -52,7 +52,6 @@ I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen);
 I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress);
 void I2cPinsInit();
 void I2cScanBus(uint8_t* pFoundDevices, uint8_t size);
-void I2cTests(void);
 
 /* I2c local functions */
 

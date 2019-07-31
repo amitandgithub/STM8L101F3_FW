@@ -28,7 +28,7 @@ typedef enum
     I2C_POLL_TX_1_RX_3,
     I2C_POLL_TX_2_RX_2,
     I2C_POLL_TX_3_RX_3,
-    I2C_INT_POLL_40_RX_40,
+    I2C_INT_POLL_10_RX_10,
 
 	/* Tests with Interrupts*/
     I2C_INT_TX_1_RX_1,
@@ -36,7 +36,7 @@ typedef enum
     I2C_INT_TX_1_RX_3,
     I2C_INT_TX_2_RX_2,
     I2C_INT_TX_3_RX_3,
-    I2C_INT_TX_40_RX_40
+    I2C_INT_TX_10_RX_10
 
 }I2c_tests_t;
 

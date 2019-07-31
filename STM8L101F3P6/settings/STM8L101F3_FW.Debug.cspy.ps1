@@ -23,9 +23,9 @@ param([String]$debugfile = "");
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.general.xcl" --backend -f "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.general.xcl" --backend -f "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\settings\STM8L101F3_FW.Debug.driver.xcl" 
 }
