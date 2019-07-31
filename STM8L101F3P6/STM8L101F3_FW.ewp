@@ -260,6 +260,7 @@
                     <state>$PROJ_DIR$\system</state>
                     <state>$PROJ_DIR$\drivers\gpio</state>
                     <state>$PROJ_DIR$\drivers\i2c</state>
+                    <state>$PROJ_DIR$\tests\i2c</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1640,6 +1641,15 @@
         <name>system</name>
         <file>
             <name>$PROJ_DIR$\system\stm8l10x_it.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\system\system.c</name>
+        </file>
+    </group>
+    <group>
+        <name>tests</name>
+        <file>
+            <name>$PROJ_DIR$\tests\i2c\i2c_tests.c</name>
         </file>
     </group>
 </project>

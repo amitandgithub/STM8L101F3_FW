@@ -21,6 +21,7 @@ void main(void)
     {
         Gpio_Off(LED);
         I2cTests();
+        I2c_Poll_Tests();
     }
 
 }

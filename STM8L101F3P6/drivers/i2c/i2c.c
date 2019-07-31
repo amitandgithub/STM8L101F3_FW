@@ -50,7 +50,7 @@ void I2cScanBus(uint8_t* pFoundDevices, uint8_t size)
     if(SendSlaveAddress(slave) == I2C_OK)
     {
       pFoundDevices[i++] = slave;
-     // printf("Slave Dectected at Address = 0x%x \n",slave);
+      // printf("Slave Dectected at Address = 0x%x \n",slave);
     }
     else
     {
@@ -89,15 +89,26 @@ I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress)
   I2C->DR = SlaveAddress & I2C_DIR_WRITE;
   
   /* Wait while ADDR flag is 0 */
-  if (WaitOnFlag(&I2C->SR1, I2C_SR1_ADDR, 0, I2C_TIMEOUT))
-  {          
+  if(WaitOnFlag(&I2C->SR1, I2C_SR1_ADDR, 0, I2C_TIMEOUT))
+  {
+    /* if there is ack fail, clear the AF flag */
+    if(I2C->SR2 & I2C_SR2_AF)
+    {
+      ClearAF();
+      
+      /* Generate Stop */
+      GenerateStop();
+      
+      return I2C_ACK_FAIL;
+    }
+    
     I2C_LOG_STATES(I2C_LOG_ADDR_TIMEOUT);
     return I2C_ADDR_TIMEOUT;                
-  }  
+  }
   I2C_LOG_EVENTS(I2C_LOG_ADDR);
   return I2C_OK;
 }
-I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen) // 104 bytes
+I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint8_t RepeatedStart) // 104 bytes
 {
   if(!TxBuf) return I2C_INVALID_PARAMS;
   
@@ -129,7 +140,8 @@ I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen) // 104
     }                               
   }             
   /* Generate Stop */
-  GenerateStop();
+  if(!RepeatedStart)
+    GenerateStop();
   
   I2C_LOG_EVENTS(I2C_LOG_STOP);
   
@@ -324,86 +336,8 @@ I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen) // 309
 uint8_t WaitOnFlag(volatile uint8_t* reg, uint8_t bitmask, uint8_t status, uint16_t timeout) // 35(0x25)bytes , 62(0x3e)
 {
   while( ((*reg & bitmask) == status) && timeout-- );    // 35(0x25) bytes 
- // while( (((*reg & bitmask)?1:0) == status) && timeout-- );  //62(0x3e) bytes
   return ((*reg & bitmask) == status);
 }
-
-#if !FORCED_INLINE
-
-void GenerateStart()
-{
-  /* Generate a START condition */
-  I2C->CR2 |= I2C_CR2_START;
-}
-
-void GenerateStop()
-{
-  /* Generate a STOP condition */
-  I2C->CR2 |= I2C_CR2_STOP;
-}
-
-void EnableACK()
-{
-  /* Enable the acknowledgement */
-  I2C->CR2 |= I2C_CR2_ACK;
-}
-
-void DisableACK()
-{
-  /* Disable the acknowledgement */
-  I2C->CR2 &= (uint8_t)(~I2C_CR2_ACK);
-}
-
-void EnablePOS()
-{
-  /* Enable POS*/
-  I2C->CR2 |= (uint8_t)I2C_CR2_POS; 
-}
-
-void DisablePOS()
-{
-  /* Disable POS */
-  I2C->CR2 &= (uint8_t)(~I2C_CR2_POS);
-}
-
-void EnableI2c()
-{
-  /* Enable I2C peripheral */
-  I2C->CR1 |= I2C_CR1_PE;
-}
-
-void DisableI2c()
-{
-  /* Disable I2C peripheral */
-  I2C->CR1 &= (uint8_t)(~I2C_CR1_PE);
-}
-
-void Softreset()
-{
-  /* Reset the Peripheral */
-  I2C->CR2 |= I2C_CR2_SWRST;
-  
-  /* Release the Reset */
-  I2C->CR2 &= (uint8_t)(~I2C_CR2_SWRST);
-}
-
-void TxData(uint8_t* pdata, uint8_t len)
-{
-  I2C->DR = *pdata++;
-  len--;
-}
-
-void ClearADDR()
-{
-  uint8_t dummy;
-  dummy = I2C->SR1;
-  dummy = I2C->SR3;
-  (void) dummy;
-}
-
-#endif //FORCED_INLINE
-
-
 
 void I2cTests(void)
 {
@@ -411,83 +345,5 @@ void I2cTests(void)
   I2cScanBus(FoundDevices, 10);  
 }
 
-
-
-
-
-#if 0
-void I2C_Init1()
-{
-  //STM8L SCL : C1
-  //      SDA : C0
-  GPIOC->DDR &= ~1;// 0: Input - 1: Output
-  GPIOC->CR1_C10 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
-  PC_DDR_DDR1 = 0;// 0: Input - 1: Output
-  PC_CR1_C11 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
-  
-  //Enable I2C1 Peripheral Clock
-  CLK_PCKENR1_PCKEN13 = 1;
-  //if at this step the bus is busy, that means it was let busy and uC restarted
-  if(I2C1_SR3_BUSY)//now we have to stop it
-  {
-    PC_DDR_DDR0 = 1;// 0: Input - 1: Output
-    PC_CR1_C10 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
-    PC_DDR_DDR1 = 1;// 0: Input - 1: Output
-    PC_CR1_C11 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
-    
-    BYTE count = 0;
-    while((I2C1_SR3_BUSY)&&(count <= 10) )//first recovery level - clock the i2c
-    {
-      PC_ODR_ODR1 = 0;
-      delay_ms(1);
-      PC_ODR_ODR1 = 1;
-      delay_ms(1);
-      count++;
-    }
-    
-    PC_DDR_DDR0 = 0;// 0: Input - 1: Output
-    PC_CR1_C10 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
-    PC_DDR_DDR1 = 0;// 0: Input - 1: Output
-    PC_CR1_C11 = 0;// Input mode: 0: Floating input - 1: Input with pull-up // Output mode: 0: Pseudo open drain 1: Push-pull
-  }
-  
-#endif
-  
-  
-
-#if 0
-/* Wait while BUSY flag is set */
-if (WaitOnFlag(&I2C->SR3, I2C_SR3_BUSY, 1, I2C_TIMEOUT))
-{
-  DGB_PRINT("TxPoll : Busy Flag Timeout \n");
-  return I2C_BUSY_TIMEOUT; 
-}
-
-/* Disable Pos */
-DisablePOS();
-
-/* Enable Acknowledge, Generate Start */
-I2C->CR2 |= I2C_CR2_START | I2C_CR2_ACK;
-
-/* Wait while SB flag is 0 */
-if (WaitOnFlag(&I2C->SR1, I2C_SR1_SB, 0, I2C_TIMEOUT))
-{         
-  DGB_PRINT("TxPoll : Start Condition Flag Timeout \n");
-  return I2C_START_TIMEOUT;                 
-} 
-
-I2C_LOG_EVENTS(I2C_LOG_START);
-
-I2C->DR = SlaveAddress & I2C_DIR_WRITE;
-
-/* Wait while ADDR flag is 0 */
-if (WaitOnFlag(&I2C->SR1, I2C_SR1_ADDR, 0, I2C_TIMEOUT))
-{          
-  DGB_PRINT("TxPoll : Address Flag Timeout \n");
-  return I2C_ADDR_TIMEOUT;                
-}
-
-I2C_LOG_EVENTS(I2C_LOG_ADDR);
-#endif 
 
 

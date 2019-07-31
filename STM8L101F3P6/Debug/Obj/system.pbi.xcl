@@ -1,4 +1,4 @@
-"C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\drivers\i2c\i2c.c"
+"C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\system\system.c"
 -std=c99
 -ferror-limit=0
 -I

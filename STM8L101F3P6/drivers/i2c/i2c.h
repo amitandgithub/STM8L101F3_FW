@@ -12,8 +12,8 @@
 #include"system.h"
 
 #define I2C_DEBUG 1
+#define __INLINE static inline
 
-#define FORCED_INLINE 1
 #define I2C_TIMEOUT 5000u
 #define DGB_PRINT(x) 
 
@@ -47,9 +47,8 @@ typedef enum
 void I2c_HwInit();
 void I2cClockEnable();
 void I2cClockDisable();
-I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen);        
+I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint8_t RepeatedStart);        
 I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen);
-I2CStatus_t XferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint8_t* RxBuf, uint8_t RxLen,uint8_t RepeatedStart);
 I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress);
 void I2cPinsInit();
 void I2cScanBus(uint8_t* pFoundDevices, uint8_t size);
@@ -57,59 +56,66 @@ void I2cTests(void);
 
 /* I2c local functions */
 
-//static inline 
 uint8_t WaitOnFlag(volatile uint8_t* reg, uint8_t bitmask, uint8_t status, uint16_t timeout);
 
-#pragma inline=forced
+
+__INLINE 
 void GenerateStart()
 {
   /* Generate a START condition */
   I2C->CR2 |= I2C_CR2_START;
 }
-#pragma inline=forced
+
+__INLINE
 void GenerateStop()
 {
   /* Generate a STOP condition */
   I2C->CR2 |= I2C_CR2_STOP;
 }
-#pragma inline=forced
+
+__INLINE 
 void EnableACK()
 {
   /* Enable the acknowledgement */
   I2C->CR2 |= I2C_CR2_ACK;
 }
-#pragma inline=forced
+
+__INLINE 
 void DisableACK()
 {
   /* Disable the acknowledgement */
   I2C->CR2 &= (uint8_t)(~I2C_CR2_ACK);
 }
-#pragma inline=forced
+
+__INLINE 
 void EnablePOS()
 {
   /* Enable POS*/
   I2C->CR2 |= (uint8_t)I2C_CR2_POS; 
 }
-#pragma inline=forced
+
+__INLINE 
 void DisablePOS()
 {
   /* Disable POS */
   I2C->CR2 &= (uint8_t)(~I2C_CR2_POS);
 }
-#pragma inline=forced
+
+__INLINE 
 void EnableI2c()
 {
   /* Enable I2C peripheral */
   I2C->CR1 |= I2C_CR1_PE;
 }
-#pragma inline=forced
+
+__INLINE 
 void DisableI2c()
 {
   /* Disable I2C peripheral */
   I2C->CR1 &= (uint8_t)(~I2C_CR1_PE);
 }
 
-#pragma inline=forced
+__INLINE 
 void Softreset()
 {
   /* Reset the Peripheral */
@@ -119,14 +125,14 @@ void Softreset()
   I2C->CR2 &= (uint8_t)(~I2C_CR2_SWRST);
 }
 
-#pragma inline=forced
+__INLINE 
 void TxData(uint8_t* pdata, uint8_t len)
 {
   I2C->DR = *pdata++;
   len--;
 }
 
-#pragma inline=forced
+__INLINE 
 void ClearADDR()
 {
   uint8_t dummy;
@@ -135,10 +141,28 @@ void ClearADDR()
   (void) dummy;
 }
 
-#pragma inline=forced
+__INLINE 
 void ClearAF()
 {
   I2C->SR2 &= (uint8_t)(~I2C_SR2_AF);
+}
+
+__INLINE 
+void ClearARLO()
+{
+  I2C->SR2 &= (uint8_t)(~I2C_SR2_ARLO);
+}
+
+__INLINE 
+void ClearBERR()
+{
+  I2C->SR2 &= (uint8_t)(~I2C_SR2_BERR);
+}
+
+__INLINE 
+void ClearOVR()
+{
+  I2C->SR2 &= (uint8_t)(~I2C_SR2_OVR);
 }
 
 
@@ -281,7 +305,8 @@ typedef enum
 #define I2C_LOG_EVENTS(x) I2cLogStates(x)
 #define I2C_LOG_STATES(x) I2cLogStates(x)
 
-#pragma inline = forced
+
+__INLINE 
 void I2cLogStates(I2CLogs_t log)
 {
   extern I2CLogs_t I2CStates[];
