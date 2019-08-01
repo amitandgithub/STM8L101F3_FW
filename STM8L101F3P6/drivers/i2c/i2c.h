@@ -11,6 +11,8 @@
 
 #include"system.h"
 
+#define I2C_RX_METHOD_1
+
 #define I2C_DEBUG 1
 #define __INLINE static inline
 
@@ -21,10 +23,15 @@
 #define I2C_DIR_READ  0x01u
 #define I2C_DIR_WRITE 0xFEu
 
+#define I2C_DATA_REG (I2C->DR)
+
+
+typedef void(*I2CCallback_t)(void);
+
 typedef enum 
 {
   I2C_OK,
-  I2C_BUSY,
+  //I2C_BUSY,
   I2C_BUSY_TIMEOUT,
   I2C_START_TIMEOUT,
   I2C_ADDR_TIMEOUT,
@@ -43,15 +50,50 @@ typedef enum
   I2C_TXN_QUEUE_ERROR,
 }I2CStatus_t;
 
+
+typedef struct
+{
+    uint8_t                 SlaveAddress;
+    uint8_t                 RepeatedStart;
+    volatile I2CStatus_t*   pStatus;
+    uint8_t                 TxLen;
+    uint8_t                 RxLen; 
+    uint8_t*                TxBuf; 
+    uint8_t*                RxBuf;
+    I2CCallback_t           XferDoneCallback;
+}Transaction_t;
+
+typedef enum
+{
+    I2C_RESET,
+    //I2C_BUSY,
+    I2C_READY,
+    I2C_MASTER_TX,
+    I2C_MASTER_RX,
+    I2C_SLAVE_TX,
+    I2C_SLAVE_RX,
+    I2C_SLAVE_RX_LISTENING,
+    I2C_MASTER_RX_REPEATED_START,
+    I2C_MASTER_TX_ACK_FAIL,
+    I2C_MASTER_TX_DMA,
+    I2C_MASTER_RX_DMA,
+    I2C_SLAVE_TX_DMA,
+    I2C_SLAVE_RX_DMA,
+}I2CState_t; 
+
 /* I2c APIs */
 void I2c_HwInit();
 void I2cClockEnable();
 void I2cClockDisable();
-I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint8_t RepeatedStart);        
+I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen);        
 I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen);
+I2CStatus_t I2cXferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint8_t* RxBuf, uint8_t RxLen, uint8_t RepeatedStart);
 I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress);
 void I2cPinsInit();
 void I2cScanBus(uint8_t* pFoundDevices, uint8_t size);
+
+I2CStatus_t I2cXferIntr(Transaction_t* pTransaction);
+void I2cTxnDoneHandler(uint8_t StopFlag);
 
 /* I2c local functions */
 
@@ -163,7 +205,41 @@ void ClearOVR()
 {
   I2C->SR2 &= (uint8_t)(~I2C_SR2_OVR);
 }
+__INLINE 
+void Enable_EVT_BUF_ERR_Interrupt(void)
+{
+    I2C->ITR = I2C_ITR_ITBUFEN | I2C_ITR_ITEVTEN | I2C_ITR_ITERREN;
+}
+__INLINE 
+void Disable_EVT_BUF_ERR_Interrupt(void)
+{
+    I2C->ITR &= (uint8_t)~(I2C_ITR_ITBUFEN | I2C_ITR_ITEVTEN | I2C_ITR_ITERREN);
+}
 
+__INLINE 
+void Enable_BUF_Interrupt(void)
+{
+    I2C->ITR = I2C_ITR_ITBUFEN;
+}
+__INLINE 
+void Disable_BUF_Interrupt(void)
+{
+    I2C->ITR &= (uint8_t)~I2C_ITR_ITBUFEN;
+}
+
+void RXNE_Handler();
+
+void TXE_Handler();
+
+void SB_Handler();
+
+void ADDR_Handler();
+
+void STOPF_Handler();
+
+void BTF_Handler();
+
+void ADD10_Handler();
 
 #define DBG_LOG_CREATE_ID(__MODULE_ID,__X) __X
 

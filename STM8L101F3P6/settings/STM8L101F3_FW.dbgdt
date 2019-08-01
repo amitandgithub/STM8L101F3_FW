@@ -730,7 +730,7 @@
                     <item>EXTI_ISRs</item>
                     <item>I2CStates</item>
                     <item>FoundDevices</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

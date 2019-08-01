@@ -29,7 +29,7 @@ void I2c_Poll_Tests()
   I2c_test_id = I2C_POLL_TX_1_RX_1;
   TxBuf[0] = 0x00;
   TxBuf[1] = 0x00;
-  I2cTxPoll(SlaveAddress,TxBuf,2,0);       
+  I2cXferPoll(SlaveAddress,TxBuf,2,0,0,0);       
   
   TxBuf[0] = 8;
   
@@ -41,54 +41,48 @@ void I2c_Poll_Tests()
     {            
     case I2C_POLL_TX_1_RX_1:
       TxLen = RxLen = 1;
-      I2cTxPoll(SlaveAddress,TxBuf,TxLen+1,0);
-      I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
-      I2cRxPoll(SlaveAddress,RxBuf,RxLen); 
+      I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
+      I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart); 
       Test_Condition(!(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_1_RX_1 = Pass"), STR("I2C_POLL_TX_1_RX_1 = Fail"));
       I2c_test_id = I2C_POLL_TX_1_RX_2;
       break;    
     case I2C_POLL_TX_1_RX_2:
       TxLen = 1;
       RxLen = 2;
-      I2cTxPoll(SlaveAddress,TxBuf,TxLen+1,0);
-      I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
-      I2cRxPoll(SlaveAddress,RxBuf,RxLen);
+      I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
+      I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);
       Test_Condition(!(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_1_RX_2 = Pass"), STR("I2C_POLL_TX_1_RX_2 = Fail"));
       I2c_test_id = I2C_POLL_TX_1_RX_3;
       break; 
     case I2C_POLL_TX_1_RX_3:
       TxLen = 1;
       RxLen = 3;
-      I2cTxPoll(SlaveAddress,TxBuf,TxLen+1,0);
-      I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
-      I2cRxPoll(SlaveAddress,RxBuf,RxLen);
+      I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
+      I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);
       Test_Condition(!(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_1_RX_3 = Pass"), STR("I2C_POLL_TX_1_RX_3 = Fail"));
       I2c_test_id = I2C_POLL_TX_2_RX_2;
       break; 
     case I2C_POLL_TX_2_RX_2:  
       TxLen = RxLen = 2;
-      I2cTxPoll(SlaveAddress,TxBuf,TxLen+1,0);
-      I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
-      I2cRxPoll(SlaveAddress,RxBuf,RxLen); 
+      I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
+      I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);
       Test_Condition(!(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_2_RX_2 = Pass"), STR("I2C_POLL_TX_2_RX_2 = Fail"));
       I2c_test_id = I2C_POLL_TX_3_RX_3;
       break;  
       
     case I2C_POLL_TX_3_RX_3:  
       TxLen = RxLen = 3;
-      I2cTxPoll(SlaveAddress,TxBuf,TxLen+1,0);
-      I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
-      I2cRxPoll(SlaveAddress,RxBuf,RxLen);  
+      I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
+      I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);  
       Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_3_RX_3 = Pass"), STR("I2C_POLL_TX_3_RX_3 = Fail"));
-      I2c_test_id = I2C_INT_POLL_10_RX_10;
+      I2c_test_id = I2C_INT_POLL_9_RX_9;
       break;
       
-    case I2C_INT_POLL_10_RX_10: 
+    case I2C_INT_POLL_9_RX_9: 
       TxLen = RxLen = 9;           
-      I2cTxPoll(SlaveAddress,TxBuf,TxLen+1,0);
-      I2cTxPoll(SlaveAddress,TxBuf,1,RepeatedStart);
-      I2cRxPoll(SlaveAddress,RxBuf,RxLen);            
-      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_POLL_40_RX_40 = Pass"), STR("I2C_INT_POLL_40_RX_40 = Fail"));
+      I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
+      I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);            
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_POLL_9_RX_9 = Pass"), STR("I2C_INT_POLL_9_RX_9 = Fail"));
       
       if(RepeatedStart == 0)
       {
