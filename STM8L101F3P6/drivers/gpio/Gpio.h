@@ -106,18 +106,20 @@ void Gpio7SetInterrupt(Trigger_t trigger, GpioFptr_t fptr);
 #define D6 GPIOD,GPIO_Pin_6
 #define D7 GPIOD,GPIO_Pin_7
 
-
-static inline void Gpio_On(Port_t port,Pin_t pin)
+static inline
+void Gpio_On(Port_t port,Pin_t pin)
 {
   port->ODR |= pin;
 }
 
-static inline void Gpio_Off(Port_t port,Pin_t pin)
+static inline
+void Gpio_Off(Port_t port,Pin_t pin)
 {
   port->ODR &= (uint8_t)(~pin);
 }
 
-static inline void Gpio_Toggle(Port_t port,Pin_t pin)
+static inline
+void Gpio_Toggle(Port_t port,Pin_t pin)
 {
   port->ODR ^= pin;
 }

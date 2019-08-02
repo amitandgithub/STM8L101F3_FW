@@ -15,12 +15,57 @@
 I2CLogs_t I2CStates[I2C_LOG_STATES_SIZE];
 #endif
 
-void I2c_HwInit()
+void I2c_HwInit1()
 { 
+    GPIOC->DDR &= ~0x01;
+    GPIOC->CR1 &= ~0x01; 
+    GPIOC->DDR &= ~0x02;
+    GPIOC->CR1 &= ~0x02;    
+    I2cClockEnable();
+    Busy_Check();
+    //GenerateStop();
+    I2C_Init(100000,0x08,0,0,0);  
+    I2cPinsInit(); 
+    I2C_Cmd(ENABLE);
+}
+
+void I2c_HwInit()
+{   
+    GpioSetInputPullup(C0);
+    GpioSetInputPullup(C1);
     I2cClockEnable();
     I2C_Init(100000,0x08,0,0,0);  
     I2cPinsInit(); 
     I2C_Cmd(ENABLE);
+}
+void Busy_Check()
+{
+    if(I2C->SR3 & I2C_SR3_BUSY )//now we have to stop it
+    {
+        GPIOC->DDR |= 0x01;
+        GPIOC->CR1 &= ~0x01; 
+        GPIOC->DDR |= 0x02;
+        GPIOC->CR1 &= ~0x02;
+        
+        uint8_t count = 0;
+        while((I2C->SR3 & I2C_SR3_BUSY )&&(count < 100) )//first recovery level - clock the i2c
+        {
+            GPIOC->ODR   &= ~0x01;
+            delay_ms(1);
+            GPIOC->ODR   = 0x01;
+            delay_ms(1);
+            count++;
+        }
+        GPIOC->DDR |= 0x01;
+        GPIOC->CR1 &= ~0x01; 
+        GPIOC->DDR |= 0x02;
+        GPIOC->CR1 &= ~0x02;
+        
+        GPIOC->DDR &= ~0x01;
+        GPIOC->CR1 &= ~0x01; 
+        GPIOC->DDR &= ~0x02;
+        GPIOC->CR1 &= ~0x02;
+    }
 }
 
 void I2cClockEnable()
@@ -345,108 +390,204 @@ I2CStatus_t I2cXferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint
         RepeatedStart = 0;
     }  
     
-    /* Send Slave address */
-    if(SendSlaveAddress(SlaveAddress & I2C_DIR_WRITE) != I2C_OK)
-        return I2C_ADDR_TIMEOUT;
-    
-    /* Clear ADDR flag */
-    ClearADDR();
-    
-    while(TxLen)
-    {    
-        /* Write data to DR */
-        I2C_DATA_REG = *TxBuf++;                
-        TxLen--; 
-        
-        /* Wait until TXE flag is set */
-        if (WaitOnFlag(&I2C->SR1, I2C_SR1_TXE, 0, I2C_TIMEOUT))
-        {          
-            I2C_LOG_STATES(I2C_LOG_TXE_TIMEOUT);
-            return I2C_TXE_TIMEOUT;                
-        }  
-        
-        I2C_LOG_EVENTS(I2C_LOG_TXE);    
-        
-        if(I2C->SR1 & I2C_SR1_BTF)
-        {
-            I2C_LOG_EVENTS(I2C_LOG_BTF);                    
-        }                               
-    }             
-    /* Generate Stop */
-    if(!RepeatedStart)
+    if(TxLen != 0)
     {
-        GenerateStop();
-        
-        I2C_LOG_EVENTS(I2C_LOG_STOP); 
-        
-        if (WaitOnFlag(&I2C->CR2, I2C_CR2_STOP, I2C_CR2_STOP, I2C_TIMEOUT))
-        {          
-            I2C_LOG_STATES(I2C_LOG_STOP_TIMEOUT);
-            return I2C_STOP_TIMEOUT;                
-        } 
-    }
-    
-    /* Send Slave address */
-    if(SendSlaveAddress(SlaveAddress | I2C_DIR_READ) != I2C_OK)
-        return I2C_ADDR_TIMEOUT;
-    
-    if(RxLen == 1)
-    {
-        /* Disable Acknowledge */
-        DisableACK();
-        
-        /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
-        software sequence must complete before the current byte end of transfer */
-        __disable_interrupt();
+        /* Send Slave address */
+        if(SendSlaveAddress(SlaveAddress & I2C_DIR_WRITE) != I2C_OK)
+            return I2C_ADDR_TIMEOUT;
         
         /* Clear ADDR flag */
         ClearADDR();
         
+        while(TxLen)
+        {    
+            /* Write data to DR */
+            I2C_DATA_REG = *TxBuf++;                
+            TxLen--; 
+            
+            /* Wait until TXE flag is set */
+            if (WaitOnFlag(&I2C->SR1, I2C_SR1_TXE, 0, I2C_TIMEOUT))
+            {          
+                I2C_LOG_STATES(I2C_LOG_TXE_TIMEOUT);
+                return I2C_TXE_TIMEOUT;                
+            }  
+            
+            I2C_LOG_EVENTS(I2C_LOG_TXE);    
+            
+            if(I2C->SR1 & I2C_SR1_BTF)
+            {
+                I2C_LOG_EVENTS(I2C_LOG_BTF);                    
+            }                               
+        }             
         /* Generate Stop */
-        GenerateStop();
-        
-        /* Re-enable IRQs */
-        __enable_interrupt();   
-        
-        I2C_LOG_STATES(I2C_LOG_RX_1);
-    }
-    else if(RxLen == 2)
-    {
-        /* Enable Pos */
-        EnablePOS();
-        
-        /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
-        software sequence must complete before the current byte end of transfer */
-        __disable_interrupt();
-        
-        /* Clear ADDR flag */
-        ClearADDR();
-        
-        /* Disable Acknowledge */
-        DisableACK();
-        
-        /* Re-enable IRQs */
-        __enable_interrupt(); 
-        
-        I2C_LOG_STATES(I2C_LOG_RX_2);
-    }
-    else
-    {
-        /* Enable Acknowledge */
-        EnableACK();
-        
-        /* Clear ADDR flag */
-        ClearADDR();
-        
-        I2C_LOG_STATES(I2C_LOG_RX_GT_2);
+        if(!RepeatedStart)
+        {
+            GenerateStop();
+            
+            I2C_LOG_EVENTS(I2C_LOG_STOP); 
+            
+            if (WaitOnFlag(&I2C->CR2, I2C_CR2_STOP, I2C_CR2_STOP, I2C_TIMEOUT))
+            {          
+                I2C_LOG_STATES(I2C_LOG_STOP_TIMEOUT);
+                return I2C_STOP_TIMEOUT;                
+            } 
+        }
     }
     
-    while(RxLen > 0U)
+    if(RxLen != 0)
     {
-        if(RxLen <= 3U)
+        /* Send Slave address */
+        if(SendSlaveAddress(SlaveAddress | I2C_DIR_READ) != I2C_OK)
+            return I2C_ADDR_TIMEOUT;
+        
+        if(RxLen == 1)
         {
-            /* One byte */
-            if(RxLen == 1U)
+            /* Disable Acknowledge */
+            DisableACK();
+            
+            /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
+            software sequence must complete before the current byte end of transfer */
+            __disable_interrupt();
+            
+            /* Clear ADDR flag */
+            ClearADDR();
+            
+            /* Generate Stop */
+            GenerateStop();
+            
+            /* Re-enable IRQs */
+            __enable_interrupt();   
+            
+            I2C_LOG_STATES(I2C_LOG_RX_1);
+        }
+        else if(RxLen == 2)
+        {
+            /* Enable Pos */
+            EnablePOS();
+            
+            /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
+            software sequence must complete before the current byte end of transfer */
+            __disable_interrupt();
+            
+            /* Clear ADDR flag */
+            ClearADDR();
+            
+            /* Disable Acknowledge */
+            DisableACK();
+            
+            /* Re-enable IRQs */
+            __enable_interrupt(); 
+            
+            I2C_LOG_STATES(I2C_LOG_RX_2);
+        }
+        else
+        {
+            /* Enable Acknowledge */
+            EnableACK();
+            
+            /* Clear ADDR flag */
+            ClearADDR();
+            
+            I2C_LOG_STATES(I2C_LOG_RX_GT_2);
+        }
+        
+        while(RxLen > 0U)
+        {
+            if(RxLen <= 3U)
+            {
+                /* One byte */
+                if(RxLen == 1U)
+                {
+                    /* Wait until RXNE flag is set */
+                    if(WaitOnFlag(&I2C->SR1, I2C_SR1_RXNE, 0, I2C_TIMEOUT))
+                    {          
+                        I2C_LOG_STATES(I2C_LOG_RXNE_TIMEOUT);
+                        return I2C_RXNE_TIMEOUT;                
+                    } 
+                    
+                    I2C_LOG_EVENTS(I2C_LOG_RXNE); 
+                    
+                    /* Read data from DR */
+                    (*RxBuf) = I2C_DATA_REG;
+                    RxLen--;
+                    I2C_LOG_STATES(I2C_LOG_RX_1_DONE);
+                }
+                /* Two bytes */
+                else if(RxLen == 2U)
+                {
+                    /* Wait until BTF flag is set */
+                    if(WaitOnFlag(&I2C->SR1, I2C_SR1_BTF, 0, I2C_TIMEOUT))
+                    {         
+                        I2C_LOG_STATES(I2C_LOG_BTF_TIMEOUT);
+                        return I2C_BTF_TIMEOUT;                
+                    }
+                    
+                    /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
+                    software sequence must complete before the current byte end of transfer */
+                    __disable_interrupt();
+                    
+                    /* Generate Stop */
+                    GenerateStop();
+                    
+                    /* Read data from DR */
+                    (*RxBuf++)= I2C_DATA_REG;
+                    RxLen--;
+                    
+                    /* Re-enable IRQs */
+                    __enable_interrupt();
+                    
+                    /* Read data from DR */
+                    (*RxBuf++) = I2C_DATA_REG;
+                    RxLen--;
+                    
+                    I2C_LOG_STATES(I2C_LOG_RX_2_DONE);
+                }
+                /* 3 Last bytes */
+                else
+                {
+                    /* Wait until BTF flag is set */
+                    if(WaitOnFlag(&I2C->SR1, I2C_SR1_BTF, 0, I2C_TIMEOUT))
+                    {          
+                        I2C_LOG_STATES(I2C_LOG_BTF_TIMEOUT);
+                        return I2C_BTF_TIMEOUT;               
+                    } 
+                    
+                    /* Disable Acknowledge */
+                    DisableACK();
+                    
+                    /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
+                    software sequence must complete before the current byte end of transfer */
+                    __disable_interrupt();
+                    
+                    /* Read data from DR */
+                    (*RxBuf++) = I2C_DATA_REG;
+                    RxLen--;
+                    
+                    /* Wait until BTF flag is set */
+                    if(WaitOnFlag(&I2C->SR1, I2C_SR1_BTF, 0, I2C_TIMEOUT))
+                    {         
+                        I2C_LOG_STATES(I2C_LOG_BTF_TIMEOUT);
+                        return I2C_BTF_TIMEOUT;                
+                    }
+                    
+                    /* Generate Stop */
+                    GenerateStop();
+                    
+                    /* Read data from DR */
+                    (*RxBuf++) = I2C_DATA_REG;
+                    RxLen--;
+                    
+                    /* Re-enable IRQs */
+                    __enable_interrupt(); 
+                    
+                    /* Read data from DR */
+                    (*RxBuf++) = I2C_DATA_REG;
+                    RxLen--;
+                    
+                    I2C_LOG_STATES(I2C_LOG_RX_3_DONE);
+                }
+            }
+            else
             {
                 /* Wait until RXNE flag is set */
                 if(WaitOnFlag(&I2C->SR1, I2C_SR1_RXNE, 0, I2C_TIMEOUT))
@@ -455,114 +596,24 @@ I2CStatus_t I2cXferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint
                     return I2C_RXNE_TIMEOUT;                
                 } 
                 
-                I2C_LOG_EVENTS(I2C_LOG_RXNE); 
+                I2C_LOG_EVENTS(I2C_LOG_RXNE);
                 
                 /* Read data from DR */
-                (*RxBuf) = I2C_DATA_REG;
+                (*RxBuf++) = I2C_DATA_REG;
                 RxLen--;
-                I2C_LOG_STATES(I2C_LOG_RX_1_DONE);
-            }
-            /* Two bytes */
-            else if(RxLen == 2U)
-            {
-                /* Wait until BTF flag is set */
+                
                 if(WaitOnFlag(&I2C->SR1, I2C_SR1_BTF, 0, I2C_TIMEOUT))
-                {         
-                    I2C_LOG_STATES(I2C_LOG_BTF_TIMEOUT);
-                    return I2C_BTF_TIMEOUT;                
+                {
+                    /* Read data from DR */
+                    (*RxBuf++) = I2C_DATA_REG;
+                    RxLen--;
+                    I2C_LOG_EVENTS(I2C_LOG_BTF);
                 }
-                
-                /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
-                software sequence must complete before the current byte end of transfer */
-                __disable_interrupt();
-                
-                /* Generate Stop */
-                GenerateStop();
-                
-                /* Read data from DR */
-                (*RxBuf++)= I2C_DATA_REG;
-                RxLen--;
-                
-                /* Re-enable IRQs */
-                __enable_interrupt();
-                
-                /* Read data from DR */
-                (*RxBuf++) = I2C_DATA_REG;
-                RxLen--;
-                
-                I2C_LOG_STATES(I2C_LOG_RX_2_DONE);
             }
-            /* 3 Last bytes */
-            else
-            {
-                /* Wait until BTF flag is set */
-                if(WaitOnFlag(&I2C->SR1, I2C_SR1_BTF, 0, I2C_TIMEOUT))
-                {          
-                    I2C_LOG_STATES(I2C_LOG_BTF_TIMEOUT);
-                    return I2C_BTF_TIMEOUT;               
-                } 
-                
-                /* Disable Acknowledge */
-                DisableACK();
-                
-                /* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
-                software sequence must complete before the current byte end of transfer */
-                __disable_interrupt();
-                
-                /* Read data from DR */
-                (*RxBuf++) = I2C_DATA_REG;
-                RxLen--;
-                
-                /* Wait until BTF flag is set */
-                if(WaitOnFlag(&I2C->SR1, I2C_SR1_BTF, 0, I2C_TIMEOUT))
-                {         
-                    I2C_LOG_STATES(I2C_LOG_BTF_TIMEOUT);
-                    return I2C_BTF_TIMEOUT;                
-                }
-                
-                /* Generate Stop */
-                GenerateStop();
-                
-                /* Read data from DR */
-                (*RxBuf++) = I2C_DATA_REG;
-                RxLen--;
-                
-                /* Re-enable IRQs */
-                __enable_interrupt(); 
-                
-                /* Read data from DR */
-                (*RxBuf++) = I2C_DATA_REG;
-                RxLen--;
-                
-                I2C_LOG_STATES(I2C_LOG_RX_3_DONE);
-            }
-        }
-        else
-        {
-            /* Wait until RXNE flag is set */
-            if(WaitOnFlag(&I2C->SR1, I2C_SR1_RXNE, 0, I2C_TIMEOUT))
-            {          
-                I2C_LOG_STATES(I2C_LOG_RXNE_TIMEOUT);
-                return I2C_RXNE_TIMEOUT;                
-            } 
-            
-            I2C_LOG_EVENTS(I2C_LOG_RXNE);
-            
-            /* Read data from DR */
-            (*RxBuf++) = I2C_DATA_REG;
-            RxLen--;
-            
-            if(WaitOnFlag(&I2C->SR1, I2C_SR1_BTF, 0, I2C_TIMEOUT))
-            {
-                /* Read data from DR */
-                (*RxBuf++) = I2C_DATA_REG;
-                RxLen--;
-                I2C_LOG_EVENTS(I2C_LOG_BTF);
-            }
-        }
-    }       
-    
-    I2C_LOG_STATES(I2C_LOG_RX_DONE);
+        }       
+        
+        I2C_LOG_STATES(I2C_LOG_RX_DONE);
+    }
     return I2C_OK;    
 }
 
@@ -639,8 +690,8 @@ I2CStatus_t I2cXferIntr(Transaction_t* pTransaction)
 
 
 
-
-void I2C_ISR(void)
+//#pragma vector = I2C_IRQn
+__interrupt void I2C_ISR(void)
 {
     uint8_t SR1 = I2C->SR1;
     
@@ -675,7 +726,7 @@ void I2C_ISR(void)
 }
 
 
-void I2cI2cTxnDoneHandler(uint8_t StopFlag)
+void I2cTxnDoneHandler(uint8_t StopFlag)
 {            
     if(m_Transaction.RxLen != 0)
     {              
@@ -834,7 +885,7 @@ void TXE_Handler()
     }
     else if(m_I2CState == I2C_SLAVE_TX )  
     {
-           
+        
     }
     else
     {
@@ -861,7 +912,7 @@ void SB_Handler()
         if(m_Transaction.RxLen == 2U) 
         {
             /* Enable Pos */
-            m_I2Cx->CR1 |= I2C_CR1_POS;
+            I2C->CR1 |= I2C_CR1_POS;
         }
 #endif 
         I2C_DATA_REG = m_Transaction.SlaveAddress | I2C_DIR_READ;
@@ -877,17 +928,17 @@ void SB_Handler()
         if(m_Transaction.RxLen == 2U) 
         {
             /* Enable Pos */
-            m_I2Cx->CR1 |= I2C_CR1_POS;
+            I2C->CR1 |= I2C_CR1_POS;
         }
 #endif          
         I2C_DATA_REG = m_Transaction.SlaveAddress | I2C_DIR_READ;  
         
-            /* start listening RxNE and TxE interrupts */                
-            Enable_BUF_Interrupt();
-            
-            m_I2CState = I2C_MASTER_RX;
-            
-            I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX_REPEATED_START);
+        /* start listening RxNE and TxE interrupts */                
+        Enable_BUF_Interrupt();
+        
+        m_I2CState = I2C_MASTER_RX;
+        
+        I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX_REPEATED_START);
     }
     else
     {
@@ -920,7 +971,7 @@ void ADDR_Handler()
             ClearADDR();
             
             /* Disable Acknowledge */
-            m_I2Cx->CR1 &= ~I2C_CR1_ACK;
+            I2C->CR1 &= ~I2C_CR1_ACK;
             
             I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_RX_SIZE_2);                       
         }
@@ -967,32 +1018,22 @@ void ADDR_Handler()
     {
         // changing state to Slave Tx here
         /* Check the addressing mode*/
-        if( (m_I2Cx->SR2 & LL_I2C_SR2_DUALF) == RESET)
+        if( (I2C->SR3 & I2C_SR3_DUALF ) == RESET)
         {
-            m_Transaction.SlaveAddress = (m_I2Cx->OAR1 & 0x00FE); // Bit 1-7 are address
+            m_Transaction.SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
         }
         else
         {
-            m_Transaction.SlaveAddress = (m_I2Cx->OAR2 & 0x00FE); // Bit 1-7 are address
+            m_Transaction.SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
         }            
         /* Transfer Direction requested by Master */
-        if( (m_I2Cx->SR2 & LL_I2C_SR2_TRA) == 0)
+        if( (I2C->SR2 & I2C_SR3_TRA) == 0)
         {
-#if I2C_SLAVE_IN_DMA_MODE
-            Disable_BUF_Interrupt();
-            m_I2CState = SLAVE_RX_DMA;  
-#else
             m_I2CState = I2C_SLAVE_RX;
-#endif
         }
         else
         {
-#if I2C_SLAVE_IN_DMA_MODE
-            Disable_BUF_Interrupt();
-            m_I2CState = SLAVE_TX_DMA;	
-#else
-            m_I2CState = I2C_SLAVE_TX
-#endif
+            m_I2CState = I2C_SLAVE_TX;
         }
     }
     else
@@ -1004,12 +1045,12 @@ void ADDR_Handler()
 void STOPF_Handler()
 {
     I2C_LOG_EVENTS(I2C_LOG_STOPF);
-    LL_I2C_ClearFlag_STOP(m_I2Cx);  
+    ClearSTOPF();  
     if((m_I2CState == I2C_SLAVE_RX) || (m_I2CState == I2C_SLAVE_RX_DMA))
     {
         /* Execute the RxDone Callback */
-        if(m_SlaveRxDoneCallback)
-            m_SlaveRxDoneCallback->CallbackFunction();  
+        //if(m_SlaveRxDoneCallback)
+        // m_SlaveRxDoneCallback();  
         
         m_I2CState = I2C_READY;
         return;
@@ -1025,27 +1066,22 @@ void BTF_Handler()
     {
         return;
     }
-    else if((m_I2CState == I2C_MASTER_RX) || (m_I2CState == I2C_MASTER_RX_DMA))
+    else if(m_I2CState == I2C_MASTER_RX)
     {
         if( m_I2CState == I2C_MASTER_RX_REPEATED_START)
             return;            
         
-        if(m_I2CState == I2C_MASTER_RX_DMA)            
-        {                
-            /* BTF event never comes in DMA rx mode*/
-            while(1);
-        }            
         if(m_Transaction.RxLen == 3U)
         {
             /* Disable Acknowledge */
-            m_I2Cx->CR1 &= ~I2C_CR1_ACK;
+            DisableACK();
             
             // Read data3
             (*m_Transaction.RxBuf++) = I2C_DATA_REG;
             m_Transaction.RxLen--;
             
             /* Generate Stop */
-            m_I2Cx->CR1 |= I2C_CR1_STOP; 
+            GenerateStop(); 
             
             // Read data2
             (*m_Transaction.RxBuf++) = I2C_DATA_REG;
@@ -1056,7 +1092,7 @@ void BTF_Handler()
         else if(m_Transaction.RxLen == 2U)
         {                 
             /* Generate Stop */
-            m_I2Cx->CR1 |= I2C_CR1_STOP;         
+            GenerateStop();         
             
             // Read data2
             (*m_Transaction.RxBuf++) = I2C_DATA_REG;
@@ -1068,11 +1104,11 @@ void BTF_Handler()
             
             I2C_LOG_STATES(I2C_LOG_BTF_MASTER_RX_SIZE_2_STOPED);
             
-            if (StopFlagCleared(I2C_TIMEOUT) == true)
-            {
-                //m_I2CStatus = I2C_STOP_TIMEOUT;
-                (*m_Transaction.pStatus) = I2C_STOP_TIMEOUT;
-            }
+            if (WaitOnFlag(&I2C->CR2, I2C_CR2_STOP, I2C_CR2_STOP, I2C_TIMEOUT))
+            {          
+                I2C_LOG_STATES(I2C_LOG_STOP_TIMEOUT);
+                (*m_Transaction.pStatus) = I2C_STOP_TIMEOUT;                
+            } 
             I2cTxnDoneHandler(0); 
         }
         else 
@@ -1081,21 +1117,11 @@ void BTF_Handler()
             (*m_Transaction.RxBuf++) = I2C_DATA_REG;
             m_Transaction.RxLen--;
             I2C_LOG_STATES(I2C_LOG_BTF_MASTER_RX_SIZE_GT_3);
-        } 
+        }
     }
-    else if((m_I2CState == I2C_MASTER_TX) || (m_I2CState == I2C_MASTER_TX_DMA))
+    else if(m_I2CState == I2C_MASTER_TX)
     {
-        if(m_I2CState == I2C_MASTER_TX_DMA)
-        {
-            //                if(m_Transaction.RxLen != 0)
-            //				{
-            //                    /* Load DMA Rx transaction*/
-            //	                m_DMAx->Load(I2C1_RX_DMA_CHANNEL, (uint32_t)m_Transaction.RxBuf, (uint32_t)&(I2C_DATA_REG), m_Transaction.RxLen, LL_DMA_DIRECTION_PERIPH_TO_MEMORY );
-            //				}                
-            I2C_LOG_STATES(I2C_LOG_BTF_MASTER_TX_DMA_STOP);
-            I2cTxnDoneHandler(I2C_CR2_STOP);  
-        }            
-        else if(m_Transaction.TxLen > 0)
+        if(m_Transaction.TxLen > 0)
         {
             I2C_DATA_REG = (*m_Transaction.TxBuf++);
             m_Transaction.TxLen--;
@@ -1109,37 +1135,11 @@ void BTF_Handler()
     }
     else if(m_I2CState == I2C_SLAVE_RX ) 
     {
-        /* Queue the received data */
-        if(m_I2CSlaveRxQueue.IsQueueFull() == false)
-        {
-            m_I2CSlaveRxQueue.Write(I2C_DATA_REG);
-            I2C_LOG_STATES(I2C_LOG_BTF_SLAVE_RX_QUEUED);
-        }
-        else
-        {                
-            I2C_LOG_STATES(I2C_LOG_BTF_SLAVE_RX_QUEUE_FULL);
-        }
+        
     }
     else if(m_I2CState == I2C_SLAVE_TX )    
     {
-        uint8_t Data;
-        if(m_I2CSlaveTxQueue.IsQueueEmpty() != true)
-        {
-            m_I2CSlaveTxQueue.Read(Data);
-            
-            I2C_DATA_REG = Data;
-            
-            I2C_LOG_STATES(I2C_LOG_BTF_SLAVE_TX);
-        }
-        else
-        {                
-            I2C_DATA_REG = 0xDE; // Send some junk data
-            
-            I2C_LOG_STATES(I2C_LOG_BTF_SLAVE_TX_QUEUE_EMPTY);
-            
-            if(m_TxQueueEmptyCallback)
-                m_TxQueueEmptyCallback->CallbackFunction();
-        }
+        
     }
     else
     {
@@ -1151,3 +1151,102 @@ void ADD10_Handler()
 {
     
 }
+void Clear_I2C_BUSY_Condition()
+{
+    uint8_t i;
+    //  Set SCL as GPIO output. 
+    GpioSetOutputOpenDrainPushPull(C0);
+    //  Set SDA as GPIO input. 
+    GpioSetOutputOpenDrainPushPull(C1);
+     // Generate 12 clcok cycles at the same freq as is normally used  
+  //  (toggle line high and low)  
+  for(i=0; i<12; i++)  
+  {
+      Gpio_On(C1);
+      
+      delay_100us();
+      delay_100us();
+      delay_50us();
+      
+      Gpio_Off(C1);
+      
+      delay_100us();
+      delay_100us();
+      delay_50us();
+  }
+  
+   Gpio_On(C1);
+  
+}
+
+void Clear_I2C_BUSY_Condition_NXP()
+{
+    uint8_t i;
+    //  Set SCL as GPIO output. 
+    GpioSetInputPullup(C0);
+    //  Set SDA as GPIO input. 
+    GpioSetInputPullup(C1);
+     // Generate 12 clcok cycles at the same freq as is normally used  
+  //  (toggle line high and low)  
+  while((I2C->SR3 & I2C_SR3_BUSY ))
+  {
+    for(i=0; i<12; i++)  
+      {
+          Gpio_On(C1);
+          
+          delay_100us();
+          delay_100us();
+          delay_50us();
+          
+          Gpio_Off(C1);
+          
+          delay_100us();
+          delay_100us();
+          delay_50us();
+      }
+  } 
+  
+}
+
+
+#if 0
+
+  // Experiencing I2C communications lockup when during the I2C communications,  
+  //  the processor experiences brownout  or is put into a low power state because of loss of power.  
+  //  Toggling the clock after initializing i2c to fix the problem.  
+  
+  //  Set PTE24 (I2C0_SCL) as GPIO output.  
+  PORT_HAL_SetMuxMode(PORTE,24u,kPortMuxAsGpio);   
+  GPIO_HAL_SetPinDir(GPIOE, 24, kGpioDigitalOutput);  
+  
+  // Set PTE25 (I2C0_SDA) as GPIO Input  
+  PORT_HAL_SetMuxMode(PORTE,25u,kPortMuxAsGpio);   
+  GPIO_HAL_SetPinDir(GPIOE, 25, kGpioDigitalInput);  
+  
+  // Generate 12 clcok cycles at the same freq as is normally used  
+  //  (toggle line high and low)  
+  for(i=0; i<12; i++)  
+  {  
+  GPIO_HAL_SetPinOutput(GPIOE, 24);  
+  delay_usec(125);  // I2C is running at 4 kbit/s. 4 KHz freq ==> 250 usec.  
+  GPIO_HAL_ClearPinOutput(GPIOE, 24);  
+  delay_usec(125);   
+  }  
+  
+  // Set the I2C0_SCL line high  
+  GPIO_HAL_SetPinOutput(GPIOE, 24); 
+  
+  
+  The solution is as follows:
+
+- rather than configure the I2C pins when the I2C interface is initialised they are left as inputs with pull-ups enabled
+
+- the first time that the I2C bus is to be used for transmission (transmission takes place as first operation of any read or write) the bus state is checked.
+
+- if it is detected in the busy state, the SCL pin is set to an output and clocks generated until the busy state no longer exists (the clocks remove the slave from its present ACK state - several clocks may be required)
+
+- the pins are then set to their final I2C peripheral usage
+
+- once the pins are set no further checking is required for subsequent I2C use and normal interrupt or DMA driven modes are possible
+  
+#endif

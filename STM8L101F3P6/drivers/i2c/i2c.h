@@ -24,7 +24,7 @@
 #define I2C_DIR_WRITE 0xFEu
 
 #define I2C_DATA_REG (I2C->DR)
-
+#define I2C_SR3_DUALF   ((uint8_t)0x80) 
 
 typedef void(*I2CCallback_t)(void);
 
@@ -82,6 +82,11 @@ typedef enum
 }I2CState_t; 
 
 /* I2c APIs */
+void Busy_Check();
+void Clear_I2C_BUSY_Condition();
+void Clear_I2C_BUSY_Condition_NXP();
+
+
 void I2c_HwInit();
 void I2cClockEnable();
 void I2cClockDisable();
@@ -199,12 +204,21 @@ void ClearBERR()
 {
   I2C->SR2 &= (uint8_t)(~I2C_SR2_BERR);
 }
-
 __INLINE 
 void ClearOVR()
 {
-  I2C->SR2 &= (uint8_t)(~I2C_SR2_OVR);
+  I2C->SR1 &= (uint8_t)(~I2C_SR2_OVR);
 }
+
+__INLINE 
+void ClearSTOPF()
+{
+  uint8_t reg;
+  reg = I2C->SR1;
+  (void)reg;
+  I2C->CR2 = I2C->CR2;
+}
+
 __INLINE 
 void Enable_EVT_BUF_ERR_Interrupt(void)
 {

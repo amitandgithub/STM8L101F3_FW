@@ -16,7 +16,7 @@
         <ShowSource>1</ShowSource>
     </Trace1>
     <DebugChecksum>
-        <Checksum>221894318</Checksum>
+        <Checksum>4222047894</Checksum>
     </DebugChecksum>
     <CallStack>
         <ShowArgs>0</ShowArgs>
@@ -26,14 +26,20 @@
         <MixedMode>1</MixedMode>
     </Disassembly>
     <CodeCoverage>
-        <Enabled>_ 0</Enabled>
+        <Enabled>0</Enabled>
+        <ShowSource>0</ShowSource>
+        <HideCovered>0</HideCovered>
     </CodeCoverage>
+    <DataSample>
+        <LogEnabled>0</LogEnabled>
+        <GraphEnabled>0</GraphEnabled>
+        <ShowTimeLog>1</ShowTimeLog>
+    </DataSample>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>1</Mode>
         <Graph>0</Graph>
         <Symbiont>0</Symbiont>
-        <Exclusions />
     </DriverProfiling>
     <CallStackLog>
         <Enabled>0</Enabled>
@@ -41,6 +47,10 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
     <InterruptLog>
         <LogEnabled>0</LogEnabled>
         <GraphEnabled>0</GraphEnabled>
@@ -74,23 +84,15 @@
         <FreqHi>0</FreqHi>
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
-    <DataSample>
-        <LogEnabled>0</LogEnabled>
-        <GraphEnabled>0</GraphEnabled>
-        <ShowTimeLog>1</ShowTimeLog>
-    </DataSample>
+    <Breakpoints>
+        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\drivers\i2c\i2c.c}.34.1" 1 0 0 0 "" 0 ""</Bp0>
+        <Count>1</Count>
+    </Breakpoints>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
-    <Breakpoints>
-        <Count>0</Count>
-    </Breakpoints>
     <Aliases>
         <A0>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c" ""</A0>
         <A1>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\app\main.c" ""</A1>
