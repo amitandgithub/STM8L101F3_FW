@@ -35,7 +35,7 @@
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
-#include"Gpio.h"
+#include"system.h"
 extern GpioFptr_t EXTI_ISRs[8];
 /* Public functions ----------------------------------------------------------*/
 
@@ -342,6 +342,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 29)
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
+  I2C_ISR();
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

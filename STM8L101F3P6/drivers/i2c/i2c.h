@@ -93,10 +93,10 @@ void I2cClockDisable();
 I2CStatus_t I2cTxPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen);        
 I2CStatus_t I2cRxPoll(uint8_t SlaveAddress,uint8_t* RxBuf, uint8_t RxLen);
 I2CStatus_t I2cXferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxLen, uint8_t* RxBuf, uint8_t RxLen, uint8_t RepeatedStart);
-I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress);
+I2CStatus_t SendSlaveAddress(uint8_t SlaveAddress, uint8_t Repeatedstart);
 void I2cPinsInit();
 void I2cScanBus(uint8_t* pFoundDevices, uint8_t size);
-
+void I2C_ISR(void);
 I2CStatus_t I2cXferIntr(Transaction_t* pTransaction);
 void I2cTxnDoneHandler(uint8_t StopFlag);
 
@@ -233,7 +233,7 @@ void Disable_EVT_BUF_ERR_Interrupt(void)
 __INLINE 
 void Enable_BUF_Interrupt(void)
 {
-    I2C->ITR = I2C_ITR_ITBUFEN;
+    I2C->ITR |= I2C_ITR_ITBUFEN;
 }
 __INLINE 
 void Disable_BUF_Interrupt(void)
@@ -241,6 +241,12 @@ void Disable_BUF_Interrupt(void)
     I2C->ITR &= (uint8_t)~I2C_ITR_ITBUFEN;
 }
 
+__INLINE 
+I2CState_t I2cGetState()
+{
+  extern I2CState_t  m_I2CState;
+  return m_I2CState;
+}
 void RXNE_Handler();
 
 void TXE_Handler();

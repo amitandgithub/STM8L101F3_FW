@@ -17,12 +17,11 @@ uint8_t TxBuf[TX_BUF_SIZE];
 uint8_t RxBuf[RX_BUF_SIZE];
 uint8_t TxLen,RxLen;
 I2c_tests_t I2c_test_id;
-
+Transaction_t Transaction;
 void I2c_Poll_Tests()
 {
-  
   I2c_HwInit();  
- 
+  
   //I2cScanBus(TxBuf, TX_BUF_SIZE);  
   
   SlaveAddress = 0x68<<1;
@@ -68,21 +67,179 @@ void I2c_Poll_Tests()
       I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);
       Test_Condition(!(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_2_RX_2 = Pass"), STR("I2C_POLL_TX_2_RX_2 = Fail"));
       I2c_test_id = I2C_POLL_TX_3_RX_3;
-      break;  
-      
+      break;      
     case I2C_POLL_TX_3_RX_3:  
       TxLen = RxLen = 3;
       I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
       I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);  
       Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_3_RX_3 = Pass"), STR("I2C_POLL_TX_3_RX_3 = Fail"));
-      I2c_test_id = I2C_INT_POLL_9_RX_9;
-      break;
-      
-    case I2C_INT_POLL_9_RX_9: 
+      I2c_test_id = I2C_POLL_TX_9_RX_9;
+      break;      
+    case I2C_POLL_TX_9_RX_9: 
       TxLen = RxLen = 9;           
       I2cXferPoll(SlaveAddress,TxBuf,TxLen+1,0,0,0);
       I2cXferPoll(SlaveAddress,TxBuf,1,RxBuf,RxLen,RepeatedStart);            
-      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_POLL_9_RX_9 = Pass"), STR("I2C_INT_POLL_9_RX_9 = Fail"));
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_POLL_TX_9_RX_9 = Pass"), STR("I2C_POLL_TX_9_RX_9 = Fail"));
+      I2c_test_id = I2C_INT_TX_1_RX_1_TXN;
+      break;
+      
+    case I2C_INT_TX_1_RX_1_TXN:
+      TxLen = RxLen = 1;   
+      Transaction.SlaveAddress = SlaveAddress;
+      Transaction.TxBuf = TxBuf;
+      Transaction.TxLen = TxLen+1;
+      Transaction.RxBuf = 0;
+      Transaction.RxLen = 0;
+      Transaction.RepeatedStart = RepeatedStart;
+      Transaction.pStatus = &Status;
+      Transaction.XferDoneCallback = I2CCallback;            
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      Transaction.TxLen = 1;
+      Transaction.RxBuf = RxBuf;
+      Transaction.RxLen = RxLen;
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_TX_1_RX_1_TXN = Pass"), STR("I2C_INT_TX_1_RX_1_TXN = Fail"));
+      I2c_test_id = I2C_INT_TX_1_RX_2_TXN;
+      break;    
+    case I2C_INT_TX_1_RX_2_TXN:
+      TxLen = 1;
+      RxLen = 2;   
+      Transaction.SlaveAddress = SlaveAddress;
+      Transaction.TxBuf = TxBuf;
+      Transaction.TxLen = TxLen+1;
+      Transaction.RxBuf = 0;
+      Transaction.RxLen = 0;
+      Transaction.RepeatedStart = RepeatedStart;
+      Transaction.pStatus = &Status;
+      Transaction.XferDoneCallback = I2CCallback;            
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      Transaction.TxLen = 1;
+      Transaction.RxBuf = RxBuf;
+      Transaction.RxLen = RxLen;
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY); 
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_TX_1_RX_2_TXN = Pass"), STR("I2C_INT_TX_1_RX_2_TXN = Fail"));
+      I2c_test_id = I2C_INT_TX_1_RX_3_TXN;
+      break; 
+    case I2C_INT_TX_1_RX_3_TXN:
+      TxLen = 1;
+      RxLen = 3;   
+      Transaction.SlaveAddress = SlaveAddress;
+      Transaction.TxBuf = TxBuf;
+      Transaction.TxLen = TxLen+1;
+      Transaction.RxBuf = 0;
+      Transaction.RxLen = 0;
+      Transaction.RepeatedStart = RepeatedStart;
+      Transaction.pStatus = &Status;
+      Transaction.XferDoneCallback = I2CCallback;            
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      Transaction.TxLen = 1;
+      Transaction.RxBuf = RxBuf;
+      Transaction.RxLen = RxLen;
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY); 
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_TX_1_RX_3_TXN = Pass"), STR("I2C_INT_TX_1_RX_3_TXN = Fail"));
+      I2c_test_id = I2C_INT_TX_2_RX_2_TXN;
+      break;
+    case I2C_INT_TX_2_RX_2_TXN:  
+      TxLen = RxLen = 2;   
+      Transaction.SlaveAddress = SlaveAddress;
+      Transaction.TxBuf = TxBuf;
+      Transaction.TxLen = TxLen+1;
+      Transaction.RxBuf = 0;
+      Transaction.RxLen = 0;
+      Transaction.RepeatedStart = RepeatedStart;
+      Transaction.pStatus = &Status;
+      Transaction.XferDoneCallback = I2CCallback;            
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      Transaction.TxLen = 1;
+      Transaction.RxBuf = RxBuf;
+      Transaction.RxLen = RxLen;
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY); 
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_TX_2_RX_2_TXN = Pass"), STR("I2C_INT_TX_2_RX_2_TXN = Fail"));
+      I2c_test_id = I2C_INT_TX_3_RX_3_TXN;
+      break;            
+    case I2C_INT_TX_3_RX_3_TXN:  
+      TxLen = RxLen = 3;   
+      Transaction.SlaveAddress = SlaveAddress;
+      Transaction.TxBuf = TxBuf;
+      Transaction.TxLen = TxLen+1;
+      Transaction.RxBuf = 0;
+      Transaction.RxLen = 0;
+      Transaction.RepeatedStart = RepeatedStart;
+      Transaction.pStatus = &Status;
+      Transaction.XferDoneCallback = I2CCallback;            
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      Transaction.TxLen = 1;
+      Transaction.RxBuf = RxBuf;
+      Transaction.RxLen = RxLen;
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY); 
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_TX_3_RX_3_TXN = Pass"), STR("I2C_INT_TX_3_RX_3_TXN = Fail"));
+      I2c_test_id = I2C_INT_TX_9_RX_9_TXN;
+      break;    
+    case I2C_INT_TX_9_RX_9_TXN:
+      // This test case tests the Transaction and the Callback functionality
+      TxLen = RxLen = 9;   
+      Transaction.SlaveAddress = SlaveAddress;
+      Transaction.TxBuf = TxBuf;
+      Transaction.TxLen = TxLen+1;
+      Transaction.RxBuf = 0;
+      Transaction.RxLen = 0;
+      Transaction.RepeatedStart = RepeatedStart;
+      Transaction.pStatus = &Status;
+      Transaction.XferDoneCallback = I2CCallback;            
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      Transaction.TxLen = 1;
+      Transaction.RxBuf = RxBuf;
+      Transaction.RxLen = RxLen;
+      
+      I2cXferIntr(&Transaction);
+      while(I2cGetState() != I2C_READY);
+      
+      I2cXferIntr(&Transaction);           
+      
+      Test_Condition( !(memcmp( (const void*) &TxBuf[1],(const void*) RxBuf, TxLen )), STR("I2C_INT_TX_9_RX_9_TXN = Pass"), STR("I2C_INT_TX_9_RX_9_TXN = Fail"));
+      
+      
       
       if(RepeatedStart == 0)
       {
@@ -92,7 +249,7 @@ void I2c_Poll_Tests()
       }
       else
       {
-        return;
+        //return;
       }
       break;
       
@@ -104,6 +261,11 @@ void I2c_Poll_Tests()
   }
 }
 
+void I2CCallback(void)
+{
+  static uint8_t count;
+  count++;
+}
 uint8_t pass,fail;
 uint8_t Test_Condition(uint8_t condition, char* PassStr, char* FailStr)
 {
