@@ -10,12 +10,15 @@
 #define i2c_h
 
 #include"system.h"
+#include"queue_8bit.h"
 
 /*Method 1: This method is for the case when the I2C is used with interrupts that have the highest priority in the application.
  This method is faster in communication. */
 #define I2C_RX_METHOD_1
 
-
+#define I2C_SLAVE_TX_BUF_SIZE 32
+#define I2C_SLAVE_RX_BUF_SIZE 32
+   
 #define I2C_DEBUG 1
 #define __INLINE static inline
 
@@ -30,6 +33,17 @@
 #define I2C_SR3_DUALF   ((uint8_t)0x80) 
 
 typedef void(*I2CCallback_t)(void);
+
+
+typedef struct
+{  
+  Queue_t TxQueue;
+  Queue_t RxQueue;
+  uint8_t TxQueueArray[I2C_SLAVE_TX_BUF_SIZE];
+  uint8_t RxQueueArray[I2C_SLAVE_RX_BUF_SIZE];
+  I2CCallback_t I2C_Slave_RX_Done_Callback;
+  I2CCallback_t I2C_Slave_TX_Done_Callback;
+}I2C_Slave_Context_t;
 
 typedef enum 
 {

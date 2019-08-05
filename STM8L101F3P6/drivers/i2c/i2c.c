@@ -8,8 +8,7 @@
 ******************/
 #include"i2c.h"
 
-
-I2CCallback_t I2C_Slave_RX_Done_Callback;
+static I2C_Slave_Context_t I2C_Slave_Context;
 
 #if I2C_DEBUG 
 I2CLogs_t I2CStates[I2C_LOG_STATES_SIZE];
@@ -35,6 +34,12 @@ void I2c_HwInit()
   Clear_I2C_BUSY_Condition_NXP();
   I2C_Init(100000,0x08,0,0,0);  
   I2cPinsInit(); 
+  I2C_Slave_Context.TxQueue.Capacity = I2C_SLAVE_TX_BUF_SIZE;
+  I2C_Slave_Context.RxQueue.Capacity = I2C_SLAVE_RX_BUF_SIZE;
+  
+  QueueInit(&I2C_Slave_Context.TxQueue);
+  QueueInit(&I2C_Slave_Context.RxQueue);
+  
   I2C_Cmd(ENABLE);
 }
 void Busy_Check()
@@ -872,7 +877,7 @@ void RXNE_Handler()
   }
   else if(m_I2CState == I2C_SLAVE_RX)
   {
-    
+    QueueWrite(&I2C_Slave_Context.TxQueue, I2C_DATA_REG );
   }
   else
   {

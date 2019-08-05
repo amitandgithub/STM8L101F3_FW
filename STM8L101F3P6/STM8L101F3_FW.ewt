@@ -2202,4 +2202,13 @@
             <name>$PROJ_DIR$\tests\i2c\i2c_tests.c</name>
         </file>
     </group>
+    <group>
+        <name>utils</name>
+        <group>
+            <name>queue</name>
+            <file>
+                <name>$PROJ_DIR$\utils\queue\queue_8bit.c</name>
+            </file>
+        </group>
+    </group>
 </project>
