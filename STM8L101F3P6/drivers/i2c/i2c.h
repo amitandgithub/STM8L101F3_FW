@@ -11,7 +11,10 @@
 
 #include"system.h"
 
+/*Method 1: This method is for the case when the I2C is used with interrupts that have the highest priority in the application.
+ This method is faster in communication. */
 #define I2C_RX_METHOD_1
+
 
 #define I2C_DEBUG 1
 #define __INLINE static inline
@@ -23,7 +26,7 @@
 #define I2C_DIR_READ  0x01u
 #define I2C_DIR_WRITE 0xFEu
 
-#define I2C_DATA_REG (I2C->DR)
+#define I2C_DATA_REG    (I2C->DR)
 #define I2C_SR3_DUALF   ((uint8_t)0x80) 
 
 typedef void(*I2CCallback_t)(void);
@@ -344,17 +347,17 @@ typedef enum
   I2C_LOG_DMA_REPEATED_START                   	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,77),
   I2C_LOG_DMA_STOP_GENERATED                   	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,78),
   I2C_LOG_DMA_TXN_DONE                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,79),
-  I2C_LOG_SB									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,80),
-  I2C_LOG_ADDR									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,81),
-  I2C_LOG_BTF									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,82),
-  I2C_LOG_RXNE									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,83),
-  I2C_LOG_TXE									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,84),
-  I2C_LOG_STOPF									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,85),
-  I2C_LOG_BERR									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,86),
-  I2C_LOG_ARLO									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,87),
-  I2C_LOG_AF									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,88),
-  I2C_LOG_OVR									=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,89),
-  I2C_LOG_PECERR								=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,90),
+  I2C_LOG_SB                                    =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,80),
+  I2C_LOG_ADDR                                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,81),
+  I2C_LOG_BTF                                   =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,82),
+  I2C_LOG_RXNE                                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,83),
+  I2C_LOG_TXE                                   =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,84),
+  I2C_LOG_STOPF                                 =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,85),
+  I2C_LOG_BERR                                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,86),
+  I2C_LOG_ARLO                                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,87),
+  I2C_LOG_AF                                    =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,88),
+  I2C_LOG_OVR                                   =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,89),
+  I2C_LOG_PECERR                                =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,90),
   I2C_LOG_ADD10                                	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,91),
   I2C_LOG_START_TIMEOUT                        	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,92),
   I2C_LOG_START_DONE                            =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,93),
