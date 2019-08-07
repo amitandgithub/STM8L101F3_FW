@@ -16,7 +16,7 @@
         <ShowSource>1</ShowSource>
     </Trace1>
     <DebugChecksum>
-        <Checksum>1978198906</Checksum>
+        <Checksum>198396638</Checksum>
     </DebugChecksum>
     <CallStack>
         <ShowArgs>0</ShowArgs>
@@ -30,6 +30,19 @@
         <ShowSource>0</ShowSource>
         <HideCovered>0</HideCovered>
     </CodeCoverage>
+    <DataSample>
+        <LogEnabled>0</LogEnabled>
+        <GraphEnabled>0</GraphEnabled>
+        <ShowTimeLog>1</ShowTimeLog>
+    </DataSample>
+    <Breakpoints>
+        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\app\main.c}.68.5" 1 0 0 0 "" 0 ""</Bp0>
+        <Count>1</Count>
+    </Breakpoints>
+    <DebuggerSettings>
+        <DisableInterruptsWhenStepping>0</DisableInterruptsWhenStepping>
+        <LeaveTargetRunning>0</LeaveTargetRunning>
+    </DebuggerSettings>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>1</Mode>
@@ -42,6 +55,15 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
+    <LogFile>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+        <Category>_ 0</Category>
+    </LogFile>
     <InterruptLog>
         <LogEnabled>0</LogEnabled>
         <GraphEnabled>0</GraphEnabled>
@@ -70,40 +92,20 @@
         <TypeViol>0</TypeViol>
         <Stop>1</Stop>
     </MemConfig>
-    <Simulator>
-        <Freq>16000000</Freq>
-        <FreqHi>0</FreqHi>
-        <MultiCoreRunAll>1</MultiCoreRunAll>
-    </Simulator>
-    <DataSample>
-        <LogEnabled>0</LogEnabled>
-        <GraphEnabled>0</GraphEnabled>
-        <ShowTimeLog>1</ShowTimeLog>
-    </DataSample>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
-    <LogFile>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-        <Category>_ 0</Category>
-    </LogFile>
-    <Breakpoints>
-        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\app\main.c}.68.5" 1 0 0 0 "" 0 ""</Bp0>
-        <Count>1</Count>
-    </Breakpoints>
     <Aliases>
         <A0>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c" ""</A0>
         <A1>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\app\main.c" ""</A1>
         <A2>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\drivers\gpio\Gpio.h" ""</A2>
         <A3>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\drivers\i2c\i2c.c" ""</A3>
         <A4>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\system\stm8l10x_it.c" ""</A4>
-        <Count>5</Count>
+        <A5>_ "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c" ""</A5>
+        <A6>_ "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c" ""</A6>
+        <Count>7</Count>
         <SuppressDialog>0</SuppressDialog>
     </Aliases>
-    <DebuggerSettings>
-        <DisableInterruptsWhenStepping>0</DisableInterruptsWhenStepping>
-        <LeaveTargetRunning>0</LeaveTargetRunning>
-    </DebuggerSettings>
+    <Simulator>
+        <Freq>16000000</Freq>
+        <FreqHi>0</FreqHi>
+        <MultiCoreRunAll>1</MultiCoreRunAll>
+    </Simulator>
 </settings>

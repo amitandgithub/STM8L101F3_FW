@@ -4,9 +4,9 @@
 #define LED B0
 
 void Gpio_1_Callback();
-
 void main(void)
 {
+    QueueSize_t data;
    __disable_interrupt();
    CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
    CLK->CKDIVR = (uint8_t)0;

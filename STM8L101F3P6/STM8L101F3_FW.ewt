@@ -2207,7 +2207,7 @@
         <group>
             <name>queue</name>
             <file>
-                <name>$PROJ_DIR$\utils\queue\queue_8bit.c</name>
+                <name>$PROJ_DIR$\utils\queue\queue.c</name>
             </file>
         </group>
     </group>

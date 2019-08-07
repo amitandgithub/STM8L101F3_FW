@@ -10,7 +10,7 @@
 #define i2c_h
 
 #include"system.h"
-#include"queue_8bit.h"
+#include"queue.h"
 
 /*Method 1: This method is for the case when the I2C is used with interrupts that have the highest priority in the application.
  This method is faster in communication. */
