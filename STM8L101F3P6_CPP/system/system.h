@@ -5,7 +5,7 @@
 
 
 #include "stm8l10x.h"
-#include "Gpio.h"
+#include "stm8l10x_gpio.h"
 #include "i2c.h"
 
 

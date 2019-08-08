@@ -21,16 +21,15 @@ rule browsedata
 
 #Build steps
 build main.pbi : index main.xcl
-build Gpio.pbi : index Gpio.xcl
 build i2c.pbi : index i2c.xcl
 build stm8l10x_clk.pbi : index stm8l10x_clk.xcl
 build stm8l10x_i2c.pbi : index stm8l10x_i2c.xcl
 build stm8l10x_it.pbi : index stm8l10x_it.xcl
 build system.pbi : index system.xcl
 build i2c_tests.pbi : index i2c_tests.xcl
-build STM8L101F3_FW_CPP_part0.pbi : link main.pbi Gpio.pbi i2c.pbi
-build STM8L101F3_FW_CPP_part1.pbi : link stm8l10x_clk.pbi stm8l10x_i2c.pbi stm8l10x_it.pbi
-build STM8L101F3_FW_CPP_part2.pbi : link system.pbi i2c_tests.pbi
+build STM8L101F3_FW_CPP_part0.pbi : link main.pbi i2c.pbi stm8l10x_clk.pbi
+build STM8L101F3_FW_CPP_part1.pbi : link stm8l10x_i2c.pbi stm8l10x_it.pbi system.pbi
+build STM8L101F3_FW_CPP_part2.pbi : link i2c_tests.pbi
 build STM8L101F3_FW_CPP.pbd : link STM8L101F3_FW_CPP_part0.pbi STM8L101F3_FW_CPP_part1.pbi STM8L101F3_FW_CPP_part2.pbi
 build STM8L101F3_FW_CPP.pbw : browsedata STM8L101F3_FW_CPP.pbd
 

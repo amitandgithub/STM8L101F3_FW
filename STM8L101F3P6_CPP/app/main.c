@@ -1,27 +1,22 @@
 
 #include"system.h"
-
+#include"DigitalOut.h"
 #define LED B0
 
-void Gpio_1_Callback();
+DigitalOut<LED> Led;
 void main(void)
 {
    __disable_interrupt();
    CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
    CLK->CKDIVR = (uint8_t)0;
     __enable_interrupt();
-  //  Gpio_On(LED);
-    
+    Led.HwInit();
     while (1)
     {
-       // Gpio_Off(LED);
+        Led.High();
         I2c_Poll_Tests();
+        Led.Low();
     }
-}
-
-void Gpio_1_Callback()
-{
-  Gpio_On(LED);
 }
 
 

@@ -14,6 +14,9 @@ static I2C_Slave_Context_t I2C_Slave_Context;
 I2CLogs_t I2CStates[I2C_LOG_STATES_SIZE];
 #endif
 
+DigitalOut<C0,OPEN_DRAIN_FAST> Sda;
+DigitalOut<C1,OPEN_DRAIN_FAST> Scl;
+
 void I2c_HwInit()
 {   
   I2cClockEnable();
@@ -70,8 +73,10 @@ SDA = C0 - 18
 */
 void I2cPinsInit()
 {
-  GpioSetOutputOpenDrainFast(C0);
-  GpioSetOutputOpenDrainFast(C1);  
+  //GpioSetOutputOpenDrainFast(C0);
+    Scl.HwInit();
+  //GpioSetOutputOpenDrainFast(C1); 
+    Sda.HwInit();
 }
 
 void I2cScanBus(uint8_t* pFoundDevices, uint8_t size)
@@ -1155,27 +1160,27 @@ void Clear_I2C_BUSY_Condition()
 {
   uint8_t i;
   //  Set SCL as GPIO output. 
-  GpioSetOutputOpenDrainPushPull(C0);
+  //GpioSetOutputOpenDrainPushPull(C0);
   //  Set SDA as GPIO input. 
-  GpioSetOutputOpenDrainPushPull(C1);
+  //GpioSetOutputOpenDrainPushPull(C1);
   // Generate 12 clcok cycles at the same freq as is normally used  
   //  (toggle line high and low)  
   for(i=0; i<12; i++)  
   {
-    Gpio_On(C1);
+    //Gpio_On(C1);
     
     delay_100us();
     delay_100us();
     delay_50us();
     
-    Gpio_Off(C1);
+    //Gpio_Off(C1);
     
     delay_100us();
     delay_100us();
     delay_50us();
   }
   
-  Gpio_On(C1);
+  //Gpio_On(C1);
   
 }
 
@@ -1183,22 +1188,22 @@ void Clear_I2C_BUSY_Condition_NXP()
 {
   uint8_t i;
   //  Set SCL as GPIO output. 
-  GpioSetInputPullup(C1);
+  //GpioSetInputPullup(C1);
   //  Set SDA as GPIO input. 
-  GpioSetInputPullup(C0);
+  //GpioSetInputPullup(C0);
   // Generate 12 clcok cycles at the same freq as is normally used  
   //  (toggle line high and low)  
   while((I2C->SR3 & I2C_SR3_BUSY ))
   {
     for(i=0; i<12; i++)  
     {
-      Gpio_On(C1);
+     // Gpio_On(C1);
       
       delay_100us();
       delay_100us();
       delay_50us();
       
-      Gpio_Off(C1);
+     // Gpio_Off(C1);
       
       delay_100us();
       delay_100us();

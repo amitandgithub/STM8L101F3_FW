@@ -10,6 +10,7 @@
 #define i2c_h
 
 #include"system.h"
+#include"DigitalOut.h"
 #include"QueueCpp.h"
 
 /*Method 1: This method is for the case when the I2C is used with interrupts that have the highest priority in the application.

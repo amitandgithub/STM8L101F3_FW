@@ -23,7 +23,7 @@ main.pbi: \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\STM8L10x_StdPeriph_Driver\inc\stm8l10x_usart.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\STM8L10x_StdPeriph_Driver\inc\stm8l10x_wfe.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ STM8\stm8\inc\c\intrinsics.h \
-  C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\drivers\gpio\Gpio.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\drivers\i2c\i2c.h \
+  C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\drivers\gpio\DigitalOut.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\utils\queue\QueueCpp.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\tests\i2c\i2c_tests.h

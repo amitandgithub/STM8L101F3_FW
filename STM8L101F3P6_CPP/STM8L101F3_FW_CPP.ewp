@@ -1651,7 +1651,7 @@
         <group>
             <name>gpio</name>
             <file>
-                <name>$PROJ_DIR$\drivers\gpio\Gpio.c</name>
+                <name>$PROJ_DIR$\drivers\gpio\DigitalOut.h</name>
             </file>
         </group>
         <group>
