@@ -2168,6 +2168,9 @@
         <group>
             <name>gpio</name>
             <file>
+                <name>$PROJ_DIR$\drivers\gpio\DigitalIn.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\drivers\gpio\DigitalOut.h</name>
             </file>
         </group>

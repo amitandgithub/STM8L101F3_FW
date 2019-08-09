@@ -35,13 +35,12 @@
 
 typedef void(*I2CCallback_t)(void);
 
-
 typedef struct
 {  
   queue<uint8_t,uint8_t,I2C_SLAVE_TX_BUF_SIZE>			TxQueue;
   queue<uint8_t,uint8_t,I2C_SLAVE_RX_BUF_SIZE>			RxQueue;
-  I2CCallback_t I2C_Slave_RX_Done_Callback;
-  I2CCallback_t I2C_Slave_TX_Done_Callback;
+  I2CCallback_t                                         I2C_Slave_RX_Done_Callback;
+  I2CCallback_t                                         I2C_Slave_TX_Done_Callback;
 }I2C_Slave_Context_t;
 
 typedef enum 

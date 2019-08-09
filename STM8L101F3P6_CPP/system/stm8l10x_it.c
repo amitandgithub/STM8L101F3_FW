@@ -27,6 +27,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l10x_it.h"
+#include"DigitalInOut.h"
+extern GpioFptr_t EXTI_ISRs[];
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -36,7 +38,7 @@
 /* Private functions ---------------------------------------------------------*/
 
 #include"system.h"
-//extern GpioFptr_t //EXTI_ISRs[8];
+//extern GpioFptr_t EXTI_ISRs[8];
 /* Public functions ----------------------------------------------------------*/
 
 /**
@@ -124,7 +126,7 @@ INTERRUPT_HANDLER(EXTI0_IRQHandler, 8)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_0;
-  //EXTI_ISRs[0]();
+  EXTI_ISRs[0]();
 }
 
 /**
@@ -138,7 +140,7 @@ INTERRUPT_HANDLER(EXTI1_IRQHandler, 9)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_1;
-  //EXTI_ISRs[1]();
+  EXTI_ISRs[1]();
 }
 
 /**
@@ -152,7 +154,7 @@ INTERRUPT_HANDLER(EXTI2_IRQHandler, 10)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_2;
-  //EXTI_ISRs[2]();
+  EXTI_ISRs[2]();
 }
 
 /**
@@ -166,7 +168,7 @@ INTERRUPT_HANDLER(EXTI3_IRQHandler, 11)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_3;
-  //EXTI_ISRs[3]();
+  EXTI_ISRs[3]();
 }
 
 /**
@@ -180,7 +182,7 @@ INTERRUPT_HANDLER(EXTI4_IRQHandler, 12)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_4;
-  //EXTI_ISRs[4]();
+  EXTI_ISRs[4]();
 }
 
 /**
@@ -194,7 +196,7 @@ INTERRUPT_HANDLER(EXTI5_IRQHandler, 13)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_5;
-  //EXTI_ISRs[5]();
+  EXTI_ISRs[5]();
 }
 
 /**
@@ -208,7 +210,7 @@ INTERRUPT_HANDLER(EXTI6_IRQHandler, 14)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_6;
-  //EXTI_ISRs[6]();
+  EXTI_ISRs[6]();
 }
 
 /**
@@ -222,7 +224,7 @@ INTERRUPT_HANDLER(EXTI7_IRQHandler, 15)
        it is recommended to set a breakpoint on the following instruction.
     */
   EXTI->SR1 = GPIO_Pin_7;
-  //EXTI_ISRs[7]();
+  EXTI_ISRs[7]();
 }
 
 /**

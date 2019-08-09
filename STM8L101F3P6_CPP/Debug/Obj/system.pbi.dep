@@ -26,5 +26,6 @@ system.pbi: \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\drivers\i2c\i2c.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\system\system.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\drivers\gpio\DigitalOut.h \
+  C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\drivers\gpio/DigitalInOut.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\utils\queue\QueueCpp.h \
   C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\tests\i2c\i2c_tests.h
