@@ -262,6 +262,7 @@
                     <state>$PROJ_DIR$\drivers\i2c</state>
                     <state>$PROJ_DIR$\tests\i2c</state>
                     <state>$PROJ_DIR$\utils\queue</state>
+                    <state>$PROJ_DIR$\tests\gpio</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1684,6 +1685,9 @@
     </group>
     <group>
         <name>tests</name>
+        <file>
+            <name>$PROJ_DIR$\tests\gpio\gpio_tests.c</name>
+        </file>
         <file>
             <name>$PROJ_DIR$\tests\i2c\i2c_tests.c</name>
         </file>

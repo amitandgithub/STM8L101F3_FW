@@ -1,32 +1,28 @@
 
 #include"system.h"
-#include"DigitalOut.h"
-#include"DigitalIn.h"
-#define LED B0
-#define BUTTON B1
 
-DigitalOut<LED> Led;
-DigitalIn<BUTTON> Button;
+
+void Gpio_1_Callback();
+
+
+
+//DigitalOut<LED> Led;
+//DigitalIn<BUTTON> Button;
+
 void main(void)
 {
     __disable_interrupt();
     CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
     CLK->CKDIVR = (uint8_t)0;
     __enable_interrupt();
-    Led.HwInit();
-    Button.HwInit();
+
+    
     while (1)
     {
-        if(Button.Read())
-        {
-            Led.High();  
-        }
-        else
-        {
-            Led.Low();
-        }        
-        I2c_Poll_Tests();
-        
+       
+       // Led.High();
+       // Led.Low();
+        I2c_Poll_Tests();  
     }
 }
 
@@ -38,7 +34,10 @@ void main(void)
 
 
 
+/*
 
+
+*/
 
 
 

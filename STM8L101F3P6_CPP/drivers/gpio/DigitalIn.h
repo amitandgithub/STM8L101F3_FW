@@ -34,7 +34,7 @@ public:
     
     void SetInterrupt();
         
-    bool Read(){ return (bool)((GPIO_TypeDef*)Port)->IDR & Pin;}    
+    bool Read(){ return (bool)(((GPIO_TypeDef*)Port)->IDR & Pin);}    
     
 //    FastIn& operator= (FastIn& rhs) {
 //        return this->write(rhs.read());

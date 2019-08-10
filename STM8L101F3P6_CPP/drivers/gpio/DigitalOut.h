@@ -15,7 +15,7 @@
 #include"DigitalInOut.h"
 
 
-template<Port_t Port, PIN_t Pin,Mode_t Mode = OPEN_DRAIN>
+template<Port_t Port, PIN_t Pin,Mode_t Mode = OPEN_DRAIN_PUSH_PULL>
 class DigitalOut
 {
     

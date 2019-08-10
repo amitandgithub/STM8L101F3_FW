@@ -2202,6 +2202,9 @@
     <group>
         <name>tests</name>
         <file>
+            <name>$PROJ_DIR$\tests\gpio\gpio_tests.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\tests\i2c\i2c_tests.c</name>
         </file>
     </group>

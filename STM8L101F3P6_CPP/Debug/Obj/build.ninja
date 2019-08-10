@@ -2,9 +2,9 @@
 
 
 #Abbreviations
-cc = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ STM8\common\bin\SourceIndexer.exe
-ll = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ STM8\common\bin\PbdLink.exe
-bd = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ STM8\common\bin\makeBrowseData.exe
+cc = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ 8.0\common\bin\SourceIndexer.exe
+ll = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ 8.0\common\bin\PbdLink.exe
+bd = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ 8.0\common\bin\makeBrowseData.exe
 
 
 
@@ -26,10 +26,11 @@ build stm8l10x_clk.pbi : index stm8l10x_clk.xcl
 build stm8l10x_i2c.pbi : index stm8l10x_i2c.xcl
 build stm8l10x_it.pbi : index stm8l10x_it.xcl
 build system.pbi : index system.xcl
+build gpio_tests.pbi : index gpio_tests.xcl
 build i2c_tests.pbi : index i2c_tests.xcl
 build STM8L101F3_FW_CPP_part0.pbi : link main.pbi i2c.pbi stm8l10x_clk.pbi
 build STM8L101F3_FW_CPP_part1.pbi : link stm8l10x_i2c.pbi stm8l10x_it.pbi system.pbi
-build STM8L101F3_FW_CPP_part2.pbi : link i2c_tests.pbi
+build STM8L101F3_FW_CPP_part2.pbi : link gpio_tests.pbi i2c_tests.pbi
 build STM8L101F3_FW_CPP.pbd : link STM8L101F3_FW_CPP_part0.pbi STM8L101F3_FW_CPP_part1.pbi STM8L101F3_FW_CPP_part2.pbi
 build STM8L101F3_FW_CPP.pbw : browsedata STM8L101F3_FW_CPP.pbd
 
