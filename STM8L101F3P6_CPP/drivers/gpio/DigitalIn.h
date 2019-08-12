@@ -41,7 +41,10 @@ template<Port_t Port, PIN_t Pin,Mode_t Mode,IntEdge_t Edge, GpioFptr_t GpioFptr>
 void DigitalIn<Port,Pin,Mode,Edge,GpioFptr>::HwInit()
 {
     SetInputMode();
-    SetInterrupt();    
+    __disable_interrupt();
+    SetInterrupt();  
+    __enable_interrupt();
+
 }
 
 

@@ -11,17 +11,16 @@ void Gpio_1_Callback();
 
 void main(void)
 {
-    __disable_interrupt();
+    
     CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
     CLK->CKDIVR = (uint8_t)0;
-    __enable_interrupt();
-
+    
     
     while (1)
     {
        
         gpio_tests();
-        I2c_Poll_Tests();  
+       // I2c_Poll_Tests();  
     }
 }
 

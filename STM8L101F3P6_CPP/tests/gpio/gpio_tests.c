@@ -5,9 +5,9 @@
 
 DigitalOut<LED> Led;
 
-DigitalIn<BUTTON,INPUT_PULLUP,INTERRUPT_ON_FALLING,Gpio_Falling_Callback> Button;
+DigitalIn<BUTTON,INPUT_PULLUP_INTERRUPT,INTERRUPT_ON_RISING_FALLING,Gpio_Falling_Callback> Button;
 
-static uint8_t Highs,Lows;
+static uint16_t Lows;
 
 void gpio_tests()
 {
@@ -40,11 +40,6 @@ void gpio_intr_test()
   Led.High();
   
   Led.Low();
-}
-
-void Gpio_Rising_Callback()
-{
-  Highs++;
 }
 
 void Gpio_Falling_Callback()

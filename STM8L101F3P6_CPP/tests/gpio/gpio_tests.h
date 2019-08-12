@@ -15,6 +15,4 @@ void gpio_intr_test();
 
 void Gpio_1_Callback();
 
-void Gpio_Rising_Callback();
-
 void Gpio_Falling_Callback();
