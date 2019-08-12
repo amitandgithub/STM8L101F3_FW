@@ -11,6 +11,8 @@
 #ifndef DigitalInOut_h
 #define DigitalInOut_h
 
+
+
 typedef enum
 {
   PORTA = GPIOA_BaseAddress,
@@ -21,14 +23,14 @@ typedef enum
 
 typedef enum
 {
-  PIN_0 = 1<<0,
-  PIN_1 = 1<<1,
-  PIN_2 = 1<<2,
-  PIN_3 = 1<<3,
-  PIN_4 = 1<<4,
-  PIN_5 = 1<<5,
-  PIN_6 = 1<<6,
-  PIN_7 = 1<<7,
+  PIN_0 = 1<<0U,
+  PIN_1 = 1<<1U,
+  PIN_2 = 1<<2U,
+  PIN_3 = 1<<3U,
+  PIN_4 = 1<<4U,
+  PIN_5 = 1<<5U,
+  PIN_6 = 1<<6U,
+  PIN_7 = 1<<7U,
 }PIN_t;
 
 typedef enum
@@ -53,6 +55,8 @@ typedef enum
 }IntEdge_t;
 
 typedef void (*GpioFptr_t)(void); 
+
+extern GpioFptr_t EXTI_ISRs[];
     
 /* Port A Pin definitions */
 #define A0 PORTA,PIN_0

@@ -1,6 +1,6 @@
 
 #include"system.h"
-
+#include"tests.h"
 
 void Gpio_1_Callback();
 
@@ -20,8 +20,7 @@ void main(void)
     while (1)
     {
        
-       // Led.High();
-       // Led.Low();
+        gpio_tests();
         I2c_Poll_Tests();  
     }
 }

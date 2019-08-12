@@ -22,14 +22,14 @@ typedef enum
 
 typedef enum
 {
-  PIN0 = 1<<0,
-  PIN1 = 1<<1,
-  PIN2 = 1<<2,
-  PIN3 = 1<<3,
-  PIN4 = 1<<4,
-  PIN5 = 1<<5,
-  PIN6 = 1<<6,
-  PIN7 = 1<<7,
+  PIN0 = 1<<0U,
+  PIN1 = 1<<1U,
+  PIN2 = 1<<2U,
+  PIN3 = 1<<3U,
+  PIN4 = 1<<4U,
+  PIN5 = 1<<5U,
+  PIN6 = 1<<6U,
+  PIN7 = 1<<7U,
 }Pin_t;
 
 typedef enum

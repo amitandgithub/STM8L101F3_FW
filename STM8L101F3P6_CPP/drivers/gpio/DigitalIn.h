@@ -14,13 +14,9 @@
 
 #include"DigitalInOut.h"
 
+extern void Dummy_ISR();
 
-inline void Dummy_ISR(){};
-
-/* Array of EXTI interrupts*/
-GpioFptr_t EXTI_ISRs[8] = {Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR};
-
-template<Port_t Port, PIN_t Pin,Mode_t Mode = INPUT_PULLUP,IntEdge_t Edge = NO_INTERRUPT , GpioFptr_t GpioFptr = Dummy_ISR>
+template<Port_t Port, PIN_t Pin, Mode_t Mode = INPUT_PULLUP, IntEdge_t Edge = NO_INTERRUPT, GpioFptr_t GpioFptr = Dummy_ISR>
 class DigitalIn
 {
 public:

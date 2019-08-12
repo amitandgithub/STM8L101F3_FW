@@ -8,6 +8,10 @@
 ******************/
 #include "system.h"
 
+inline void Dummy_ISR(){};
+
+/* Array of EXTI interrupts*/
+GpioFptr_t EXTI_ISRs[8] = {Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR,Dummy_ISR};
 
 const uint8_t CLZ[0xff] = 
 {

@@ -263,6 +263,7 @@
                     <state>$PROJ_DIR$\tests\i2c</state>
                     <state>$PROJ_DIR$\utils\queue</state>
                     <state>$PROJ_DIR$\tests\gpio</state>
+                    <state>$PROJ_DIR$\tests</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
