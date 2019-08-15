@@ -2177,7 +2177,7 @@
         <group>
             <name>i2c</name>
             <file>
-                <name>$PROJ_DIR$\drivers\i2c\i2c.c</name>
+                <name>$PROJ_DIR$\drivers\i2c\i2c.cpp</name>
             </file>
         </group>
     </group>
@@ -2205,7 +2205,7 @@
             <name>$PROJ_DIR$\tests\gpio\gpio_tests.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\tests\i2c\i2c_tests.c</name>
+            <name>$PROJ_DIR$\tests\i2c\i2c_tests.cpp</name>
         </file>
     </group>
     <group>

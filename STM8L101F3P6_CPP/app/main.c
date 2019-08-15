@@ -6,21 +6,28 @@ void Gpio_1_Callback();
 
 
 
-//DigitalOut<LED> Led;
-//DigitalIn<BUTTON> Button;
+//template<uint8_t slaveAddress,uint8_t txLen, uint8_t rxLen, uint8_t repeatedStart>
+//class TxnPoll
+//{
+//public:
+//    uint8_t TxBuf[10]; 
+//    uint8_t RxBuf[10];
+//    
+//    uint8_t send(){return (uint8_t)I2cXferPoll(slaveAddress,TxBuf, txLen, RxBuf, rxLen, repeatedStart);} 
+//
+//};
+
+
 
 void main(void)
 {
-    
     CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
     CLK->CKDIVR = (uint8_t)0;
     
-    
     while (1)
     {
-       
-        gpio_tests();
-       // I2c_Poll_Tests();  
+       // gpio_tests();
+        I2c_Poll_Tests();  
     }
 }
 

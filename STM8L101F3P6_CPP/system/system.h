@@ -6,8 +6,14 @@
 
 #include "stm8l10x.h"
 #include "stm8l10x_gpio.h"
+#include "DigitalInOut.h"
 #include "i2c.h"
 
+
+
+#ifndef NULL
+#define NULL ((void*)0)
+#endif
 
 #include "i2c_tests.h"
 
