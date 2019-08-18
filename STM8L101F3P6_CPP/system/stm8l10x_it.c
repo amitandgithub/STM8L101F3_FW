@@ -344,7 +344,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 29)
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
-  //I2C_ISR();
+  i2c::I2C_ISR();
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

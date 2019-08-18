@@ -27,9 +27,7 @@ public:
     typedef T QueueSize_t;
     typedef Base_t Basic_t;
     
-	queue();
-	
-    void Init();
+    queue();
     
     bool Full();
     
@@ -52,7 +50,7 @@ private:
 template<typename T, typename Base_t, uint32_t QSize>
 queue<T,Base_t,QSize>::queue()
 {
-	WriteHead =  QSize - 1; // rear
+    WriteHead =  QSize - 1; // rear
     ReadHead =  0; // front
 }
 template<typename T, typename Base_t, uint32_t QSize>

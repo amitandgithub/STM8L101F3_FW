@@ -210,8 +210,8 @@ public:
         I2C_LOG_START                                 =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,107),
         I2C_LOG_STOP                                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,108),
         I2C_LOG_STOP_TIMEOUT                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,109),
-        I2C_LOG_BUSY_TIMEOUT                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,110),/*
-        I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,111),
+        I2C_LOG_BUSY_TIMEOUT                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,110),
+        I2C_LOG_ACK_FAIL                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,111),/*
         I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,112),
         I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,113),
         I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,114),
@@ -231,9 +231,9 @@ public:
     }I2CLogs_t;
     
     
-    i2c(){};  
+    //i2c(){m_i2c_this = this;};  
     
-    ~i2c(){};
+   // ~i2c(){};
     
     I2CStatus_t HwInit();
     
@@ -255,7 +255,7 @@ public:
     
     void ScanBus(uint8_t* pFoundDevices, uint8_t size);
     
-    void I2C_ISR(void);
+    static void I2C_ISR(void);
     
     I2CStatus_t XferIntr(Transaction_t* pTransaction);
     
@@ -265,9 +265,9 @@ public:
     
     void GenerateStop(){I2C->CR2 |= I2C_CR2_STOP;}
     
-    void EnableACK(){I2C->CR2 |= I2C_CR2_ACK;}
+    inline void EnableACK(){I2C->CR2 |= I2C_CR2_ACK;}
     
-    void DisableACK(){I2C->CR2 &= (uint8_t)(~I2C_CR2_ACK);}
+    inline void DisableACK(){I2C->CR2 &= (uint8_t)(~I2C_CR2_ACK);}
     
     void EnablePOS(){I2C->CR2 |= (uint8_t)I2C_CR2_POS;}
     
@@ -319,6 +319,8 @@ public:
     
     void ADD10_Handler();
     
+    void AF_Handler();
+    
 #if I2C_DEBUG 
     inline void I2cLogStates(I2CLogs_t log);
     I2CLogs_t I2CStates[I2C_LOG_STATES_SIZE];
@@ -326,13 +328,23 @@ public:
 #endif
     
 private:
-    Transaction_t           m_Transaction;
+    static i2c*                 m_i2c_this;
+    
+    Transaction_t               m_Transaction;
     
     /* It must be volatile becoz it is shared between ISR and main loop */
-    volatile I2CState_t     m_I2CState; 
+    volatile I2CState_t         m_I2CState; 
     
     /* It must be volatile becoz it is shared between ISR and main loop */
-    volatile I2CStatus_t    m_I2CStatus;
+    volatile I2CStatus_t        m_I2CStatus;
+    
+    queue<uint8_t,uint8_t,I2C_SLAVE_TX_BUF_SIZE>        SlaveTxQueue;
+    
+    queue<uint8_t,uint8_t,I2C_SLAVE_RX_BUF_SIZE>        SlaveRxQueue;
+    
+    I2CCallback_t                                       m_SlaveTxDoneCallback;
+    
+    I2CCallback_t                                       m_SlaveRxDoneCallback;
     
     
 };

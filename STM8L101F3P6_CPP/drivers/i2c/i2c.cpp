@@ -8,18 +8,21 @@
 ******************/
 #include "i2c.h"
 
+i2c* i2c::m_i2c_this;
 
 i2c::I2CStatus_t i2c::HwInit()
 {
-    ClockEnable();
-
-    I2C_Init(100000,0x08,I2C_DutyCycle_2,I2C_Ack_Disable,I2C_AcknowledgedAddress_7bit); 
-    
-    PinsInit();
-    
-    I2C_Cmd(ENABLE);
-    
-    return I2C_OK;
+  m_i2c_this = this;
+  
+  ClockEnable();
+  
+  I2C_Init(100000,0x08,I2C_DutyCycle_2,I2C_Ack_Disable,I2C_AcknowledgedAddress_7bit); 
+  
+  PinsInit();
+  
+  I2C_Cmd(ENABLE);
+  
+  return I2C_OK;
 }
 
 
@@ -47,28 +50,24 @@ SDA = C0 - 18
 */
 void i2c::PinsInit()
 {
-    DigitalOut<C0,OPEN_DRAIN_FAST> Sda;
-    DigitalOut<C1,OPEN_DRAIN_FAST> Scl;
-    Scl.HwInit();
-    Sda.HwInit();
+  DigitalOut<C0,OPEN_DRAIN_FAST> Sda;
+  DigitalOut<C1,OPEN_DRAIN_FAST> Scl;
+  Scl.HwInit();
+  Sda.HwInit();
 }
 
 void i2c::ScanBus(uint8_t* pFoundDevices, uint8_t size)
 {
   uint8_t slave, i=0;
   
-  for(slave = 0; slave < 255; slave++)
+  for(slave = 0x00; slave < 255; slave++)
   {
-    if(SendSlaveAddress(slave,0) == I2C_OK)
+    if(SendSlaveAddress(slave&I2C_DIR_WRITE,0) == I2C_OK)
     {
       pFoundDevices[i++] = slave;
-      // printf("Slave Dectected at Address = 0x%x \n",slave);
+      GenerateStop();
     }
-    else
-    {
-      ClearAF();
-    }
-    GenerateStop();
+    
     if(i == size) i=0;
   }
 }
@@ -112,6 +111,8 @@ i2c::I2CStatus_t i2c::SendSlaveAddress(uint8_t SlaveAddress, uint8_t Repeatedsta
       
       /* Generate Stop */
       GenerateStop();
+      
+      I2C_LOG_STATES(I2C_LOG_ACK_FAIL);
       
       return I2C_ACK_FAIL;
     }
@@ -647,34 +648,39 @@ uint16_t Err;
 void i2c::I2C_ISR(void)
 {
   uint8_t SR1 = I2C->SR1;
+  uint8_t SR2 = I2C->SR2;
   
   if(SR1 & I2C_SR1_SB)
   {
-    SB_Handler();
+    m_i2c_this->SB_Handler();
   }
   else if(SR1 & I2C_SR1_ADDR)
   {
-    ADDR_Handler();
+    m_i2c_this->ADDR_Handler();
   }
   else if(SR1 & I2C_SR1_RXNE)
   {
-    RXNE_Handler();
+    m_i2c_this->RXNE_Handler();
   }
   else if(SR1 & I2C_SR1_TXE)
   {
-    TXE_Handler();
+    m_i2c_this->TXE_Handler();
   }
   else if(SR1 & I2C_SR1_BTF) 
   {
-    BTF_Handler();
+    m_i2c_this->BTF_Handler();
   }
   else if(SR1 & I2C_SR1_STOPF)
   {
-    STOPF_Handler();
+    m_i2c_this->STOPF_Handler();
   }   
   else if(SR1 & I2C_SR1_ADD10)
   {
-    ADD10_Handler();
+    m_i2c_this->ADD10_Handler();
+  }
+  else if(SR2 & I2C_SR2_AF)
+  {
+    m_i2c_this->AF_Handler();
   }
   else
   {
@@ -747,6 +753,33 @@ void i2c::TxnDoneHandler(uint8_t StopFlag)
       I2C_LOG_STATES(I2C_LOG_TXN_DONE_ALL);                    
     }
   }                         
+}
+#pragma inline = forced
+void i2c::AF_Handler()
+{
+  I2C_LOG_EVENTS(I2C_LOG_AF);
+  I2C_LOG_STATES(I2C_LOG_ACK_FAIL);
+  
+  ClearAF(); 
+  
+  if((m_I2CState == I2C_MASTER_TX)) 
+  {
+    /* Generate Stop */
+    GenerateStop();    
+    *(m_Transaction.pStatus) = I2C_ACK_FAIL;    
+    return;
+  }
+  else if((m_I2CState == I2C_SLAVE_TX))
+  {                
+    // In Slave mode just execute the transaction done callback if registered    
+    m_I2CState = I2C_READY;
+    
+    m_SlaveTxDoneCallback();					  
+  }
+  else                                
+  {
+    while(1);/* Fatal Error*/   
+  }
 }
 
 #pragma inline = forced
@@ -826,14 +859,14 @@ void i2c::RXNE_Handler()
   else if(m_I2CState == I2C_SLAVE_RX)
   {
     /* Read the data from I2C data register and save it into the Rx Queue */
-    //RxQueue.Write(I2C_DATA_REG);
+    SlaveRxQueue.Write(I2C_DATA_REG);
   }
   else
   {
     while(1);/* Fatal Error*/ 
   }
 }
-
+#pragma inline = forced
 void i2c::TXE_Handler()
 {
   I2C_LOG_EVENTS(I2C_LOG_TXE);
@@ -857,7 +890,7 @@ void i2c::TXE_Handler()
   else if(m_I2CState == I2C_SLAVE_TX )  
   {
     /* Read the data from TxQueue and write in to the I2c data register for slave transmision */
-    //I2C_Slave_Context.TxQueue.Read((uint8_t*)&I2C_DATA_REG);
+    SlaveTxQueue.Read((uint8_t*)&I2C_DATA_REG);
   }
   else if(m_I2CState == I2C_MASTER_RX_REPEATED_START)
   {
@@ -869,7 +902,7 @@ void i2c::TXE_Handler()
   }
   
 }
-
+#pragma inline = forced
 void i2c::SB_Handler()
 {
   I2C_LOG_EVENTS(I2C_LOG_SB); 
@@ -881,8 +914,8 @@ void i2c::SB_Handler()
   else if((m_I2CState == I2C_MASTER_RX) || (m_I2CState == I2C_MASTER_RX_REPEATED_START))
   {
     /* start listening RxNE and TxE interrupts */  
-   // if((m_I2CState == I2C_MASTER_RX))
-      Enable_BUF_Interrupt();
+    // if((m_I2CState == I2C_MASTER_RX))
+    Enable_BUF_Interrupt();
     
 #ifndef I2C_RX_METHOD_1                
     if(m_Transaction.RxLen == 2U) 
@@ -896,37 +929,37 @@ void i2c::SB_Handler()
     /* Repeated start is handled here, clear the flag*/
     m_Transaction.RepeatedStart = 0;
     
-     m_I2CState = I2C_MASTER_RX;
+    m_I2CState = I2C_MASTER_RX;
     
     I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX);
   }
-//  else if(m_I2CState == I2C_MASTER_RX_REPEATED_START)
-//  {
-//    /* Repeated start is handled here, clear the flag*/
-//    m_Transaction.RepeatedStart = 0;         
-//    
-//#ifndef I2C_RX_METHOD_1                
-//    if(m_Transaction.RxLen == 2U) 
-//    {
-//      /* Enable Pos */
-//      EnablePOS();
-//    }
-//#endif          
-//    I2C_DATA_REG = m_Transaction.SlaveAddress | I2C_DIR_READ;  
-//    
-//    /* start listening RxNE and TxE interrupts */                
-//    Enable_BUF_Interrupt();
-//    
-//    m_I2CState = I2C_MASTER_RX;
-//    
-//    I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX_REPEATED_START);
-//  }
+  //  else if(m_I2CState == I2C_MASTER_RX_REPEATED_START)
+  //  {
+  //    /* Repeated start is handled here, clear the flag*/
+  //    m_Transaction.RepeatedStart = 0;         
+  //    
+  //#ifndef I2C_RX_METHOD_1                
+  //    if(m_Transaction.RxLen == 2U) 
+  //    {
+  //      /* Enable Pos */
+  //      EnablePOS();
+  //    }
+  //#endif          
+  //    I2C_DATA_REG = m_Transaction.SlaveAddress | I2C_DIR_READ;  
+  //    
+  //    /* start listening RxNE and TxE interrupts */                
+  //    Enable_BUF_Interrupt();
+  //    
+  //    m_I2CState = I2C_MASTER_RX;
+  //    
+  //    I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX_REPEATED_START);
+  //  }
   else
   {
     while(1);
   }						
 }
-
+//#pragma inline = forced
 void i2c::ADDR_Handler()
 {
   I2C_LOG_EVENTS(I2C_LOG_ADDR); 
@@ -1008,23 +1041,23 @@ void i2c::ADDR_Handler()
     while(1);/* Fatal Error*/      
   }
 }
-
+#pragma inline = forced
 void i2c::STOPF_Handler()
 {
   I2C_LOG_EVENTS(I2C_LOG_STOPF);
-  ClearSTOPF();  
+  I2C_LOG_STATES(I2C_LOG_STOPF_FLAG);
+  
+  ClearSTOPF();
+  
   if(m_I2CState == I2C_SLAVE_RX)
   {
     /* Execute the RxDone Callback */
-    //if(m_SlaveRxDoneCallback)
-    // m_SlaveRxDoneCallback();  
+    m_SlaveRxDoneCallback();  
     
     m_I2CState = I2C_READY;
-    return;
-  }               
-  I2C_LOG_STATES(I2C_LOG_STOPF_FLAG);
-}
-
+  }  
+} 
+#pragma inline = forced
 void i2c::BTF_Handler()
 {
   I2C_LOG_EVENTS(I2C_LOG_BTF);
@@ -1113,7 +1146,7 @@ void i2c::BTF_Handler()
     while(1);/* Fatal Error*/ 
   }
 }
-
+#pragma inline = forced
 void i2c::ADD10_Handler()
 {
   
@@ -1161,13 +1194,13 @@ void Clear_I2C_BUSY_Condition_NXP()
   {
     for(i=0; i<12; i++)  
     {
-     // Gpio_On(C1);
+      // Gpio_On(C1);
       
       delay_100us();
       delay_100us();
       delay_50us();
       
-     // Gpio_Off(C1);
+      // Gpio_Off(C1);
       
       delay_100us();
       delay_100us();
@@ -1218,15 +1251,16 @@ The solution is as follows:
           - once the pins are set no further checking is required for subsequent I2C use and normal interrupt or DMA driven modes are possible
             
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            

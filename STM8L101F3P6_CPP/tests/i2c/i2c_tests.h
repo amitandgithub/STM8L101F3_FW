@@ -26,7 +26,7 @@ typedef enum
     I2C_POLL_TX_1_RX_3,
     I2C_POLL_TX_2_RX_2,
     I2C_POLL_TX_3_RX_3,
-    I2C_INT_POLL_9_RX_9,
+    I2C_POLL_TX_9_RX_9,
 
 	/* Tests with Interrupts*/
     I2C_INT_TX_1_RX_1,
