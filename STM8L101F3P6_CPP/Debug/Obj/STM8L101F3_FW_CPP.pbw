@@ -35388,7 +35388,7 @@
     "display": "i2c::I2CStatus_t TxPoll(uint8_t, uint8_t *, uint8_t)",
     "location": {
       "column": "23",
-      "line": "127",
+      "line": "128",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "TxPoll",
@@ -35402,7 +35402,7 @@
     "display": "i2c::I2CStatus_t RxPoll(uint8_t, uint8_t *, uint8_t)",
     "location": {
       "column": "23",
-      "line": "166",
+      "line": "167",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "RxPoll",
@@ -35416,7 +35416,7 @@
     "display": "i2c::I2CStatus_t XferPoll(uint8_t, uint8_t *, uint8_t, uint8_t *, uint8_t, uint8_t)",
     "location": {
       "column": "24",
-      "line": "350",
+      "line": "351",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "XferPoll",
@@ -35430,7 +35430,7 @@
     "display": "i2c::I2CStatus_t XferIntr(i2c::Transaction_t *)",
     "location": {
       "column": "23",
-      "line": "589",
+      "line": "590",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "XferIntr",
@@ -35444,7 +35444,7 @@
     "display": "Err",
     "location": {
       "column": "10",
-      "line": "647",
+      "line": "648",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "Err",
@@ -35458,7 +35458,7 @@
     "display": "void I2C_ISR(void)",
     "location": {
       "column": "11",
-      "line": "648",
+      "line": "649",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "I2C_ISR",
@@ -35466,13 +35466,13 @@
     "scope": null
   },
   {
-    "ID": "c:i2c.cpp@16802@S@i2c@F@I2C_ISR#S@SR1",
+    "ID": "c:i2c.cpp@16844@S@i2c@F@I2C_ISR#S@SR1",
     "What": "Variable",
     "defdec": "Def",
     "display": "SR1",
     "location": {
       "column": "11",
-      "line": "650",
+      "line": "651",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "SR1",
@@ -35480,13 +35480,13 @@
     "scope": null
   },
   {
-    "ID": "c:i2c.cpp@16829@S@i2c@F@I2C_ISR#S@SR2",
+    "ID": "c:i2c.cpp@16871@S@i2c@F@I2C_ISR#S@SR2",
     "What": "Variable",
     "defdec": "Def",
     "display": "SR2",
     "location": {
       "column": "11",
-      "line": "651",
+      "line": "652",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "SR2",
@@ -35500,7 +35500,7 @@
     "display": "void TxnDoneHandler(uint8_t)",
     "location": {
       "column": "11",
-      "line": "692",
+      "line": "693",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "TxnDoneHandler",
@@ -35514,7 +35514,7 @@
     "display": "void AF_Handler(void)",
     "location": {
       "column": "11",
-      "line": "758",
+      "line": "759",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "AF_Handler",
@@ -35528,7 +35528,7 @@
     "display": "void RXNE_Handler(void)",
     "location": {
       "column": "11",
-      "line": "786",
+      "line": "787",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "RXNE_Handler",
@@ -35542,7 +35542,7 @@
     "display": "void TXE_Handler(void)",
     "location": {
       "column": "11",
-      "line": "870",
+      "line": "871",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "TXE_Handler",
@@ -35556,7 +35556,7 @@
     "display": "void SB_Handler(void)",
     "location": {
       "column": "11",
-      "line": "906",
+      "line": "907",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "SB_Handler",
@@ -35570,7 +35570,7 @@
     "display": "void ADDR_Handler(void)",
     "location": {
       "column": "11",
-      "line": "963",
+      "line": "964",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "ADDR_Handler",
@@ -35584,7 +35584,7 @@
     "display": "void STOPF_Handler(void)",
     "location": {
       "column": "11",
-      "line": "1045",
+      "line": "1046",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "STOPF_Handler",
@@ -35598,7 +35598,7 @@
     "display": "void BTF_Handler(void)",
     "location": {
       "column": "11",
-      "line": "1061",
+      "line": "1062",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "BTF_Handler",
@@ -35612,7 +35612,7 @@
     "display": "void ADD10_Handler(void)",
     "location": {
       "column": "11",
-      "line": "1150",
+      "line": "1151",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP\\drivers\\i2c\\i2c.cpp"
     },
     "name": "ADD10_Handler",
