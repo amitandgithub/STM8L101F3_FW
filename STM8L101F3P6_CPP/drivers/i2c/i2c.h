@@ -46,6 +46,8 @@ public:
     
     typedef void(*I2CCallback_t)(void);
     
+    typedef void(*I2CSlaveCallback_t)(uint8_t Len, uint8_t* Buf);
+    
     typedef enum 
     {
         I2C_OK,
@@ -321,6 +323,10 @@ public:
     
     void AF_Handler();
     
+    void SetSlaveTxCallback(I2CSlaveCallback_t I2CSlaveCallback){m_SlaveTxDoneCallback = I2CSlaveCallback;}
+    
+    void SetSlaveRxCallback(I2CSlaveCallback_t I2CSlaveCallback){m_SlaveRxDoneCallback = I2CSlaveCallback;}
+    
 #if I2C_DEBUG 
     inline void I2cLogStates(I2CLogs_t log);
     I2CLogs_t I2CStates[I2C_LOG_STATES_SIZE];
@@ -338,13 +344,15 @@ private:
     /* It must be volatile becoz it is shared between ISR and main loop */
     volatile I2CStatus_t        m_I2CStatus;
     
-    queue<uint8_t,uint8_t,I2C_SLAVE_TX_BUF_SIZE>        SlaveTxQueue;
+    //queue<uint8_t,uint8_t,I2C_SLAVE_TX_BUF_SIZE>        SlaveTxQueue;
     
-    queue<uint8_t,uint8_t,I2C_SLAVE_RX_BUF_SIZE>        SlaveRxQueue;
+   // queue<uint8_t,uint8_t,I2C_SLAVE_RX_BUF_SIZE>        SlaveRxQueue;
     
-    I2CCallback_t                                       m_SlaveTxDoneCallback;
+    I2CSlaveCallback_t                                m_SlaveTxDoneCallback;
     
-    I2CCallback_t                                       m_SlaveRxDoneCallback;
+    I2CSlaveCallback_t                                m_SlaveRxDoneCallback;
+    
+    
     
     
 };

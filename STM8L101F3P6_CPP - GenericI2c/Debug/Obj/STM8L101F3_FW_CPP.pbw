@@ -15851,7 +15851,7 @@
     "defdec": "Def",
     "display": "void SB_Handler(void)",
     "location": {
-      "column": "11",
+      "column": "12",
       "line": "907",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L\\Code\\STM8L101F3_FW\\STM8L101F3P6_CPP - GenericI2c\\drivers\\i2c\\i2c.cpp"
     },

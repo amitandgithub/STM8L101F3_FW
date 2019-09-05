@@ -2211,6 +2211,9 @@
     <group>
         <name>utils</name>
         <group>
+            <name>CmdSvr</name>
+        </group>
+        <group>
             <name>queue</name>
             <file>
                 <name>$PROJ_DIR$\utils\queue\QueueCpp.h</name>

@@ -904,7 +904,7 @@ void i2c::TXE_Handler()
   
 }
 #pragma inline = forced
-void i2c::SB_Handler()
+void i2c:: SB_Handler()
 {
   I2C_LOG_EVENTS(I2C_LOG_SB); 
   if( m_I2CState == I2C_MASTER_TX )

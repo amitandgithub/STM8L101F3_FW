@@ -775,7 +775,7 @@ void i2c::AF_Handler()
     // In Slave mode just execute the transaction done callback if registered    
     m_I2CState = I2C_READY;
     
-    m_SlaveTxDoneCallback();					  
+    //m_SlaveTxDoneCallback();					  
   }
   else                                
   {
@@ -860,7 +860,7 @@ void i2c::RXNE_Handler()
   else if(m_I2CState == I2C_SLAVE_RX)
   {
     /* Read the data from I2C data register and save it into the Rx Queue */
-    SlaveRxQueue.Write(I2C_DATA_REG);
+    //SlaveRxQueue.Write(I2C_DATA_REG);
   }
   else
   {
@@ -891,7 +891,7 @@ void i2c::TXE_Handler()
   else if(m_I2CState == I2C_SLAVE_TX )  
   {
     /* Read the data from TxQueue and write in to the I2c data register for slave transmision */
-    SlaveTxQueue.Read((uint8_t*)&I2C_DATA_REG);
+    //SlaveTxQueue.Read((uint8_t*)&I2C_DATA_REG);
   }
   else if(m_I2CState == I2C_MASTER_RX_REPEATED_START)
   {
@@ -1053,7 +1053,7 @@ void i2c::STOPF_Handler()
   if(m_I2CState == I2C_SLAVE_RX)
   {
     /* Execute the RxDone Callback */
-    m_SlaveRxDoneCallback();  
+    //m_SlaveRxDoneCallback();  
     
     m_I2CState = I2C_READY;
   }  
