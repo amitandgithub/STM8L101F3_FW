@@ -101,6 +101,7 @@ void I2c_Poll_Tests()
       while(I2CDevIntr.GetState() != i2c::I2C_READY);
       
       Transaction.TxLen = 1;
+      Transaction.TxBuf = TxBuf;
       Transaction.RxBuf = RxBuf;
       Transaction.RxLen = RxLen;
       
@@ -126,6 +127,7 @@ void I2c_Poll_Tests()
       while(I2CDevIntr.GetState() != i2c::I2C_READY);
       
       Transaction.TxLen = 1;
+      Transaction.TxBuf = TxBuf;
       Transaction.RxBuf = RxBuf;
       Transaction.RxLen = RxLen;
       
@@ -151,6 +153,7 @@ void I2c_Poll_Tests()
       while(I2CDevIntr.GetState() != i2c::I2C_READY);
       
       Transaction.TxLen = 1;
+      Transaction.TxBuf = TxBuf;
       Transaction.RxBuf = RxBuf;
       Transaction.RxLen = RxLen;
       
@@ -175,6 +178,7 @@ void I2c_Poll_Tests()
       while(I2CDevIntr.GetState() != i2c::I2C_READY);
       
       Transaction.TxLen = 1;
+      Transaction.TxBuf = TxBuf;
       Transaction.RxBuf = RxBuf;
       Transaction.RxLen = RxLen;
       
@@ -199,6 +203,7 @@ void I2c_Poll_Tests()
       while(I2CDevIntr.GetState() != i2c::I2C_READY);
       
       Transaction.TxLen = 1;
+      Transaction.TxBuf = TxBuf;
       Transaction.RxBuf = RxBuf;
       Transaction.RxLen = RxLen;
       
@@ -224,6 +229,7 @@ void I2c_Poll_Tests()
       while(I2CDevIntr.GetState() != i2c::I2C_READY);
       
       Transaction.TxLen = 1;
+      Transaction.TxBuf = TxBuf;
       Transaction.RxBuf = RxBuf;
       Transaction.RxLen = RxLen;
       

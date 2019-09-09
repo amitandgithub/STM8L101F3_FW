@@ -797,7 +797,7 @@ void i2c::RXNE_Handler()
       
       /* Disable EVT, BUF and ERR interrupt */
       Disable_EVT_BUF_ERR_Interrupt();
-      
+
       I2C_LOG_STATES(I2C_LOG_RXNE_MASTER_SIZE_1);
       
       TxnDoneHandler(0);                
