@@ -23,7 +23,7 @@ void main(void)
 {
     CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
     CLK->CKDIVR = (uint8_t)0;
-    
+    __enable_interrupt(); 
     while (1)
     {
        // gpio_tests();

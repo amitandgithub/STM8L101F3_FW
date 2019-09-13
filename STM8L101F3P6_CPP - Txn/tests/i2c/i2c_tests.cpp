@@ -26,7 +26,7 @@ void I2c_Poll_Tests()
   
   I2CDevIntr.ScanBus(RxBuf,10);
   SlaveAddress = 0x68<<1;
-  I2c_test_id = I2C_POLL_TX_1_RX_1;
+  I2c_test_id = I2C_POLL_TX_1_RX_1;//I2C_POLL_TX_1_RX_1;//I2C_INT_TX_1_RX_1_TXN
   TxBuf[0] = 0x00;
   TxBuf[1] = 0x00;
   I2CDevIntr.XferPoll(SlaveAddress,TxBuf,2);       
@@ -86,7 +86,6 @@ void I2c_Poll_Tests()
       I2c_test_id = I2C_INT_TX_1_RX_1_TXN;
       break;
     case I2C_INT_TX_1_RX_1_TXN:
-      ////count = I2CCallback.get_XferComplete();
       TxLen = RxLen = 1;   
       Transaction.SlaveAddress = SlaveAddress;
       Transaction.TxBuf = TxBuf;
