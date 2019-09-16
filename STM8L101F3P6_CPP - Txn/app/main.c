@@ -24,10 +24,12 @@ void main(void)
     CLK->CKDIVR &= (uint8_t)(~CLK_CKDIVR_HSIDIV);
     CLK->CKDIVR = (uint8_t)0;
     __enable_interrupt(); 
+    I2C_Slave_Tests();
     while (1)
     {
        // gpio_tests();
-        I2c_Poll_Tests();  
+        //I2c_Master_Tests();
+        
     }
 }
 

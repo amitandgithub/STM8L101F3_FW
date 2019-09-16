@@ -10,8 +10,8 @@
 
 #define I2C_PRINT printf
 
-void I2c_Poll_Tests();
-void I2c_Intr_Tests();
+void I2c_Master_Tests();
+void I2C_Slave_Tests();
 bool Test_Condition(uint8_t condition, char* PassStr, char* FailStr);
 void MemSet(uint8_t* mem, uint8_t data, uint8_t size);
 

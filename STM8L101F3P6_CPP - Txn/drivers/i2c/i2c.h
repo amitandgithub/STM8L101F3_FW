@@ -27,9 +27,12 @@ This method is faster in communication. */
 #define __INLINE static inline
 
 #define DBG_LOG_CREATE_ID(__MODULE_ID,__X) __X
+
+#if I2C_DEBUG
 #define I2C_LOG_STATES_SIZE 255
 #define I2C_LOG_EVENTS(x) I2cLogStates(x)
 #define I2C_LOG_STATES(x) I2cLogStates(x)
+#endif
 
 #define I2C_TIMEOUT 5000u
 #define DGB_PRINT(x) 
@@ -40,9 +43,11 @@ This method is faster in communication. */
 #define I2C_DATA_REG    (I2C->DR)
 #define I2C_SR3_DUALF   ((uint8_t)0x80)
 
-#define I2C_BUF_BYTE_IN(__I2C_BUF)      (*__I2C_BUF->RxBuf++) = I2C_DATA_REG; __I2C_BUF->RxLen--
+#define I2C_BUF_BYTE_IN(__I2C_BUF)              (*__I2C_BUF->RxBuf++) = I2C_DATA_REG; __I2C_BUF->RxLen--
 
-#define I2C_BUF_BYTE_OUT(__I2C_BUF)      I2C_DATA_REG = (*__I2C_BUF->TxBuf++); __I2C_BUF->TxLen--
+#define I2C_BUF_BYTE_OUT(__I2C_BUF)             I2C_DATA_REG = (*__I2C_BUF->TxBuf++); __I2C_BUF->TxLen--
+
+#define I2C_SLAVE_BUF_BYTE_IN(__I2C_BUF)        (*__I2C_BUF->RxBuf++) = I2C_DATA_REG; __I2C_BUF->RxLen++
 
 class i2c
 {
@@ -71,6 +76,8 @@ public:
     I2C_DATA_OVR,
     I2C_INVALID_PARAMS,
     I2C_XFER_DONE,
+    I2C_SLAVE_TX_DONE,
+    I2C_SLAVE_RX_DONE,
     I2C_TXN_POSTED,
     I2C_TXN_QUEUE_ERROR,
   }I2CStatus_t;
@@ -126,6 +133,8 @@ public:
   {
     uint8_t                 TxLen;
     uint8_t                 RxLen; 
+    uint8_t                 RxBufSize;
+    uint8_t                 DefaultByte;
     uint8_t*                TxBuf; 
     uint8_t*                RxBuf;
     i2cSlaveCallback_t      XferDoneCallback;
@@ -261,9 +270,9 @@ public:
     I2C_LOG_STOP                                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,108),
     I2C_LOG_STOP_TIMEOUT                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,109),
     I2C_LOG_BUSY_TIMEOUT                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,110),
-    I2C_LOG_ACK_FAIL                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,111),/*
-    I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,112),
-    I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,113),
+    I2C_LOG_ACK_FAIL                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,111),
+    I2C_LOG_SLAVE_RX_DONE_WITH_NACK                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,112),
+    I2C_LOG_TXE_DEFAULT_BYTE                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,113),/*
     I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,114),
     I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,115),
     I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,116),
@@ -339,7 +348,7 @@ public:
   
   void ClearOVR(){I2C->SR1 &= (uint8_t)(~I2C_SR2_OVR);}
   
-  void ClearSTOPF(){uint8_t reg;reg = I2C->SR1;reg = I2C->CR2;reg = reg;}
+  void ClearSTOPF(){uint8_t reg;reg = I2C->SR1;I2C->CR2 = I2C->CR2;reg = reg;}
   
   void Enable_EVT_BUF_ERR_Interrupt(){I2C->ITR = I2C_ITR_ITBUFEN | I2C_ITR_ITEVTEN | I2C_ITR_ITERREN;}
   
@@ -373,7 +382,7 @@ public:
   
   void SwapMasterBuf(MasterTxn_t* i2cBuf){MasterTxn_t* temp = i2cBuf; i2cBuf = m_MasterTxn; m_MasterTxn = temp; }
   
-  void SwapSlaveBuf(SlaveTxn_t* i2cBuf){SlaveTxn_t* temp = i2cBuf; i2cBuf = m_SlaveTxn; m_SlaveTxn = temp; }
+  void SwitchSlaveBuf(SlaveTxn_t* i2cSlaveBuf);
   
   I2CStatus_t SlaveStartListening(SlaveTxn_t* SlaveTxn );
   

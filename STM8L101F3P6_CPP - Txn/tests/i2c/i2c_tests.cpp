@@ -9,14 +9,15 @@ i2c I2CDevIntr;
 i2c::I2CStatus_t Status;
 uint8_t RepeatedStart = 0;
 uint8_t SlaveAddress = 0x0010;
-uint8_t TxBuf[10];
-uint8_t RxBuf[10];
+uint8_t TxBuf[15];
+uint8_t RxBuf[15];
 uint8_t TxLen,RxLen;
 i2c::MasterTxn_t Transaction;
 
 void I2CCallback(i2c::I2CStatus_t Status);
+void I2C_Slave_Callback(i2c::I2CStatus_t status);
 
-void I2c_Poll_Tests()
+void I2c_Master_Tests()
 {
   I2c_tests_t I2c_test_id = I2C_POLL_TX_1_RX_1;
   
@@ -110,7 +111,6 @@ void I2c_Poll_Tests()
       I2c_test_id = I2C_INT_TX_1_RX_2_TXN;
       break;    
     case I2C_INT_TX_1_RX_2_TXN:
-      //count = I2CCallback.get_XferComplete();
       TxLen = 1;
       RxLen = 2;   
       Transaction.SlaveAddress = SlaveAddress;
@@ -119,7 +119,6 @@ void I2c_Poll_Tests()
       Transaction.RxBuf = 0;
       Transaction.RxLen = 0;
       Transaction.RepeatedStart = RepeatedStart;
-      //Transaction.pStatus = &Status;
       Transaction.XferDoneCallback = &I2CCallback;            
       
       I2CDevIntr.XferIntr(&Transaction);
@@ -136,7 +135,6 @@ void I2c_Poll_Tests()
       I2c_test_id = I2C_INT_TX_1_RX_3_TXN;
       break; 
     case I2C_INT_TX_1_RX_3_TXN:
-      //count = I2CCallback.get_XferComplete();
       TxLen = 1;
       RxLen = 3;   
       Transaction.SlaveAddress = SlaveAddress;
@@ -145,7 +143,6 @@ void I2c_Poll_Tests()
       Transaction.RxBuf = 0;
       Transaction.RxLen = 0;
       Transaction.RepeatedStart = RepeatedStart;
-      //Transaction.pStatus = &Status;
       Transaction.XferDoneCallback = &I2CCallback;            
       
       I2CDevIntr.XferIntr(&Transaction);
@@ -162,7 +159,6 @@ void I2c_Poll_Tests()
       I2c_test_id = I2C_INT_TX_2_RX_2_TXN;
       break;
     case I2C_INT_TX_2_RX_2_TXN:  
-      //count = I2CCallback.get_XferComplete();
       TxLen = RxLen = 2;   
       Transaction.SlaveAddress = SlaveAddress;
       Transaction.TxBuf = TxBuf;
@@ -170,7 +166,6 @@ void I2c_Poll_Tests()
       Transaction.RxBuf = 0;
       Transaction.RxLen = 0;
       Transaction.RepeatedStart = RepeatedStart;
-      //Transaction.pStatus = &Status;
       Transaction.XferDoneCallback = &I2CCallback;            
       
       I2CDevIntr.XferIntr(&Transaction);
@@ -187,7 +182,6 @@ void I2c_Poll_Tests()
       I2c_test_id = I2C_INT_TX_3_RX_3_TXN;
       break;            
     case I2C_INT_TX_3_RX_3_TXN:  
-      //count = I2CCallback.get_XferComplete();
       TxLen = RxLen = 3;   
       Transaction.SlaveAddress = SlaveAddress;
       Transaction.TxBuf = TxBuf;
@@ -195,7 +189,6 @@ void I2c_Poll_Tests()
       Transaction.RxBuf = 0;
       Transaction.RxLen = 0;
       Transaction.RepeatedStart = RepeatedStart;
-      //Transaction.pStatus = &Status;
       Transaction.XferDoneCallback = &I2CCallback;            
       
       I2CDevIntr.XferIntr(&Transaction);
@@ -212,8 +205,6 @@ void I2c_Poll_Tests()
       I2c_test_id = I2C_INT_TX_9_RX_9_TXN;
       break;    
     case I2C_INT_TX_9_RX_9_TXN:
-      // This test case tests the Transaction and the Callback functionality
-      //count = I2CCallback.get_XferComplete();
       TxLen = RxLen = 9;   
       Transaction.SlaveAddress = SlaveAddress;
       Transaction.TxBuf = TxBuf;
@@ -221,7 +212,6 @@ void I2c_Poll_Tests()
       Transaction.RxBuf = 0;
       Transaction.RxLen = 0;
       Transaction.RepeatedStart = RepeatedStart;
-      //Transaction.pStatus = &Status;
       Transaction.XferDoneCallback = &I2CCallback;            
       
       I2CDevIntr.XferIntr(&Transaction);
@@ -259,7 +249,6 @@ void I2c_Poll_Tests()
   }
 }
 
-
 void I2CCallback(i2c::I2CStatus_t Status)
 {
   static uint8_t count;
@@ -295,4 +284,62 @@ void MemSet(uint8_t* mem, uint8_t data, uint8_t size)
 }
 
 
+i2c::SlaveTxn_t SlaveTxn;
+
+void I2C_Slave_Tests()
+{
+  I2CDevIntr.HwInit();
+  SlaveTxn.TxLen = sizeof(TxBuf);
+  SlaveTxn.RxLen = 0;
+  SlaveTxn.RxBufSize = sizeof(RxBuf);
+  SlaveTxn.TxBuf = TxBuf;
+  SlaveTxn.RxBuf = RxBuf;
+  
+  if(I2CDevIntr.GetState() != i2c::I2C_SLAVE_RX_LISTENING)
+  {    
+    SlaveTxn.XferDoneCallback = I2C_Slave_Callback;
+    
+    while(I2CDevIntr.SlaveStartListening(&SlaveTxn) != i2c::I2C_OK);
+  }
+  return;
+}
+
+void I2C_Slave_Callback(i2c::I2CStatus_t status)
+{
+  SlaveTxn.TxLen = sizeof(TxBuf);
+  SlaveTxn.RxBufSize = sizeof(RxBuf);
+  
+  SlaveTxn.RxBuf = RxBuf;
+  
+  if(status == i2c::I2C_SLAVE_TX_DONE)
+  {
+    SlaveTxn.TxBuf = TxBuf;
+  }
+  else if(status == i2c::I2C_SLAVE_RX_DONE)
+  {
+    for(uint8_t i = 0; i<SlaveTxn.RxLen; i++)
+    {
+      SlaveTxn.TxBuf[i] = SlaveTxn.RxBuf[i] + 1;
+    }
+    SlaveTxn.RxLen = 0;
+    
+    I2CDevIntr.SwitchSlaveBuf(&SlaveTxn);
+  }
+  else if(status == i2c::I2C_STOP_DETECTED)
+  {
+    for(uint8_t i = 0; i<SlaveTxn.RxLen; i++)
+    {
+      SlaveTxn.TxBuf[i] = SlaveTxn.RxBuf[i] + 1;
+    }
+    SlaveTxn.RxLen = 0;
+  }
+  else
+  {
+    // rest of conditions
+  }
+    
+  
+  
+  
+}
 //#endif //I2C_POLL

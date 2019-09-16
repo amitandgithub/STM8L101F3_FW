@@ -16,7 +16,7 @@ i2c::I2CStatus_t i2c::HwInit()
   
   ClockEnable();
   
-  I2C_Init(100000,0x08,I2C_DutyCycle_2,I2C_Ack_Disable,I2C_AcknowledgedAddress_7bit); 
+  I2C_Init(100000,0x08<<1,I2C_DutyCycle_2,I2C_Ack_Disable,I2C_AcknowledgedAddress_7bit); 
   
   PinsInit();
   
@@ -763,7 +763,8 @@ void i2c::AF_Handler()
     // In Slave mode just execute the transaction done callback if registered    
     m_I2CState = I2C_READY;
     
-    //m_SlaveTxDoneCallback();					  
+    if(m_SlaveTxn->XferDoneCallback)
+        m_SlaveTxn->XferDoneCallback(I2C_ACK_FAIL); 				  
   }
   else                                
   {
@@ -844,12 +845,29 @@ void i2c::RXNE_Handler()
   {
     /* Read the data from I2C data register and save it into the Rx Queue */
     //SlaveRxQueue.Write(I2C_DATA_REG);
+    
+    I2C_SLAVE_BUF_BYTE_IN(m_SlaveTxn);
+    
+    if(m_SlaveTxn->RxLen == m_SlaveTxn->RxBufSize)
+    {
+      /* This is the last byte we can receive in this buffer 
+      So, NACK further bytes from master */
+      DisableACK();
+      
+      m_I2CState = I2C_READY;
+      
+      if(m_SlaveTxn->XferDoneCallback)
+        m_SlaveTxn->XferDoneCallback(I2C_SLAVE_RX_DONE); 
+      
+      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK);      
+    }
   }
   else
   {
     while(1);/* Fatal Error*/ 
   }
 }
+
 #pragma inline = forced
 void i2c::TXE_Handler()
 {
@@ -875,6 +893,28 @@ void i2c::TXE_Handler()
   {
     /* Read the data from TxQueue and write it into the I2c data register for slave transmision */
     //SlaveTxQueue.Read((uint8_t*)&I2C_DATA_REG);
+    if(m_SlaveTxn->TxLen > 0)
+    {
+      I2C_BUF_BYTE_OUT(m_SlaveTxn);
+	  
+      I2C_LOG_STATES(I2C_LOG_TXE);
+      
+      if(m_SlaveTxn->TxLen == 0)
+      {
+        m_I2CState = I2C_READY;
+        
+        /* Execute the Callback */
+        if(m_SlaveTxn->XferDoneCallback)
+          m_SlaveTxn->XferDoneCallback(I2C_SLAVE_TX_DONE);
+        
+        I2C_LOG_STATES(I2C_LOG_TXE_DONE);
+      }
+    } 
+    else
+    {
+      I2C_LOG_STATES(I2C_LOG_TXE_DEFAULT_BYTE);
+      I2C_DATA_REG = m_SlaveTxn->DefaultByte;
+    }    
   }
   else if(m_I2CState == I2C_MASTER_RX_REPEATED_START)
   {
@@ -898,7 +938,6 @@ void i2c::SB_Handler()
   else if((m_I2CState == I2C_MASTER_RX) || (m_I2CState == I2C_MASTER_RX_REPEATED_START))
   {
     /* start listening RxNE and TxE interrupts */  
-    // if((m_I2CState == I2C_MASTER_RX))
     Enable_BUF_Interrupt();
     
 #ifndef I2C_RX_METHOD_1                
@@ -917,27 +956,6 @@ void i2c::SB_Handler()
     
     I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX);
   }
-  //  else if(m_I2CState == I2C_MASTER_RX_REPEATED_START)
-  //  {
-  //    /* Repeated start is handled here, clear the flag*/
-  //    m_MasterTxn->RepeatedStart = 0;         
-  //    
-  //#ifndef I2C_RX_METHOD_1                
-  //    if(m_MasterTxn->RxLen == 2U) 
-  //    {
-  //      /* Enable Pos */
-  //      EnablePOS();
-  //    }
-  //#endif          
-  //    I2C_DATA_REG = m_MasterTxn->SlaveAddress | I2C_DIR_READ;  
-  //    
-  //    /* start listening RxNE and TxE interrupts */                
-  //    Enable_BUF_Interrupt();
-  //    
-  //    m_I2CState = I2C_MASTER_RX;
-  //    
-  //    I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX_REPEATED_START);
-  //  }
   else
   {
     while(1);
@@ -1011,7 +1029,7 @@ void i2c::ADDR_Handler()
       m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
     }            
     /* Transfer Direction requested by Master */
-    if( (I2C->SR2 & I2C_SR3_TRA) == 0)
+    if( (I2C->SR3 & I2C_SR3_TRA) == 0)
     {
       m_I2CState = I2C_SLAVE_RX;
     }
@@ -1036,11 +1054,13 @@ void i2c::STOPF_Handler()
   
   if(m_I2CState == I2C_SLAVE_RX)
   {
+     m_I2CState = I2C_READY;
+     
     /* Execute the RxDone Callback */
-    if(m_SlaveRxDoneCallback)
-      m_SlaveRxDoneCallback(I2C_STOP_DETECTED);  
+    if(m_SlaveTxn->XferDoneCallback)
+       m_SlaveTxn->XferDoneCallback(I2C_STOP_DETECTED);  
     
-    m_I2CState = I2C_READY;
+   
   }  
 } 
 #pragma inline = forced
@@ -1117,11 +1137,44 @@ void i2c::BTF_Handler()
   }
   else if(m_I2CState == I2C_SLAVE_RX ) 
   {
+    I2C_SLAVE_BUF_BYTE_IN(m_SlaveTxn);
     
+    if(m_SlaveTxn->RxLen == m_SlaveTxn->RxBufSize)
+    {
+      /* This is the last byte we can receive in this buffer 
+      So, NACK further bytes from master */
+      DisableACK();
+      
+      m_I2CState = I2C_READY;
+      
+      m_SlaveTxn->XferDoneCallback(I2C_SLAVE_RX_DONE); 
+      
+      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK);      
+    }    
   }
   else if(m_I2CState == I2C_SLAVE_TX )    
   {
-    
+    if(m_SlaveTxn->TxLen > 0)
+    {
+      I2C_BUF_BYTE_OUT(m_SlaveTxn);
+	  
+      I2C_LOG_STATES(I2C_LOG_TXE);
+      
+      if(m_SlaveTxn->TxLen == 0)
+      {
+        m_I2CState = I2C_READY;
+        /* Execute the RxDone Callback */
+        if(m_SlaveTxn->XferDoneCallback)
+          m_SlaveTxn->XferDoneCallback(I2C_SLAVE_TX_DONE);
+        
+        I2C_LOG_STATES(I2C_LOG_TXE_DONE);
+      }
+    } 
+    else
+    {
+      I2C_LOG_STATES(I2C_LOG_TXE_DEFAULT_BYTE);
+      I2C_DATA_REG = m_SlaveTxn->DefaultByte;
+    }
   }
   else
   {
@@ -1136,17 +1189,35 @@ void i2c::ADD10_Handler()
 
 i2c::I2CStatus_t i2c::SlaveStartListening(SlaveTxn_t* SlaveTxn )
 {
-  if((SlaveTxn == 0) || (SlaveTxn->TxBuf == 0) || (SlaveTxn->RxBuf == 0) )
+  if((SlaveTxn == 0) || (SlaveTxn->TxBuf == 0) || (SlaveTxn->RxBuf == 0) || (SlaveTxn->RxBufSize == 0)  )
   {
     return I2C_INVALID_PARAMS;
   }  
   m_SlaveTxn = SlaveTxn;  
   
-  m_I2CState = I2C_SLAVE_RX_LISTENING;
+  Enable_EVT_BUF_ERR_Interrupt();
+  
+  EnableACK();
+     
+  m_I2CState = I2C_READY;
   
   return I2C_OK; 
 }
 
+/*This function is to facilitate the fast 
+  switching of buffer to quickly start receiving 
+  more data from the Master with minimal delay 
+  so be carefull in passing the "i2cBuf" pointer,  
+  No "NULL" check is performed here */
+
+void i2c::SwitchSlaveBuf(SlaveTxn_t* i2cSlaveBuf)
+{
+  m_SlaveTxn = i2cSlaveBuf;
+  
+  EnableACK();
+  
+  m_I2CState = I2C_READY;
+}
 
 
 #if 0

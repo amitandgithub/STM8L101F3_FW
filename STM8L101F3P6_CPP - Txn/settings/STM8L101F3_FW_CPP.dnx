@@ -16,7 +16,7 @@
         <ShowSource>1</ShowSource>
     </Trace1>
     <DebugChecksum>
-        <Checksum>556987855</Checksum>
+        <Checksum>2634531877</Checksum>
     </DebugChecksum>
     <Disassembly>
         <InstrCount>0</InstrCount>
@@ -75,6 +75,11 @@
         <FreqHi>0</FreqHi>
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
+    <struct_types>
+        <Fmt0>class i2c-I2CStates_Idx	3	0</Fmt0>
+        <Fmt1>i2c::SlaveTxn_t-RxLen	3	0</Fmt1>
+        <Fmt2>i2c::SlaveTxn_t-TxLen	3	0</Fmt2>
+    </struct_types>
     <DataSample>
         <LogEnabled>0</LogEnabled>
         <GraphEnabled>0</GraphEnabled>
