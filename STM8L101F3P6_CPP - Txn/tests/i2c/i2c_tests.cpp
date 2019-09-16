@@ -306,6 +306,8 @@ void I2C_Slave_Tests()
 
 void I2C_Slave_Callback(i2c::I2CStatus_t status)
 {
+  static uint8_t Ack_Fail_Count;
+  
   SlaveTxn.TxLen = sizeof(TxBuf);
   SlaveTxn.RxBufSize = sizeof(RxBuf);
   
@@ -333,9 +335,9 @@ void I2C_Slave_Callback(i2c::I2CStatus_t status)
     }
     SlaveTxn.RxLen = 0;
   }
-  else
+  else if(status == i2c::I2C_ACK_FAIL)
   {
-    // rest of conditions
+    Ack_Fail_Count++;
   }
     
   
