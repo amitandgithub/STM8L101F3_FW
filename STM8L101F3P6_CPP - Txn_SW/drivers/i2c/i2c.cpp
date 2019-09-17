@@ -768,13 +768,14 @@ void i2c::AF_Handler()
   }
   else                                
   {
-    while(1);/* Fatal Error*/   
+    //while(1);/* Fatal Error*/   
   }
 }
 
 #pragma inline = forced
 void i2c::RXNE_Handler()
 {
+  I2C_LOG_EVENTS(I2C_LOG_RXNE);
   if(m_I2CState == I2C_MASTER_RX)
   {
 #ifdef I2C_RX_METHOD_1
@@ -871,7 +872,7 @@ void i2c::RXNE_Handler()
 #pragma inline = forced
 void i2c::TXE_Handler()
 {
-  I2C_LOG_EVENTS(I2C_LOG_TXE);
+  
   if(m_I2CState == I2C_MASTER_TX)   
   {
     if( m_I2CState == I2C_MASTER_RX_REPEATED_START)
@@ -895,9 +896,9 @@ void i2c::TXE_Handler()
     //SlaveTxQueue.Read((uint8_t*)&I2C_DATA_REG);
     if(m_SlaveTxn->TxLen > 0)
     {
+      I2C_LOG_EVENTS(I2C_LOG_TXE);
+      
       I2C_BUF_BYTE_OUT(m_SlaveTxn);
-	  
-      I2C_LOG_STATES(I2C_LOG_TXE);
       
       if(m_SlaveTxn->TxLen == 0)
       {
@@ -961,7 +962,7 @@ void i2c::SB_Handler()
     while(1);
   }						
 }
-//#pragma inline = forced
+#pragma inline = forced
 void i2c::ADDR_Handler()
 {
   I2C_LOG_EVENTS(I2C_LOG_ADDR); 
@@ -1060,9 +1061,7 @@ void i2c::STOPF_Handler()
      
     /* Execute the RxDone Callback */
     if(m_SlaveTxn->XferDoneCallback)
-       m_SlaveTxn->XferDoneCallback(I2C_STOP_DETECTED);  
-    
-   
+       m_SlaveTxn->XferDoneCallback(I2C_STOP_DETECTED);   
   }  
 } 
 #pragma inline = forced

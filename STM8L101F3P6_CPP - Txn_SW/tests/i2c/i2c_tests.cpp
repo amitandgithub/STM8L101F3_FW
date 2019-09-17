@@ -8,8 +8,8 @@
 i2c I2CDevIntr;
 i2c::I2CStatus_t Status;
 uint8_t RepeatedStart = 0;
-uint8_t SlaveAddress = 0x0010;
-uint8_t TxBuf[15];
+uint8_t SlaveAddress = 0x10;
+uint8_t TxBuf[16];
 uint8_t RxBuf[15];
 uint8_t TxLen,RxLen;
 i2c::MasterTxn_t Transaction;
@@ -345,12 +345,11 @@ void I2C_Slave_Callback(i2c::I2CStatus_t status)
   else if(status == i2c::I2C_ACK_FAIL)
   {
     Ack_Fail_Count++;
-  }
-    
-
-  
+  } 
   
 }
+
+
 #else // #endif // I2C_INTERRUPT_MODE_TESTS
 
 void I2C_Slave_Tests(){}
