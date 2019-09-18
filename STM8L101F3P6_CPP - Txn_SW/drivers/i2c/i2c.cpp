@@ -845,7 +845,6 @@ void i2c::RXNE_Handler()
   else if(m_I2CState == I2C_SLAVE_RX)
   {
     /* Read the data from I2C data register and save it into the Rx Queue */
-    //SlaveRxQueue.Write(I2C_DATA_REG);
     
     I2C_SLAVE_BUF_BYTE_IN(m_SlaveTxn);
     
