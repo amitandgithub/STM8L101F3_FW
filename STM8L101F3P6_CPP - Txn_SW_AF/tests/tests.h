@@ -6,3 +6,5 @@
 #include "gpio_tests.h"
 
 #include "CmdSvr.h"
+
+#include"I2C_Commands.h"

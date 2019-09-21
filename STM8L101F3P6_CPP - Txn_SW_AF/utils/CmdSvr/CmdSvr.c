@@ -3,34 +3,34 @@
 
 #include "CmdSvr.h"
 
-/* I2C Command Table*/
- const CmdElement_t I2C_Cmds[] = 
-{
-  {0,0,0},
-  {0,0,0},
-  {0,0,0},
-  {0,0,0},
-  {0,0,0}
-}; 
-
- const CmdTable_t I2C_CmdTable = { I2C_Cmds, sizeof(I2C_Cmds)/sizeof(CmdElement_t) };
+#include"I2C_Commands.h"
 
 
-/* SPI Command Table*/
- const CmdElement_t SPI_Cmds[] = 
-{
-  {0,0,0},
-  {0,0,0},
-  {0,0,0},
-  {0,0,0},
-  {0,0,0}
-}; 
-
- const CmdTable_t SPI_CmdTable = { SPI_Cmds, sizeof(SPI_Cmds)/sizeof(CmdElement_t) };
-
- CmdTable_t CmdTables[MODULE_ID_MAX] = 
+static const CmdHandler CmdTable[MODULE_ID_MAX] = 
 {       
-  I2C_CmdTable,
-  SPI_CmdTable
-                                            
+  I2C_CmdHandler1,                                        
 };
+
+
+CmdStatus_t Cmdsvr_GetCmd(Cmd_t *pCmd)
+{
+  return CMD_STATUS_OK;  
+}
+
+CmdStatus_t Cmdsvr_AuthenticateCmd(Cmd_t *pCmd)
+{
+  return CMD_STATUS_OK; 
+}
+
+CmdStatus_t Cmdsvr_DispatchCmd(Cmd_t *pCmd)
+{
+  if((pCmd == 0) || (pCmd->Request->ModuleID >= MODULE_ID_MAX))
+    return CMD_STATUS_INVALID_PARAMS;
+  
+  return CmdTable[pCmd->Request->ModuleID](pCmd);
+}
+
+CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
+{
+  return CMD_STATUS_OK;
+}

@@ -1,14 +1,14 @@
-"C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\tests\i2c\i2c_tests.cpp"
+"C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\utils\CmdSvr\I2C_CMD\I2C_Commands.c"
 -std=c++98
 -ferror-limit=0
 -fbracket-depth=512
 -MD
 -MF
-C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\Debug\Obj\i2c_tests.pbi.dep
+C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\Debug\Obj\I2C_Commands.pbi.dep
 -o
-i2c_tests.pbi
+I2C_Commands.pbi
 -I
-C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\tests\i2c
+C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\utils\CmdSvr\I2C_CMD
 -I
 C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\STM8L10x_StdPeriph_Driver\inc
 -I

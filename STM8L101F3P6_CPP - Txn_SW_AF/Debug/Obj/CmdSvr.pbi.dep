@@ -41,4 +41,6 @@ CmdSvr.pbi: \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\ysizet.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\ystdio.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\cstring \
-  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\string.h
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\string.h \
+  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\utils\CmdSvr\I2C_CMD\I2C_Commands.h \
+  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\utils\CmdSvr\CmdSvr.h

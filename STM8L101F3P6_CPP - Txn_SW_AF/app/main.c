@@ -18,6 +18,8 @@ void Gpio_1_Callback();
 //};
 
 
+uint8_t I2C_Request[10] = {MODULE_ID_I2C,};
+Cmd_t myI2C_CMD = {(CmdHdr_t*)I2C_Request,0};
 
 void main(void)
 {
@@ -25,8 +27,15 @@ void main(void)
     CLK->CKDIVR = (uint8_t)0;
     __enable_interrupt(); 
     I2C_Slave_Tests();
+    I2C_Request[CMDSVR_CMDID_POS] = I2C_CMDID_DIV_REQUEST;
+    I2C_Request[CMDSVR_LEN_POS] = 2;
+    I2C_Request[CMDSVR_DATA_POS + 0] = 50;
+    I2C_Request[CMDSVR_DATA_POS + 1] = 2;
+    I2C_Request[CMDSVR_DATA_POS + 2] = I2C_CMDID_DIV_REQUEST;
+    
     while (1)
     {
+      Cmdsvr_DispatchCmd(&myI2C_CMD);
        // gpio_tests();
         //I2c_Master_Tests();
         

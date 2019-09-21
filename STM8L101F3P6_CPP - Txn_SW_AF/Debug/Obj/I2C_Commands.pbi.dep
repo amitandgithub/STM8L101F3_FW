@@ -1,9 +1,5 @@
-main.pbi: \
-  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\utils\CmdSvr\I2C_CMD\I2C_Commands.h \
+I2C_Commands.pbi: \
   C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\utils\CmdSvr\CmdSvr.h \
-  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\drivers\gpio\DigitalIn.h \
-  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\tests\gpio\gpio_tests.h \
-  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\tests\tests.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\ysizet.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\ycheck.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\stm8\inc\c\string.h \
@@ -42,4 +38,5 @@ main.pbi: \
   C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\STM8L10x_StdPeriph_Driver\inc\stm8l10x_beep.h \
   C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\STM8L10x_StdPeriph_Driver\inc\stm8l10x_awu.h \
   C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\system\stm8l10x_conf.h \
-  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\app\main.c
+  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\utils\CmdSvr\I2C_CMD\I2C_Commands.h \
+  C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP\ -\ Txn_SW_AF\utils\CmdSvr\I2C_CMD\I2C_Commands.c

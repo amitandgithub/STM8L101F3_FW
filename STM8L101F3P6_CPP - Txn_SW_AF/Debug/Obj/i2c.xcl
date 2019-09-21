@@ -28,6 +28,8 @@ C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\
 -I
 C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\utils\CmdSvr
 -I
+C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\utils\CmdSvr\I2C_CMD
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\stm8\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\stm8\inc\c
@@ -51,6 +53,8 @@ C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\
 C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\tests
 -I
 C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\utils\CmdSvr
+-I
+C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn_SW_AF\utils\CmdSvr\I2C_CMD
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

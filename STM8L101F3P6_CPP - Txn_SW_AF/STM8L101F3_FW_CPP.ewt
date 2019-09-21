@@ -2215,6 +2215,9 @@
             <file>
                 <name>$PROJ_DIR$\utils\CmdSvr\CmdSvr.c</name>
             </file>
+            <file>
+                <name>$PROJ_DIR$\utils\CmdSvr\I2C_CMD\I2C_Commands.c</name>
+            </file>
         </group>
         <group>
             <name>queue</name>

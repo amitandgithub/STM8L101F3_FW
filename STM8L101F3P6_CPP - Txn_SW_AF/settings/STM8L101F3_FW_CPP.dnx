@@ -16,11 +16,11 @@
         <ShowSource>1</ShowSource>
     </Trace1>
     <DebugChecksum>
-        <Checksum>3804829956</Checksum>
+        <Checksum>3282734477</Checksum>
     </DebugChecksum>
     <Disassembly>
-        <MixedMode>1</MixedMode>
         <InstrCount>0</InstrCount>
+        <MixedMode>1</MixedMode>
     </Disassembly>
     <CodeCoverage>
         <Enabled>0</Enabled>
@@ -79,6 +79,9 @@
         <Fmt0>i2c::SlaveTxn_t-RxLen	3	0</Fmt0>
         <Fmt1>i2c::SlaveTxn_t-TxLen	3	0</Fmt1>
     </struct_types>
+    <array_types>
+        <Fmt0>uint8_t[10]	3	0</Fmt0>
+    </array_types>
     <DataSample>
         <LogEnabled>0</LogEnabled>
         <GraphEnabled>0</GraphEnabled>
@@ -94,7 +97,8 @@
         <Category>_ 0</Category>
     </LogFile>
     <Breakpoints>
-        <Count>0</Count>
+        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\app\main.c}.38.7" 1 0 0 0 "" 0 ""</Bp0>
+        <Count>1</Count>
     </Breakpoints>
     <Aliases>
         <A0>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\app\main.c" ""</A0>

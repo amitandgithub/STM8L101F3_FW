@@ -771,14 +771,14 @@ void i2c::AF_Handler()
   {
     //m_I2CState = I2C_READY;
     
-    I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK); 
+    I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK);
     /* Last byte received here, execute the Callback */
     if(m_SlaveTxn->XferDoneCallback)
       m_SlaveTxn->XferDoneCallback(I2C_SLAVE_RX_DONE_WITH_NACK);
   }
   else                                
   {
-    //while(1);/* Fatal Error*/   
+    //while(1);/* Fatal Error*/
   }
 }
 

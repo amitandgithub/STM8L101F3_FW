@@ -6,10 +6,12 @@
 
 #include"system.h"
 
+
+#define CMDSVR_CMD_LENGTH_MAX 32
+
 typedef enum
 {
   MODULE_ID_I2C,
-  MODULE_ID_SPI,
   
   
   MODULE_ID_MAX, 
@@ -19,6 +21,7 @@ typedef enum
 typedef enum
 {
   CMD_STATUS_OK,
+  CMD_STATUS_INVALID_PARAMS,
   CMD_STATUS_CRC_ERROR,
   CMD_STATUS_INVALID_MODULEID,
   CMD_STATUS_INVALID_CMDID,  
@@ -31,30 +34,33 @@ typedef struct
   uint8_t Len;
 }CmdHdr_t;
 
-typedef CmdStatus_t (*CmdHandler_t)(CmdHdr_t* CmdHdr);
-
-typedef CmdStatus_t (*CmdResponse_t)(CmdHdr_t* CmdHdr);
-
 typedef struct
 {
-  CmdHandler_t          CmdHandler;
-  CmdResponse_t         CmdResponse;
-  uint8_t               ProcessingTime;
-}CmdElement_t;
+  CmdHdr_t* Request;
+  CmdHdr_t* Response;
+}Cmd_t;
 
-typedef struct
-{
-  const CmdElement_t * const    pCommands;
-  const uint8_t                 TotalCommands;
-}CmdTable_t;
 
-uint8_t Cmdsvr_GetCmd(CmdHdr_t *pCmd);
+#define CMDSVR_MODULEID_POS 0
 
-uint8_t Cmdsvr_AuthenticateCmd(CmdHdr_t *pCmd);
+#define CMDSVR_CMDID_POS 1
 
-uint8_t Cmdsvr_DispatchCmd(CmdHdr_t *pCmd);
+#define CMDSVR_LEN_POS 2
 
-uint8_t Cmdsvr_DispatchResponse(CmdHdr_t *pCmd);
+#define CMDSVR_DATA_POS 3
+
+#define CMDSVR_DATA_PTR(__X) (uint8_t*)( (uint8_t*)((__X)->Request) + CMDSVR_DATA_POS)
+
+typedef CmdStatus_t (*CmdHandler)(Cmd_t* CmdHdr);
+
+
+CmdStatus_t Cmdsvr_GetCmd(Cmd_t *pCmd);
+
+CmdStatus_t Cmdsvr_AuthenticateCmd(Cmd_t *pCmd);
+
+CmdStatus_t Cmdsvr_DispatchCmd(Cmd_t *pCmd);
+
+CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd);
 
 
 

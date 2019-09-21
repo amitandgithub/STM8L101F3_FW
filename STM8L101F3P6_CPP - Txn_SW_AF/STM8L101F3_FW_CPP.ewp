@@ -146,7 +146,7 @@
                 </option>
                 <option>
                     <name>IccOptLevel</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>IccOptStrategy</name>
@@ -155,12 +155,12 @@
                 </option>
                 <option>
                     <name>IccOptLevelSlave</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>IccOptAllowList</name>
                     <version>0</version>
-                    <state>000000</state>
+                    <state>111111</state>
                 </option>
                 <option>
                     <name>IccGenerateDebugInfo</name>
@@ -265,6 +265,7 @@
                     <state>$PROJ_DIR$\tests\gpio</state>
                     <state>$PROJ_DIR$\tests</state>
                     <state>$PROJ_DIR$\utils\CmdSvr</state>
+                    <state>$PROJ_DIR$\utils\CmdSvr\I2C_CMD</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1700,6 +1701,9 @@
             <name>CmdSvr</name>
             <file>
                 <name>$PROJ_DIR$\utils\CmdSvr\CmdSvr.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\utils\CmdSvr\I2C_CMD\I2C_Commands.c</name>
             </file>
         </group>
         <group>
