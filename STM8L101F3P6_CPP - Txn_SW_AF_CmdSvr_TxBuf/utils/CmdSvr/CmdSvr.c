@@ -69,7 +69,7 @@ CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
   }
   I2C_SlaveTxn.RxIndex = 0;
   I2C_SlaveTxn.RxBufSize = sizeof(CmdSvrContext.RequestBuf);
-  I2C_SlaveTxn.TxIndex = 0;
+  //I2C_SlaveTxn.TxIndex = 0;
   I2CDevIntr.SlaveStartReceiving();
   return CMD_STATUS_OK;
 }
@@ -88,6 +88,8 @@ CmdStatus_t Cmdsvr_Init()
     
   while(I2CDevIntr.SlaveStartListening(&I2C_SlaveTxn) != i2c::I2C_OK);
   
+  CmdSvrContext.Status = CMD_STATUS_READY;
+    
   return CMD_STATUS_OK;
     
 }
@@ -134,9 +136,9 @@ void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
         I2CDevIntr.SlaveStartReceiving();  
       }
     }
-    else
+    else if(status == i2c::I2C_ACK_FAIL)
     {
-      //while(1);
+      while(1);
     }
   }
   else

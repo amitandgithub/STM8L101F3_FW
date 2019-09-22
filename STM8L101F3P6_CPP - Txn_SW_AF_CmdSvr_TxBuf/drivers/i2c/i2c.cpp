@@ -750,7 +750,7 @@ void i2c::AF_Handler()
   I2C_LOG_STATES(I2C_LOG_ACK_FAIL);
   
   ClearAF(); 
-  m_I2CState = I2C_READY;
+ 
   
   if((m_I2CState == I2C_MASTER_TX)) 
   {
@@ -762,10 +762,11 @@ void i2c::AF_Handler()
   else if((m_I2CState == I2C_SLAVE_TX))
   {                
     // In Slave mode just execute the transaction done callback if registered    
-    m_I2CState = I2C_READY;
+    //m_I2CState = I2C_READY;
     
-    if(m_SlaveTxn->XferDoneCallback)
-      m_SlaveTxn->XferDoneCallback(I2C_ACK_FAIL); 				  
+    //if(m_SlaveTxn->XferDoneCallback)
+      //m_SlaveTxn->XferDoneCallback(I2C_ACK_FAIL); 
+    //while(1);
   }
   else if((m_I2CState == I2C_SLAVE_RX))
   {
@@ -775,12 +776,14 @@ void i2c::AF_Handler()
     /* Last byte received here, execute the Callback */
     //if(m_SlaveTxn->XferDoneCallback)
      // m_SlaveTxn->XferDoneCallback(I2C_SLAVE_RX_DONE_WITH_NACK);
-    while(1);
+    //while(1);
   }
   else                                
   {
     //while(1);/* Fatal Error*/
   }
+  
+   m_I2CState = I2C_READY;
 }
 
 #pragma inline = forced
@@ -919,7 +922,7 @@ void i2c::TXE_Handler()
       
       if(m_SlaveTxn->TxIndex == m_SlaveTxn->TxBufSize)
       {
-        //m_I2CState = I2C_READY;
+        m_I2CState = I2C_READY;
         
         /* Execute the Callback */
         if(m_SlaveTxn->XferDoneCallback)
@@ -930,8 +933,7 @@ void i2c::TXE_Handler()
     } 
     else
     {
-      I2C_LOG_STATES(I2C_LOG_TXE_DEFAULT_BYTE);
-      I2C_DATA_REG = m_SlaveTxn->DefaultByte;
+      
     }    
   }
   else if(m_I2CState == I2C_MASTER_RX_REPEATED_START)
@@ -940,7 +942,8 @@ void i2c::TXE_Handler()
   }
   else
   {
-    while(1);/* Fatal Error*/  
+    I2C_LOG_STATES(I2C_LOG_TXE_DEFAULT_BYTE);
+    I2C_DATA_REG = m_SlaveTxn->DefaultByte; 
   }
   
 }
@@ -1070,9 +1073,7 @@ void i2c::STOPF_Handler()
   
   I2C_LOG_STATES(I2C_LOG_STOPF_FLAG);
   
-  ClearSTOPF();
-  
-   m_I2CState = I2C_READY;
+  ClearSTOPF();   
    
   if(m_I2CState == I2C_SLAVE_RX)
   {     
@@ -1086,6 +1087,8 @@ void i2c::STOPF_Handler()
     if(m_SlaveTxn->XferDoneCallback)
        m_SlaveTxn->XferDoneCallback(I2C_SLAVE_TX_DONE);
   }
+  
+  m_I2CState = I2C_READY;
 } 
 #pragma inline = forced
 void i2c::BTF_Handler()
