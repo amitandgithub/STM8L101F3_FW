@@ -5,3 +5,4 @@ STM8L101F3P6_CPP - Txn_SW_AF_CmdSvr_TxBuf/Debug/Obj/.ninja_log
 *.o
 *.dep
 *.xcl
+*.o
