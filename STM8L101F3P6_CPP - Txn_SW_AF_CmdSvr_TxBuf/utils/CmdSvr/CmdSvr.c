@@ -77,11 +77,13 @@ CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
 CmdStatus_t Cmdsvr_Init()
 {
   I2CDevIntr.HwInit();
+  
   I2C_SlaveTxn.TxIndex = 0;
-  I2C_SlaveTxn.RxIndex = 0;
   I2C_SlaveTxn.TxBufSize = 1;
-  I2C_SlaveTxn.RxBufSize = sizeof(CmdSvrContext.RequestBuf);
   I2C_SlaveTxn.TxBuf = (uint8_t*)&CmdSvrContext.Status;
+  
+  I2C_SlaveTxn.RxIndex = 0;  
+  I2C_SlaveTxn.RxBufSize = sizeof(CmdSvrContext.RequestBuf);  
   I2C_SlaveTxn.RxBuf = CmdSvrContext.RequestBuf;
   
   I2C_SlaveTxn.XferDoneCallback = I2C_CmdSvr_Callback;
@@ -105,13 +107,14 @@ void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
     {
       CmdSvrContext.Status = CMD_STATUS_PROCESSING;
       
-      I2C_SlaveTxn.RxBuf = CmdSvr_SwitchBuf(I2C_SlaveTxn.RxBuf);
+      //I2C_SlaveTxn.RxBuf = CmdSvr_SwitchBuf(I2C_SlaveTxn.RxBuf);
     }
     else
     {
       //CmdSvrContext.Status = CMD_STATUS_LEN_ERROR;
       I2C_SlaveTxn.RxIndex = 0;
     }    
+    
     I2CDevIntr.SlaveStartReceiving();   
   }
   else if(status == i2c::I2C_SLAVE_RX_DONE_WITH_NACK)
@@ -133,7 +136,8 @@ void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
       {
         CmdSvrContext.Status = CMD_STATUS_READY;        
         I2C_SlaveTxn.TxBufSize = 1;
-        I2CDevIntr.SlaveStartReceiving();  
+        I2C_SlaveTxn.TxBuf = (uint8_t*)&CmdSvrContext.Status;
+        //I2CDevIntr.SlaveStartReceiving();  
       }
     }
     else if(status == i2c::I2C_ACK_FAIL)
