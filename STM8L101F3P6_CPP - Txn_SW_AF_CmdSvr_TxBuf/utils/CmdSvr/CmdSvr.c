@@ -58,8 +58,7 @@ CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
   {
     I2C_SlaveTxn.TxBuf = (uint8_t*)pCmd->Response;    
     I2C_SlaveTxn.TxBufSize = pCmd->Response->Len + 4;
-    CmdSvrContext.Status = CMD_STATUS_PROCESSING_DONE;
-    
+    CmdSvrContext.Status = CMD_STATUS_PROCESSING_DONE;    
   }
   else
   {    
