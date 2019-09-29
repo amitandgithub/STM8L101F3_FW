@@ -30,11 +30,7 @@ void main(void)
     Cmdsvr_Init();
     while (1)
     {
-      if(CmdSvr_GetStatus() == CMD_STATUS_PROCESSING)
-      {
-        Cmdsvr_DispatchCmd(&myI2C_CMD);
-        Cmdsvr_DispatchResponse(&myI2C_CMD);
-      }      
+      CmdSvr_Run();     
        // gpio_tests();
         //I2c_Master_Tests();
         
