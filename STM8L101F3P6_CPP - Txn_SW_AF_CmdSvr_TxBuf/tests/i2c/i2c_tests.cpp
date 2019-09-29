@@ -298,7 +298,7 @@ void I2C_Slave_Tests()
   I2CDevIntr.HwInit();
   SlaveTxn.TxIndex = 0;
   SlaveTxn.RxIndex = 0;
-  SlaveTxn.RxBufSize = sizeof(RxBuf);
+  SlaveTxn.RxLen = sizeof(RxBuf);
   SlaveTxn.TxBuf = TxBuf;
   SlaveTxn.RxBuf = RxBuf;
   
@@ -325,7 +325,7 @@ void I2C_Slave_Callback(i2c::I2CStatus_t status)
       SlaveTxn.TxBuf[i] = SlaveTxn.RxBuf[i] + 1;
     }    
     SlaveTxn.TxIndex = 0;
-    SlaveTxn.TxBufSize = SlaveTxn.RxIndex;
+    SlaveTxn.TxLen = SlaveTxn.RxIndex;
     SlaveTxn.RxIndex = 0;
     
     //I2CDevIntr.SwitchSlaveBuf(&SlaveTxn);
@@ -338,7 +338,7 @@ void I2C_Slave_Callback(i2c::I2CStatus_t status)
       SlaveTxn.TxBuf[i] = SlaveTxn.RxBuf[i] + 1;
     }
     SlaveTxn.TxIndex = 0;
-    SlaveTxn.TxBufSize = SlaveTxn.RxIndex;
+    SlaveTxn.TxLen = SlaveTxn.RxIndex;
     SlaveTxn.RxIndex = 0;
   }
   else 

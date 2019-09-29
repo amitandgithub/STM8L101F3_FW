@@ -41,8 +41,16 @@ typedef struct
 
 typedef struct
 {
+  CmdStatus_t   Status;
+  uint8_t       ModuleID;
+  uint8_t       CmdID;
+  uint8_t       Len;
+}RspHdr_t;
+
+typedef struct
+{
   CmdHdr_t* Request;
-  CmdHdr_t* Response;
+  RspHdr_t* Response;
 }Cmd_t;
 
 typedef struct
@@ -51,16 +59,6 @@ typedef struct
   uint8_t ResponseBuf[CMDSVR_CMD_LENGTH_MAX];
   CmdStatus_t Status;
 }CmdSvrContext_t;
-
-#define CMDSVR_MODULEID_POS 0
-
-#define CMDSVR_CMDID_POS 1
-
-#define CMDSVR_LEN_POS 2
-
-#define CMDSVR_DATA_POS 3
-
-#define CMDSVR_DATA_PTR(__X) (uint8_t*)( (uint8_t*)((__X)->Request) + CMDSVR_DATA_POS)
 
 typedef CmdStatus_t (*CmdHandler)(Cmd_t* CmdHdr);
 
@@ -80,6 +78,7 @@ uint8_t* CmdSvr_SwitchBuf(uint8_t* Buffer);
 
 CmdStatus_t CmdSvr_GetStatus();
 
+void CmdSvr_Run(void);
 
 
 

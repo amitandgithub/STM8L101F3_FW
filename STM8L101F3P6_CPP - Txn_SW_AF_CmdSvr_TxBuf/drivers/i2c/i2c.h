@@ -142,8 +142,8 @@ public:
   {
     uint8_t                 TxIndex;
     uint8_t                 RxIndex; 
-    uint8_t                 RxBufSize;
-    uint8_t                 TxBufSize;
+    uint8_t                 RxLen;
+    uint8_t                 TxLen;
     uint8_t                 DefaultByte;
     uint8_t*                TxBuf; 
     uint8_t*                RxBuf;
