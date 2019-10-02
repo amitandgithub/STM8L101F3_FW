@@ -62,7 +62,7 @@ CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
   }
   I2C_SlaveTxn.RxIndex = 0;
   I2C_SlaveTxn.TxIndex = 0;
-  //delay_ms(100);  
+  delay_ms(100);  
   return CMD_STATUS_OK;
 }
 
