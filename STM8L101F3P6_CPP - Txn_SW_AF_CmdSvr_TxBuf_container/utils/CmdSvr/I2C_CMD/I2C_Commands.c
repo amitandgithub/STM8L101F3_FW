@@ -59,7 +59,7 @@ CmdStatus_t I2C_CmdHandler1(Cmd_t* pCmd)
     ReponseData->CmdId  = I2C_CMDID_ADD_RESPONSE;
     ReponseData->Len    = 1;
     ReponseData->Result = RequestData->Param1 / RequestData->Param2;
-    //pCmd->Response = 0;
+    pCmd->Response = 0;
     break;
   default: 
     return CMD_STATUS_INVALID_CMDID;

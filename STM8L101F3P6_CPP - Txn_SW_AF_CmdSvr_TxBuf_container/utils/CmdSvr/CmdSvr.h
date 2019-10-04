@@ -56,7 +56,6 @@ typedef struct
 typedef struct
 {
   Cmd_t Cmd;
-  CmdStatus_t pStatus;
 }CmdSvrContext_t;
 
 typedef CmdStatus_t (*CmdHandler)(Cmd_t* CmdHdr);

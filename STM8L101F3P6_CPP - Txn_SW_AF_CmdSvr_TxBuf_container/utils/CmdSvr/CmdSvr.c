@@ -18,8 +18,7 @@ Cmd_t CmdSvr_Cmd = {(CmdHdr_t*)CmdSvr_RxBuf.Buf,(RspHdr_t*)CmdSvr_TxBuf.Buf};
 
 CmdSvrContext_t CmdSvrContext = 
 {
-  { (CmdHdr_t*)CmdSvr_RxBuf.Buf,(RspHdr_t*)CmdSvr_TxBuf.Buf },
-  CMD_STATUS_READY
+  { (CmdHdr_t*)CmdSvr_RxBuf.Buf,(RspHdr_t*)CmdSvr_TxBuf.Buf }
 };
 
 static const CmdHandler CmdTable[MODULE_ID_MAX] = 
@@ -60,21 +59,19 @@ CmdStatus_t Cmdsvr_DispatchCmd(Cmd_t *pCmd)
 CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
 {
   if(pCmd->Response)
-  {
-    
+  {    
     CmdSvr_TxBuf.Buf = (uint8_t*)pCmd->Response;
     CmdSvr_TxBuf.Len = pCmd->Response->Len + sizeof(RspHdr_t) + 1;// 1 for CRC 
     pCmd->Response->Status = CMD_STATUS_PROCESSING_DONE;
   }
-//  else
-//  { 
-//    CmdSvr_TxBuf.Buf = &CmdSvr_Buf[0];
-//    CmdSvr_TxBuf.Len = 1;
-//    pCmd->Response->Status = CMD_STATUS_READY;
-//  }
+  else
+  { 
+    CmdSvr_TxBuf.Buf[0] = CMD_STATUS_READY;
+  }
+  
   CmdSvr_TxBuf.Idx = 0;
   CmdSvr_RxBuf.Idx = 0;
-  delay_ms(100);  
+  //delay_ms(100);  
   return CMD_STATUS_OK;
 }
 
@@ -83,10 +80,6 @@ CmdStatus_t Cmdsvr_Init()
   I2CDevIntr.HwInit();
   
   I2CDevIntr.SetSlaveTxDefaultByte(0xff);
-  
-  //I2C_SlaveTxn.TxBuf[0] = CMD_STATUS_READY;
-    
-  //I2C_SlaveTxn.XferDoneCallback = I2C_CmdSvr_Callback;
   
   I2CDevIntr.SetSlaveCallback(I2C_CmdSvr_Callback);
     
@@ -99,13 +92,12 @@ CmdStatus_t Cmdsvr_Init()
 void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
 {  
   if((status == i2c::I2C_SLAVE_RX_DONE) )
-  {
-    CmdSvr_TxBuf.Idx = 0;
-    CmdSvr_TxBuf.Len = 1;
-    
+  {    
     if((CmdSvr_TxBuf.Buf[0] == CMD_STATUS_READY) && (CmdSvr_RxBuf.Idx >= sizeof(RspHdr_t)))
     {
+      CmdSvr_TxBuf.Buf = &CmdSvr_Buf[0];
       CmdSvr_TxBuf.Buf[0] = CMD_STATUS_PROCESSING;
+      CmdSvr_TxBuf.Len = 1;
     }
     else
     {
@@ -125,10 +117,9 @@ void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
     }
     else if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_PROCESSING_DONE)
     {
-      if(CmdSvr_TxBuf.Idx >= sizeof(RspHdr_t))
+      if(CmdSvr_TxBuf.Idx >= 1)//sizeof(RspHdr_t))
       {
         CmdSvr_TxBuf.Buf[0] = CMD_STATUS_READY;
-        CmdSvr_TxBuf.Len = 1;
       }
     }
     else if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_READY)
@@ -153,7 +144,7 @@ void CmdSvr_Run(void)
 {  
   if(CmdSvr_GetStatus() == CMD_STATUS_PROCESSING)
   {
-    Cmdsvr_DispatchCmd(&CmdSvr_Cmd);
-    Cmdsvr_DispatchResponse(&CmdSvr_Cmd);
+    Cmdsvr_DispatchCmd(&CmdSvrContext.Cmd);
+    Cmdsvr_DispatchResponse(&CmdSvrContext.Cmd);
   } 
 }
