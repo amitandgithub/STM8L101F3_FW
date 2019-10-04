@@ -45,7 +45,6 @@ typedef union
 }I2C_Cmds_t;
 
 CmdStatus_t I2C_CmdHandler(Cmd_t* CmdHdr);
-CmdStatus_t I2C_CmdHandler1(Cmd_t* CmdHdr);
 
 CmdStatus_t I2C_Add(Cmd_t *pCmd);
 CmdStatus_t I2C_Sub(Cmd_t *pCmd);

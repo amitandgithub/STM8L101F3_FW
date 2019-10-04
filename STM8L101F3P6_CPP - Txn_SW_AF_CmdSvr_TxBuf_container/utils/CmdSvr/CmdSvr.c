@@ -23,7 +23,7 @@ CmdSvrContext_t CmdSvrContext =
 
 static const CmdHandler CmdTable[MODULE_ID_MAX] = 
 {       
-  I2C_CmdHandler1,                                        
+  I2C_CmdHandler,                                        
 };
 
 
@@ -62,12 +62,16 @@ CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
   {    
     CmdSvr_TxBuf.Buf = (uint8_t*)pCmd->Response;
     CmdSvr_TxBuf.Len = pCmd->Response->Len + sizeof(RspHdr_t) + 1;// 1 for CRC 
-    pCmd->Response->Status = CMD_STATUS_PROCESSING_DONE;
+    CmdSvr_TxBuf.Buf[0] = CMD_STATUS_PROCESSING_DONE;   
   }
   else
   { 
+    /* If the response is not available then get ready for next command reception here*/
     CmdSvr_TxBuf.Buf[0] = CMD_STATUS_READY;
   }
+  
+  /* During the Rx packet reception, if I2C was put on hold then resume it here*/
+  I2CDevIntr.SlaveStartReceiving();
   
   CmdSvr_TxBuf.Idx = 0;
   CmdSvr_RxBuf.Idx = 0;
@@ -99,21 +103,21 @@ void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
       CmdSvr_TxBuf.Buf[0] = CMD_STATUS_PROCESSING;
       CmdSvr_TxBuf.Len = 1;
     }
-    else
-    {
-      CmdSvr_RxBuf.Idx = 0;
-    }    
+//    else
+//    {
+//      CmdSvr_RxBuf.Idx = 0;
+//    }    
     CmdSvr_RxBuf.Idx = 0;
   }
-  else if(status == i2c::I2C_SLAVE_RX_DONE_WITH_NACK)
-  {
-    CmdSvr_RxBuf.Idx = 0;
-  }
+//  else if(status == i2c::I2C_SLAVE_RX_DONE_WITH_NACK)
+//  {
+//    CmdSvr_RxBuf.Idx = 0;
+//  }
   else if(status == i2c::I2C_SLAVE_TX_DONE)
   {           
     if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_PROCESSING)
     {
-        CmdSvr_TxBuf.Idx = 0;  
+        //CmdSvr_TxBuf.Idx = 0;  
     }
     else if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_PROCESSING_DONE)
     {
