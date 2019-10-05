@@ -16,11 +16,13 @@
 #include"DigitalOut.h"
 #include"QueueCpp.h"
 
+#define I2C_DEBUG 1
+
 #define I2C_INTERRUPT_MODE 1
 
-#define I2C_SLAVE_ONLY 0  // i2c.o                      566        2        2
-
-#define I2C_MASTER_ONLY 0 //i2c.o                      913        2        2
+                        // ALL i2c.o                    1 257       2        2
+#define I2C_SLAVE_ONLY 1  // i2c.o                       566        2        2
+#define I2C_MASTER_ONLY 0  //i2c.o                       913        2        2
 
 /*Method 1: This method is for the case when the I2C is used with interrupts that have the highest priority in the application.
 This method is faster in communication. */
@@ -29,7 +31,7 @@ This method is faster in communication. */
 #define I2C_SLAVE_TX_BUF_SIZE 32
 #define I2C_SLAVE_RX_BUF_SIZE 32
 
-#define I2C_DEBUG 0
+
 #define __INLINE static inline
 
 #define DBG_LOG_CREATE_ID(__MODULE_ID,__X) __X

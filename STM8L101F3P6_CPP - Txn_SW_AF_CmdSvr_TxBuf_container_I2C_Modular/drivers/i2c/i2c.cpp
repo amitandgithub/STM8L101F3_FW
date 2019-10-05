@@ -828,23 +828,19 @@ void i2c::ADDR_Handler()
 	  
       I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_TX_SIZE_GT_0);
     }
-    else
-    {
-      //while(1);
-    }
   }
   else if((m_I2CState == I2C_READY) || (m_I2CState == I2C_SLAVE_RX) || (m_I2CState == I2C_SLAVE_TX) )
   {
     // changing state to Slave Tx here
     /* Check the addressing mode*/
-    if( (I2C->SR3 & I2C_SR3_DUALF ) == RESET)
-    {
-      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
-    }
-    else
-    {
-      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
-    }            
+//    if( (I2C->SR3 & I2C_SR3_DUALF ) == RESET)
+//    {
+//      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
+//    }
+//    else
+//    {
+//      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
+//    }            
     /* Transfer Direction requested by Master */
     if( (I2C->SR3 & I2C_SR3_TRA) == 0)
     {
@@ -856,10 +852,6 @@ void i2c::ADDR_Handler()
       m_I2CState = I2C_SLAVE_TX;
       I2C_LOG_STATES(I2C_LOG_ADDR_SLAVE_TX_SELECTED);
     }
-  }
-  else
-  {
-    while(1);/* Fatal Error*/      
   }
 }
 
@@ -1572,17 +1564,17 @@ void i2c::SB_Handler_Slave()
 #pragma inline = forced
 void i2c::ADDR_Handler_Slave()
 {
-  I2C_LOG_EVENTS(I2C_LOG_ADDR); 
+   I2C_LOG_EVENTS(I2C_LOG_ADDR); 
      // changing state to Slave Tx here
     /* Check the addressing mode*/
-    if( (I2C->SR3 & I2C_SR3_DUALF ) == RESET)
-    {
-      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
-    }
-    else
-    {
-      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
-    }            
+//    if( (I2C->SR3 & I2C_SR3_DUALF ) == RESET)
+//    {
+//      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
+//    }
+//    else
+//    {
+//      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
+//    }            
     /* Transfer Direction requested by Master */
     if( (I2C->SR3 & I2C_SR3_TRA) == 0)
     {
@@ -1660,17 +1652,12 @@ void i2c::AF_Handler_Slave()
   if((m_I2CState == I2C_SLAVE_TX))
   {                
     // In Slave mode just execute the transaction done callback if registered    
-    m_I2CState = I2C_READY;
+    //m_I2CState = I2C_READY;
     
     if(m_SlaveTxn.XferDoneCallback)
       m_SlaveTxn.XferDoneCallback(I2C_SLAVE_TX_DONE); 
-  }
-  else                                
-  {
-    while(1);/* Fatal Error*/
-  }
-  
-   m_I2CState = I2C_READY;
+  }  
+  m_I2CState = I2C_READY;
 }
 
 #pragma inline = forced

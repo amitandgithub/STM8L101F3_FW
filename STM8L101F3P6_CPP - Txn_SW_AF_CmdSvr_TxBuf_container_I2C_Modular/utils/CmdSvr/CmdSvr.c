@@ -94,7 +94,7 @@ void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
       CmdSvr_TxBuf.Buf[0] = CMD_STATUS_PROCESSING;
       CmdSvr_TxBuf.Len = 1;
     }
-    CmdSvr_RxBuf.Idx = 0;
+    //CmdSvr_RxBuf.Idx = 0;
   }
   else if(status == i2c::I2C_SLAVE_TX_DONE)
   {           
