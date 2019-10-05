@@ -651,13 +651,13 @@ void i2c::I2C_ISR(void)
   {
     m_i2c_this->RXNE_Handler();
   }
-  else if(SR1 & I2C_SR1_TXE)
-  {
-    m_i2c_this->TXE_Handler();
-  }
   else if(SR1 & I2C_SR1_BTF) 
   {
     m_i2c_this->BTF_Handler();
+  }
+  else if(SR1 & I2C_SR1_TXE)
+  {
+    m_i2c_this->TXE_Handler();
   }
   else if(SR1 & I2C_SR1_STOPF)
   {
@@ -858,28 +858,16 @@ void i2c::RXNE_Handler()
   }
   else if(m_I2CState == I2C_SLAVE_RX)
   {
-    /* Read the data from I2C data register and save it into the Rx Queue */
-    
-    //I2C_SLAVE_BUF_BYTE_IN(m_SlaveTxn);
-    
-    if(m_SlaveTxn.RxBuf->Idx == m_SlaveTxn.RxBuf->Len -1)
-    {
-      /* This is the second last byte we receive in this buffer 
-      Next byte, last byte, will be NACKed */
-      DisableACK();      
-      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_WITH_NACK);      
-    }
-    else if(m_SlaveTxn.RxBuf->Idx >= m_SlaveTxn.RxBuf->Len)
-    {
-      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK); 
-      DisableACK(); 
-      /* Last byte received here, execute the Callback */
-      //if(m_SlaveTxn.XferDoneCallback)
-        //m_SlaveTxn.XferDoneCallback(I2C_SLAVE_RX_DONE);
+    if(m_SlaveTxn.RxBuf->Idx >= m_SlaveTxn.RxBuf->Len - 1)
+    {     
+      /* Dummy read/Write to clear the RXNE interrupt*/
+      I2C_DATA_REG = I2C_DATA_REG;
+      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_DEFAULT_BYTE); 
     }
     else
     {
       I2C_SLAVE_BUF_BYTE_IN(m_SlaveTxn);
+      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_BYTE_IN); 
     }
   }
   else
@@ -1076,6 +1064,7 @@ void i2c::STOPF_Handler()
    
   if(m_I2CState == I2C_SLAVE_RX)
   {     
+    //  EnableACK();
     /* Execute the RxDone Callback */
     if(m_SlaveTxn.XferDoneCallback)
        m_SlaveTxn.XferDoneCallback(I2C_SLAVE_RX_DONE);   
@@ -1162,29 +1151,17 @@ void i2c::BTF_Handler()
     
   }
   else if(m_I2CState == I2C_SLAVE_RX ) 
-  {
-     /* Read the data from I2C data register and save it into the Rx Queue */
-    
-    //I2C_SLAVE_BUF_BYTE_IN(m_SlaveTxn);
-    
-    if(m_SlaveTxn.RxBuf->Idx == m_SlaveTxn.RxBuf->Len -1)
-    {
-      /* This is the second last byte we receive in this buffer 
-      Next byte, last byte, will be NACKed */
-      DisableACK();      
-      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_WITH_NACK);      
-    }
-    else if(m_SlaveTxn.RxBuf->Idx == m_SlaveTxn.RxBuf->Len)
-    {
-      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK); 
-      DisableACK(); 
-      /* Last byte received here, execute the Callback */
-      //if(m_SlaveTxn.XferDoneCallback)
-        //m_SlaveTxn.XferDoneCallback(I2C_SLAVE_RX_DONE);
+  {    
+    if(m_SlaveTxn.RxBuf->Idx >= m_SlaveTxn.RxBuf->Len - 1)
+    {     
+      /* Dummy read/Write to clear the RXNE interrupt*/
+      I2C_DATA_REG = I2C_DATA_REG;
+      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_DEFAULT_BYTE); 
     }
     else
     {
       I2C_SLAVE_BUF_BYTE_IN(m_SlaveTxn);
+      I2C_LOG_STATES(I2C_LOG_SLAVE_RX_BYTE_IN); 
     }
   }
   else if(m_I2CState == I2C_SLAVE_TX )    

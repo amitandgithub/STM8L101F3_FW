@@ -5,28 +5,23 @@
 
 #include"I2C_Commands.h"
 
-#define CMDSVR_BUF_SIZE 20
+#define CMDSVR_BUF_SIZE 7
 
 static i2c I2CDevIntr;
-//static i2c::SlaveTxn_t I2C_SlaveTxn;
 
 uint8_t CmdSvr_Buf[CMDSVR_BUF_SIZE] = {CMD_STATUS_READY,};
 i2c::i2cBuf_t CmdSvr_TxBuf = {&CmdSvr_Buf[0],1,0};
 i2c::i2cBuf_t CmdSvr_RxBuf = {&CmdSvr_Buf[1],CMDSVR_BUF_SIZE,0};
 
-Cmd_t CmdSvr_Cmd = {(CmdHdr_t*)CmdSvr_RxBuf.Buf,(RspHdr_t*)CmdSvr_TxBuf.Buf};
-
 CmdSvrContext_t CmdSvrContext = 
 {
-  { (CmdHdr_t*)CmdSvr_RxBuf.Buf,(RspHdr_t*)CmdSvr_TxBuf.Buf }
+  {(CmdHdr_t*)CmdSvr_RxBuf.Buf,(RspHdr_t*)CmdSvr_TxBuf.Buf}
 };
 
 static const CmdHandler CmdTable[MODULE_ID_MAX] = 
 {       
   I2C_CmdHandler,                                        
 };
-
-
 
 uint8_t* CmdSvr_SwitchBuf(uint8_t* Buffer)
 {  
@@ -70,12 +65,9 @@ CmdStatus_t Cmdsvr_DispatchResponse(Cmd_t *pCmd)
     CmdSvr_TxBuf.Buf[0] = CMD_STATUS_READY;
   }
   
-  /* During the Rx packet reception, if I2C was put on hold then resume it here*/
-  I2CDevIntr.SlaveStartReceiving();
-  
   CmdSvr_TxBuf.Idx = 0;
   CmdSvr_RxBuf.Idx = 0;
-  //delay_ms(100);  
+  delay_ms(100);  
   return CMD_STATUS_OK;
 }
 
@@ -89,8 +81,7 @@ CmdStatus_t Cmdsvr_Init()
     
   while(I2CDevIntr.SlaveStartListening(&CmdSvr_TxBuf, &CmdSvr_RxBuf) != i2c::I2C_OK);
   
-  return CMD_STATUS_OK;
-    
+  return CMD_STATUS_OK;    
 }
 
 void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
@@ -99,50 +90,29 @@ void I2C_CmdSvr_Callback(i2c::I2CStatus_t status)
   {    
     if((CmdSvr_TxBuf.Buf[0] == CMD_STATUS_READY) && (CmdSvr_RxBuf.Idx >= sizeof(RspHdr_t)))
     {
-      CmdSvr_TxBuf.Buf = &CmdSvr_Buf[0];
+      CmdSvr_TxBuf.Buf = CmdSvr_Buf;
       CmdSvr_TxBuf.Buf[0] = CMD_STATUS_PROCESSING;
       CmdSvr_TxBuf.Len = 1;
     }
-//    else
-//    {
-//      CmdSvr_RxBuf.Idx = 0;
-//    }    
     CmdSvr_RxBuf.Idx = 0;
   }
-//  else if(status == i2c::I2C_SLAVE_RX_DONE_WITH_NACK)
-//  {
-//    CmdSvr_RxBuf.Idx = 0;
-//  }
   else if(status == i2c::I2C_SLAVE_TX_DONE)
   {           
-    if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_PROCESSING)
+    if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_PROCESSING_DONE)
     {
-        //CmdSvr_TxBuf.Idx = 0;  
-    }
-    else if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_PROCESSING_DONE)
-    {
-      if(CmdSvr_TxBuf.Idx >= 1)//sizeof(RspHdr_t))
+      CmdSvr_RxBuf.Idx = 0;
+      if(CmdSvr_TxBuf.Idx >= 1)
       {
         CmdSvr_TxBuf.Buf[0] = CMD_STATUS_READY;
       }
-    }
-    else if(CmdSvr_TxBuf.Buf[0] == CMD_STATUS_READY)
-    {
-      
-    }
-    else
-    {
-      while(1);
     }
     CmdSvr_TxBuf.Idx = 0;    
   }
   else
   {
     while(1);
-  } 
-  
+  }  
 }
-
 
 void CmdSvr_Run(void)
 {  

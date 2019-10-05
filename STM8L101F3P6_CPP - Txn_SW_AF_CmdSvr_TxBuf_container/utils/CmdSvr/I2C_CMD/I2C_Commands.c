@@ -4,7 +4,7 @@
 #include"I2C_Commands.h"
 
 
-uint8_t I2c_Cmd_response[sizeof(I2C_Add_Cmd_Response)];
+uint8_t I2c_Cmd_response[sizeof(I2C_Add_Cmd_Response)+5];
 
 
 CmdStatus_t I2C_CmdHandler(Cmd_t* pCmd)

@@ -32,8 +32,8 @@ This method is faster in communication. */
 
 #if I2C_DEBUG
 #define I2C_LOG_STATES_SIZE 255
-#define I2C_LOG_EVENTS(x) I2cLogStates(x)
-#define I2C_LOG_STATES(x) I2cLogStates(x)
+#define I2C_LOG_EVENTS(x) //I2cLogStates(x)
+#define I2C_LOG_STATES(x) //I2cLogStates(x)
 #endif
 
 #define I2C_TIMEOUT 5000u
@@ -277,11 +277,11 @@ public:
     I2C_LOG_STOP_TIMEOUT                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,109),
     I2C_LOG_BUSY_TIMEOUT                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,110),
     I2C_LOG_ACK_FAIL                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,111),
-    I2C_LOG_SLAVE_RX_DONE_WITH_NACK                  =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,112),
+    I2C_LOG_SLAVE_RX_DONE_WITH_DEFAULT_BYTE     =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,112),
     I2C_LOG_TXE_DEFAULT_BYTE                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,113),
     I2C_LOG_ADDR_SLAVE_RX_SELECTED              =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,114),
     I2C_LOG_ADDR_SLAVE_TX_SELECTED      =	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,115),
-    I2C_LOG_SLAVE_RX_WITH_NACK                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,116),/*
+    I2C_LOG_SLAVE_RX_BYTE_IN          	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,116),/*
     I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,117),
     I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,118),
     I2C_LOG_                         	=	DBG_LOG_CREATE_ID(DBG_LOG_MODULE_ID_I2C,119),
