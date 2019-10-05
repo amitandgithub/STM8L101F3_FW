@@ -32,8 +32,8 @@ This method is faster in communication. */
 
 #if I2C_DEBUG
 #define I2C_LOG_STATES_SIZE 255
-#define I2C_LOG_EVENTS(x) //I2cLogStates(x)
-#define I2C_LOG_STATES(x) //I2cLogStates(x)
+#define I2C_LOG_EVENTS(x) I2cLogStates(x)
+#define I2C_LOG_STATES(x) I2cLogStates(x)
 #endif
 
 #define I2C_TIMEOUT 5000u

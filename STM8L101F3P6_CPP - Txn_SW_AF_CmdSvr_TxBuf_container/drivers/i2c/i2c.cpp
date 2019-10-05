@@ -743,47 +743,126 @@ void i2c::TxnDoneHandler(uint8_t StopFlag)
     }
   }                         
 }
+
 #pragma inline = forced
-void i2c::AF_Handler()
+void i2c::SB_Handler()
 {
-  I2C_LOG_EVENTS(I2C_LOG_AF);
-  I2C_LOG_STATES(I2C_LOG_ACK_FAIL);
-  
-  ClearAF(); 
- 
-  
-  if((m_I2CState == I2C_MASTER_TX)) 
+  I2C_LOG_EVENTS(I2C_LOG_SB); 
+  if( m_I2CState == I2C_MASTER_TX )
   {
-    /* Generate Stop */
-    GenerateStop();    
-    // m_I2CStatus = I2C_ACK_FAIL;    
-    return;
+    I2C_DATA_REG = m_MasterTxn->SlaveAddress & I2C_DIR_WRITE; 
+    I2C_LOG_STATES(I2C_LOG_SB_MASTER_TX);
   }
-  else if((m_I2CState == I2C_SLAVE_TX))
+  else if((m_I2CState == I2C_MASTER_RX) || (m_I2CState == I2C_MASTER_RX_REPEATED_START))
+  {
+    /* start listening RxNE and TxE interrupts */  
+    Enable_BUF_Interrupt();
+    
+#ifndef I2C_RX_METHOD_1                
+    if(m_MasterTxn->RxLen == 2U) 
+    {
+      /* Enable Pos */
+      EnablePOS();
+    }
+#endif 
+    I2C_DATA_REG = m_MasterTxn->SlaveAddress | I2C_DIR_READ;    
+    
+    /* Repeated start is handled here, clear the flag*/
+    m_MasterTxn->RepeatedStart = 0;
+    
+    m_I2CState = I2C_MASTER_RX;
+    
+    I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX);
+  }
+  else
+  {
+    while(1);
+  }						
+}
+
+#pragma inline = forced
+void i2c::ADDR_Handler()
+{
+  I2C_LOG_EVENTS(I2C_LOG_ADDR); 
+  if(m_I2CState == I2C_MASTER_RX)
+  {
+    if(m_MasterTxn->RxLen == 1U)   
+    {
+      /* Clear ADDR flag */
+      ClearADDR();
+      
+      /* Disable Acknowledge */
+      DisableACK();
+      
+      /* Generate Stop */
+      GenerateStop();
+      
+      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_RX_SIZE_1);                                       
+    }   
+#ifndef I2C_RX_METHOD_1 
+    else if(m_MasterTxn->RxLen == 2U)   
+    {
+      /* Clear ADDR flag */
+      ClearADDR();
+      
+      /* Disable Acknowledge */
+      DisableACK();
+      
+      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_RX_SIZE_2);                       
+    }
+#endif
+    else
+    {                    
+      /* Clear ADDR flag */
+      ClearADDR();
+      
+      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_RX_SIZE_OTHER);
+    }  
+  }
+  else if(m_I2CState == I2C_MASTER_TX)
   {                
-    // In Slave mode just execute the transaction done callback if registered    
-    m_I2CState = I2C_READY;
+    /* Clear ADDR flag */
+    ClearADDR();
     
-    if(m_SlaveTxn.XferDoneCallback)
-      m_SlaveTxn.XferDoneCallback(I2C_SLAVE_TX_DONE); 
-    //while(1);
+    if(m_MasterTxn->TxLen > 0)
+    {                    
+      I2C_BUF_BYTE_OUT(m_MasterTxn);
+	  
+      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_TX_SIZE_GT_0);
+    }
+    else
+    {
+      //while(1);
+    }
   }
-  else if((m_I2CState == I2C_SLAVE_RX))
+  else if((m_I2CState == I2C_READY) || (m_I2CState == I2C_SLAVE_RX) || (m_I2CState == I2C_SLAVE_TX) )
   {
-    //m_I2CState = I2C_READY;
-    
-    //I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK);
-    /* Last byte received here, execute the Callback */
-    if(m_SlaveTxn.XferDoneCallback)
-      m_SlaveTxn.XferDoneCallback(I2C_SLAVE_RX_DONE);
-    //while(1);
+    // changing state to Slave Tx here
+    /* Check the addressing mode*/
+    if( (I2C->SR3 & I2C_SR3_DUALF ) == RESET)
+    {
+      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
+    }
+    else
+    {
+      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
+    }            
+    /* Transfer Direction requested by Master */
+    if( (I2C->SR3 & I2C_SR3_TRA) == 0)
+    {
+      m_I2CState = I2C_SLAVE_RX;
+      I2C_LOG_STATES(I2C_LOG_ADDR_SLAVE_RX_SELECTED);
+    }
+    else
+    {
+      m_I2CState = I2C_SLAVE_TX;
+      I2C_LOG_STATES(I2C_LOG_ADDR_SLAVE_TX_SELECTED);
+    }
   }
-  else                                
+  else
   {
-    //while(1);/* Fatal Error*/
+    while(1);/* Fatal Error*/      
   }
-  
-   m_I2CState = I2C_READY;
 }
 
 #pragma inline = forced
@@ -934,125 +1013,8 @@ void i2c::TXE_Handler()
   }
   
 }
-#pragma inline = forced
-void i2c::SB_Handler()
-{
-  I2C_LOG_EVENTS(I2C_LOG_SB); 
-  if( m_I2CState == I2C_MASTER_TX )
-  {
-    I2C_DATA_REG = m_MasterTxn->SlaveAddress & I2C_DIR_WRITE; 
-    I2C_LOG_STATES(I2C_LOG_SB_MASTER_TX);
-  }
-  else if((m_I2CState == I2C_MASTER_RX) || (m_I2CState == I2C_MASTER_RX_REPEATED_START))
-  {
-    /* start listening RxNE and TxE interrupts */  
-    Enable_BUF_Interrupt();
-    
-#ifndef I2C_RX_METHOD_1                
-    if(m_MasterTxn->RxLen == 2U) 
-    {
-      /* Enable Pos */
-      EnablePOS();
-    }
-#endif 
-    I2C_DATA_REG = m_MasterTxn->SlaveAddress | I2C_DIR_READ;    
-    
-    /* Repeated start is handled here, clear the flag*/
-    m_MasterTxn->RepeatedStart = 0;
-    
-    m_I2CState = I2C_MASTER_RX;
-    
-    I2C_LOG_STATES(I2C_LOG_SB_MASTER_RX);
-  }
-  else
-  {
-    while(1);
-  }						
-}
-#pragma inline = forced
-void i2c::ADDR_Handler()
-{
-  I2C_LOG_EVENTS(I2C_LOG_ADDR); 
-  if(m_I2CState == I2C_MASTER_RX)
-  {
-    if(m_MasterTxn->RxLen == 1U)   
-    {
-      /* Clear ADDR flag */
-      ClearADDR();
-      
-      /* Disable Acknowledge */
-      DisableACK();
-      
-      /* Generate Stop */
-      GenerateStop();
-      
-      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_RX_SIZE_1);                                       
-    }   
-#ifndef I2C_RX_METHOD_1 
-    else if(m_MasterTxn->RxLen == 2U)   
-    {
-      /* Clear ADDR flag */
-      ClearADDR();
-      
-      /* Disable Acknowledge */
-      DisableACK();
-      
-      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_RX_SIZE_2);                       
-    }
-#endif
-    else
-    {                    
-      /* Clear ADDR flag */
-      ClearADDR();
-      
-      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_RX_SIZE_OTHER);
-    }  
-  }
-  else if(m_I2CState == I2C_MASTER_TX)
-  {                
-    /* Clear ADDR flag */
-    ClearADDR();
-    
-    if(m_MasterTxn->TxLen > 0)
-    {                    
-      I2C_BUF_BYTE_OUT(m_MasterTxn);
-	  
-      I2C_LOG_STATES(I2C_LOG_ADDR_INTR_MASTER_TX_SIZE_GT_0);
-    }
-    else
-    {
-      //while(1);
-    }
-  }
-  else if((m_I2CState == I2C_READY) || (m_I2CState == I2C_SLAVE_RX) || (m_I2CState == I2C_SLAVE_TX) )
-  {
-    // changing state to Slave Tx here
-    /* Check the addressing mode*/
-    if( (I2C->SR3 & I2C_SR3_DUALF ) == RESET)
-    {
-      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
-    }
-    else
-    {
-      m_MasterTxn->SlaveAddress = (I2C->OARL & 0xFE); // Bit 1-7 are address
-    }            
-    /* Transfer Direction requested by Master */
-    if( (I2C->SR3 & I2C_SR3_TRA) == 0)
-    {
-      m_I2CState = I2C_SLAVE_RX;
-      I2C_LOG_STATES(I2C_LOG_ADDR_SLAVE_RX_SELECTED);
-    }
-    else
-    {
-      m_I2CState = I2C_SLAVE_TX;
-      I2C_LOG_STATES(I2C_LOG_ADDR_SLAVE_TX_SELECTED);
-    }
-  }
-  else
-  {
-    while(1);/* Fatal Error*/      
-  }
-}
+
+
 #pragma inline = forced
 void i2c::STOPF_Handler()
 {
@@ -1078,6 +1040,50 @@ void i2c::STOPF_Handler()
   
   m_I2CState = I2C_READY;
 } 
+
+#pragma inline = forced
+void i2c::AF_Handler()
+{
+  I2C_LOG_EVENTS(I2C_LOG_AF);
+  I2C_LOG_STATES(I2C_LOG_ACK_FAIL);
+  
+  ClearAF(); 
+ 
+  
+  if((m_I2CState == I2C_MASTER_TX)) 
+  {
+    /* Generate Stop */
+    GenerateStop();    
+    // m_I2CStatus = I2C_ACK_FAIL;    
+    return;
+  }
+  else if((m_I2CState == I2C_SLAVE_TX))
+  {                
+    // In Slave mode just execute the transaction done callback if registered    
+    m_I2CState = I2C_READY;
+    
+    if(m_SlaveTxn.XferDoneCallback)
+      m_SlaveTxn.XferDoneCallback(I2C_SLAVE_TX_DONE); 
+    //while(1);
+  }
+  else if((m_I2CState == I2C_SLAVE_RX))
+  {
+    //m_I2CState = I2C_READY;
+    
+    //I2C_LOG_STATES(I2C_LOG_SLAVE_RX_DONE_WITH_NACK);
+    /* Last byte received here, execute the Callback */
+    if(m_SlaveTxn.XferDoneCallback)
+      m_SlaveTxn.XferDoneCallback(I2C_SLAVE_RX_DONE);
+    //while(1);
+  }
+  else                                
+  {
+    //while(1);/* Fatal Error*/
+  }
+  
+   m_I2CState = I2C_READY;
+}
+
 #pragma inline = forced
 void i2c::BTF_Handler()
 {
