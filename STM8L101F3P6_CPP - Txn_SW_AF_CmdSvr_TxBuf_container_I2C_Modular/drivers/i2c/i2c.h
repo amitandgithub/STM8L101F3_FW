@@ -55,10 +55,6 @@ This method is faster in communication. */
 
 #define I2C_BUF_BYTE_OUT(__I2C_BUF)             I2C_DATA_REG = (*__I2C_BUF->TxBuf++); __I2C_BUF->TxLen--
 
-//#define I2C_SLAVE_BUF_BYTE_IN(__I2C_BUF)        (*__I2C_BUF->RxBuf++) = I2C_DATA_REG; __I2C_BUF->RxLen++
-//
-//#define I2C_SLAVE_BUF_BYTE_OUT(__I2C_BUF)        I2C_DATA_REG = (*__I2C_BUF->TxBuf++); __I2C_BUF->TxLen++
-
 #define I2C_SLAVE_BUF_BYTE_IN(__I2C_BUF)        __I2C_BUF.RxBuf->Buf[__I2C_BUF.RxBuf->Idx++] = I2C_DATA_REG
 
 #define I2C_SLAVE_BUF_BYTE_OUT(__I2C_BUF)        I2C_DATA_REG = __I2C_BUF.TxBuf->Buf[__I2C_BUF.TxBuf->Idx++]
@@ -97,37 +93,12 @@ public:
     I2C_TXN_QUEUE_ERROR,
   }I2CStatus_t;
   
-//  typedef enum
-//  {
-//    I2C_BUF_TYPE_MASTER_TX,
-//    I2C_BUF_TYPE_MASTER_RX,
-//    I2C_BUF_TYPE_SLAVE_TX,
-//    I2C_BUF_TYPE_SLAVE_RX  
-//  }i2cBufType_t;
-//  
   typedef struct
   {
     uint8_t* Buf;
     uint8_t  Len;
     uint8_t  Idx;     
   }i2cBuf_t;
-  
-//  typedef struct
-//  {
-//    uint8_t               SlaveAddress;
-//    uint8_t               RepeatedStart;
-//    i2cBuf_t*             TxBuf;
-//    i2cBuf_t*             RxBuf;  
-//    i2cMasterCallback_t   XferDoneCallback;
-//  }i2cMasterContext_t;
-//  
-//  typedef struct
-//  {
-//    i2cBuf_t*              TxBuf;
-//    i2cBuf_t*              RxBuf; 
-//    i2cSlaveCallback_t    SlaveTxCallback;
-//    i2cSlaveCallback_t    SlaveRxCallback;
-//  }i2cSlaveContext_t;
   
   typedef void(*i2cMasterCallback_t)(I2CStatus_t Status);
   
@@ -370,9 +341,7 @@ public:
   
   void Disable_BUF_Interrupt(){I2C->ITR &= (uint8_t)~I2C_ITR_ITBUFEN;}
   
-  I2CState_t GetState(){return m_I2CState;}
-  
-  
+  I2CState_t GetState(){return m_I2CState;}  
   
   void SB_Handler();
   
@@ -427,8 +396,6 @@ public:
   
   void SetSlaveCallback(i2cSlaveCallback_t I2CSlaveCallback){m_SlaveTxn.XferDoneCallback = I2CSlaveCallback;}
   
- // void SetSlaveRxCallback(i2cSlaveCallback_t I2CSlaveCallback){m_SlaveRxDoneCallback = I2CSlaveCallback;}
-  
   void SwapMasterBuf(MasterTxn_t* i2cBuf){MasterTxn_t* temp = i2cBuf; i2cBuf = m_MasterTxn; m_MasterTxn = temp; }
   
   void SwitchSlaveTxBuf(i2cBuf_t* i2cSlaveTxBuf);
@@ -462,19 +429,7 @@ private:
   volatile I2CState_t           m_I2CState; 
   
   /* It must be volatile becoz it is shared between ISR and main loop */
-  volatile I2CStatus_t          m_I2CStatus;
-  
-  //queue<uint8_t,uint8_t,I2C_SLAVE_TX_BUF_SIZE>        SlaveTxQueue;
-  
-  // queue<uint8_t,uint8_t,I2C_SLAVE_RX_BUF_SIZE>        SlaveRxQueue;
-  
-  i2cSlaveCallback_t            m_SlaveTxDoneCallback;
-  
-  i2cSlaveCallback_t            m_SlaveRxDoneCallback;
-  
-  
-  
-  
+  volatile I2CStatus_t          m_I2CStatus;  
 };
 
 
