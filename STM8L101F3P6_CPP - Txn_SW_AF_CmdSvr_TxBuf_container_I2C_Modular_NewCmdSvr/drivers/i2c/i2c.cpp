@@ -16,11 +16,33 @@ i2c::I2CStatus_t i2c::HwInit()
   
   ClockEnable();
   
-  I2C_Init(100000,0x08<<1,I2C_DutyCycle_2,I2C_Ack_Disable,I2C_AcknowledgedAddress_7bit); 
+  I2C->CR1 = 0;				// clearing (PE) if this is a re - init, this does not stop the ongoing communication
+  // CR1_NOSTRETCH	Clock Strtching enabled
+  // CR1_ENGC 		General call disabled
+  // CR2_POS 			ACK controls the current byte
+  I2C->FREQR = 10;             // 10:10MHz clk at least 1 MHz for Standard and 4MHz for Fast
+  I2C->CCRH = 0;           // I2C running is standard mode.
+  
+  //I2C1_CCRL = 0x50;            // I2C period = 2 * CCR * tMASTER 100KHz : tabe 50 RM0016 P 315 for STM8S103
+  //I2C1_CCRH = 0x00;			// CCR[11:8] = 0
+  //400KHz %Err=0%, I2C_CCr = 1 ; Duty_bit = 1
+  I2C->CCRL = 0x01;            // I2C period = 2 * CCR * tMASTER 100KHz : tabe 50 RM0031 P 517 for STM8L151
+  I2C->CCRH = 0xC0;	     // F/S = 1 ; DUTY = 1 ; res = 0; CCR[11:8] = 0;
+  
+  I2C->OARL = I2C_OWN_SLAVE_ADDRESS;
+  I2C->OARH = I2C_ADDRESSING_MODE_7_BIT | I2C_OARH_ADDCONF_1;               // 7-bit slave address
+  // ADD[9:8] unused
+  
+  I2C->TRISER = 3;			//Maximum time used by the feedback loop to keep SCL Freq stable whatever SCL rising time is
+  //Standard mode max rise time is 1000ns
+  //Fast mode 300ns
+  //example for 16MHz-S : (1000ns / 62.5 ns = 16 ) + 1 = 17
+  //for 16 MHz-F : (300 ns / 62.5 ns = 16 ) + 1 = 6
   
   PinsInit();
   
-  I2C_Cmd(ENABLE);
+  /* Enable I2C peripheral */
+  I2C->CR1 |= I2C_CR1_PE;
   
   return I2C_OK;
 }

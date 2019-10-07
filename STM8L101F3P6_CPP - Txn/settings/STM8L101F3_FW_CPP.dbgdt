@@ -816,7 +816,7 @@
                     <item>I2CDevIntr</item>
                     <item>pass</item>
                     <item>fail</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

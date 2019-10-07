@@ -24,6 +24,12 @@
 #define I2C_SLAVE_ONLY 1  // i2c.o                       566        2        2
 #define I2C_MASTER_ONLY 0  //i2c.o                       913        2        2
 
+
+#define I2C_OWN_SLAVE_ADDRESS 0x10
+#define I2C_ADDRESSING_MODE_7_BIT 0x00
+#define I2C_OARH_ADDCONF_1 0x40
+
+
 /*Method 1: This method is for the case when the I2C is used with interrupts that have the highest priority in the application.
 This method is faster in communication. */
 #define I2C_RX_METHOD_1
@@ -62,10 +68,6 @@ This method is faster in communication. */
 class i2c
 {
 public:
-  
-//  typedef void(*I2CCallback_t)(void);
-//  
-//  typedef void(*I2CSlaveCallback_t)(uint8_t Len, uint8_t* Buf);
   
   typedef enum 
   {

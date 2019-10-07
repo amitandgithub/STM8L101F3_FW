@@ -16,7 +16,7 @@
         <ShowSource>1</ShowSource>
     </Trace1>
     <DebugChecksum>
-        <Checksum>1302615327</Checksum>
+        <Checksum>374952384</Checksum>
     </DebugChecksum>
     <Disassembly>
         <InstrCount>0</InstrCount>
@@ -80,6 +80,9 @@
         <GraphEnabled>0</GraphEnabled>
         <ShowTimeLog>1</ShowTimeLog>
     </DataSample>
+    <Breakpoints>
+        <Count>0</Count>
+    </Breakpoints>
     <TermIOLog>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -89,13 +92,17 @@
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
-    <Breakpoints>
-        <Count>0</Count>
-    </Breakpoints>
     <Aliases>
         <A0>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\app\main.c" ""</A0>
-        <A1>_ "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\system\stm8l10x_it.c" ""</A1>
-        <Count>2</Count>
+        <A1>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - I2C_Buf_SW\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c" ""</A1>
+        <A2>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - I2C_Buf_SW\app\main.c" ""</A2>
+        <A3>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - I2C_Buf_SW\drivers\gpio\DigitalOut.h" ""</A3>
+        <A4>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - I2C_Buf_SW\drivers\i2c\i2c.cpp" ""</A4>
+        <A5>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - I2C_Buf_SW\drivers\i2c\i2c.h" ""</A5>
+        <A6>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - I2C_Buf_SW\system\stm8l10x_it.c" ""</A6>
+        <A7>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - I2C_Buf_SW\tests\i2c\i2c_tests.cpp" ""</A7>
+        <A8>_ "C:\Amit_Chaudhary\STM8\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\system\stm8l10x_it.c" ""</A8>
+        <Count>9</Count>
         <SuppressDialog>0</SuppressDialog>
     </Aliases>
     <DebuggerSettings>

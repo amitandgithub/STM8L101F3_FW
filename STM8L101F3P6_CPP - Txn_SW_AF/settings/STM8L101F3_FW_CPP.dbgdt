@@ -819,7 +819,7 @@
                     <item>I2C_Request</item>
                     <item>I2C_Response</item>
                     <item>RequestData</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
