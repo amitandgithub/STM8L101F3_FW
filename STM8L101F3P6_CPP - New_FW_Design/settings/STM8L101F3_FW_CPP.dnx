@@ -88,12 +88,6 @@
         <GraphEnabled>0</GraphEnabled>
         <ShowTimeLog>1</ShowTimeLog>
     </DataSample>
-    <Breakpoints>
-        <Bp0>_ "STD_DATA" "Buf" 0 0 0 3 0 "" 0 ""</Bp0>
-        <Bp1>_ "STD_DATA" "CmdSvr_TxBuf.Buf" 0 0 0 2 0 "CmdSvr_TxBuf.Buf = 0x41" 0 ""</Bp1>
-        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\tests\i2c\i2c_tests.cpp}.284.3" 0 0 0 0 "" 0 ""</Bp2>
-        <Count>3</Count>
-    </Breakpoints>
     <TermIOLog>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -103,6 +97,12 @@
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
+    <Breakpoints>
+        <Bp0>_ "STD_DATA" "Buf" 0 0 0 3 0 "" 0 ""</Bp0>
+        <Bp1>_ "STD_DATA" "CmdSvr_TxBuf.Buf" 0 0 0 2 0 "CmdSvr_TxBuf.Buf = 0x41" 0 ""</Bp1>
+        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\tests\i2c\i2c_tests.cpp}.284.3" 0 0 0 0 "" 0 ""</Bp2>
+        <Count>3</Count>
+    </Breakpoints>
     <Aliases>
         <A0>_ "C:\Amit_Chaudhary\STM8L\Code\STM8L101F3_FW\STM8L101F3P6_CPP\app\main.c" ""</A0>
         <A1>_ "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Txn\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c" ""</A1>

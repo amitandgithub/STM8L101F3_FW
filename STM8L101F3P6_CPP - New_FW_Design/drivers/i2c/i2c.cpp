@@ -621,6 +621,9 @@ i2c::I2CStatus_t  i2c::XferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxL
 #if I2C_INTERRUPT_MODE
 i2c::I2CStatus_t i2c::XferIntr(MasterTxn_t* pTransaction) 
 {
+   if(m_I2CState != READY)
+        return I2C_BUSY;
+   
   if(pTransaction == 0)
   {
     return I2C_INVALID_PARAMS;
