@@ -621,7 +621,7 @@ i2c::I2CStatus_t  i2c::XferPoll(uint8_t SlaveAddress,uint8_t* TxBuf, uint8_t TxL
 #if I2C_INTERRUPT_MODE
 i2c::I2CStatus_t i2c::XferIntr(MasterTxn_t* pTransaction) 
 {
-   if(m_I2CState != READY)
+   if(m_I2CState != I2C_READY)
         return I2C_BUSY;
    
   if(pTransaction == 0)
@@ -989,7 +989,6 @@ void i2c::RXNE_Handler()
 #pragma inline = forced
 void i2c::TXE_Handler()
 {
-  
   if(m_I2CState == I2C_MASTER_TX)   
   {
     if( m_I2CState == I2C_MASTER_RX_REPEATED_START)
@@ -1079,7 +1078,6 @@ void i2c::AF_Handler()
   I2C_LOG_STATES(I2C_LOG_ACK_FAIL);
   
   I2C_CLEAR_AF(); 
- 
   
   if((m_I2CState == I2C_MASTER_TX)) 
   {

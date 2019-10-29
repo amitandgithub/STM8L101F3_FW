@@ -73,7 +73,7 @@ public:
   typedef enum 
   {
     I2C_OK,
-    //I2C_BUSY,
+    I2C_BUSY,
     I2C_BUSY_TIMEOUT,
     I2C_START_TIMEOUT,
     I2C_ADDR_TIMEOUT,
