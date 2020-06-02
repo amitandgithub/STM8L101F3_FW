@@ -26,8 +26,8 @@ void main(void)
     
     while (1)
     {
-       // gpio_tests();
-        I2c_Poll_Tests();  
+        gpio_tests();
+        //I2c_Poll_Tests();  
     }
 }
 

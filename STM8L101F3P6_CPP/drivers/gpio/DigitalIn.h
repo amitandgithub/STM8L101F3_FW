@@ -44,7 +44,6 @@ void DigitalIn<Port,Pin,Mode,Edge,GpioFptr>::HwInit()
     __disable_interrupt();
     SetInterrupt();  
     __enable_interrupt();
-
 }
 
 

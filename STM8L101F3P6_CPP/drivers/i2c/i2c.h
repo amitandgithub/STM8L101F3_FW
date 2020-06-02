@@ -310,7 +310,7 @@ public:
   
   void EnablePOS(){I2C->CR2 |= (uint8_t)I2C_CR2_POS;}
   
-  void DisablePOS(){I2C->CR2 &= (uint8_t)(~I2C_CR2_POS);;}
+  void DisablePOS(){I2C->CR2 &= (uint8_t)(~I2C_CR2_POS);}
   
   void EnableI2c(){I2C->CR1 |= I2C_CR1_PE;}
   
@@ -387,10 +387,7 @@ private:
   
   I2CSlaveCallback_t                                m_SlaveTxDoneCallback;
   
-  I2CSlaveCallback_t                                m_SlaveRxDoneCallback;
-  
-  
-  
+  I2CSlaveCallback_t                                m_SlaveRxDoneCallback; 
   
 };
 

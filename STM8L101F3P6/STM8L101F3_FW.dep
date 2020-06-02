@@ -5,195 +5,179 @@
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$PROJ_DIR$\utils\queue\queue.c</file>
-            <file>$PROJ_DIR$\tests\i2c\i2c_tests.c</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c</file>
-            <file>$PROJ_DIR$\system\stm8l10x_it.c</file>
-            <file>$PROJ_DIR$\drivers\gpio\Gpio.c</file>
-            <file>$PROJ_DIR$\drivers\i2c\i2c.c</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c</file>
             <file>$PROJ_DIR$\app\main.c</file>
-            <file>$PROJ_DIR$\system\system.c</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_beep.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\system.o</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_tim3.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_awu.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\Gpio.xcl</file>
-            <file>$PROJ_DIR$\Debug\Obj\queue.__cstat.et</file>
-            <file>$PROJ_DIR$\Debug\Obj\QueueCpp.xcl</file>
-            <file>$PROJ_DIR$\Debug\Obj\i2c_tests.o</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_spi.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_rst.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.xcl</file>
-            <file>$PROJ_DIR$\utils\queue\queue.hpp</file>
-            <file>$PROJ_DIR$\utils\queue\queue_8bit.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_tim2.h</file>
-            <file>$PROJ_DIR$\Debug\Exe\STM8L101F3_FW.hex</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_i2c.__cstat.et</file>
-            <file>$PROJ_DIR$\Debug\Obj\i2c_tests.__cstat.et</file>
-            <file>$PROJ_DIR$\drivers\gpio\Gpio.h</file>
-            <file>$TOOLKIT_DIR$\lib\dbgstm8smd.a</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_clk.__cstat.et</file>
-            <file>$PROJ_DIR$\utils\queue\queue.cpp</file>
-            <file>$PROJ_DIR$\system\system.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\system.__cstat.et</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\queue.xcl</file>
-            <file>$PROJ_DIR$\utils\queue\queue_8bit.c</file>
-            <file>$PROJ_DIR$\Debug\Exe\STM8L101F3_FW.out</file>
-            <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_it.__cstat.et</file>
-            <file>$PROJ_DIR$\utils\queue\QueueCpp.cpp</file>
-            <file>$PROJ_DIR$\utils\queue\queue.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_clk.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\Gpio.o</file>
-            <file>$PROJ_DIR$\drivers\i2c\i2c.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-            <file>$PROJ_DIR$\tests\i2c\i2c_tests.h</file>
-            <file>$PROJ_DIR$\system\stm8l10x_it.h</file>
-            <file>$TOOLKIT_DIR$\lib\dlstm8smn.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-            <file>$PROJ_DIR$\system\stm8l10x_conf.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_tim4.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_irtim.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_i2c.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_flash.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-            <file>$PROJ_DIR$\utils\queue\QueueCpp.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\i2c.o</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_i2c.xcl</file>
-            <file>$PROJ_DIR$\Debug\Obj\i2c.xcl</file>
-            <file>$PROJ_DIR$\Debug\Obj\Gpio.__cstat.et</file>
-            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_iwdg.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_it.xcl</file>
-            <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\system.xcl</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_clk.o</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x.h</file>
             <file>$PROJ_DIR$\Debug\Obj\queue_8bit.o</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_usart.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\queue_8bit.xcl</file>
             <file>$PROJ_DIR$\Debug\List\STM8L101F3_FW.map</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_clk.xcl</file>
+            <file>$PROJ_DIR$\Debug\Obj\system.xcl</file>
+            <file>$PROJ_DIR$\Debug\Obj\Gpio.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_usart.h</file>
             <file>$PROJ_DIR$\Debug\Obj\i2c_tests.xcl</file>
+            <file>$TOOLKIT_DIR$\lib\dlstm8smn.a</file>
+            <file>$PROJ_DIR$\Debug\Obj\i2c.__cstat.et</file>
             <file>$PROJ_DIR$\Debug\Obj\stm8l10x_i2c.o</file>
             <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_exti.h</file>
             <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_comp.h</file>
-            <file>$TOOLKIT_DIR$\lib\dlstm8smn.a</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_clk.xcl</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_wfe.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\i2c.__cstat.et</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_itc.h</file>
             <file>$TOOLKIT_DIR$\config\lnkstm8l101f3.icf</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_it.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\queue.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_it.xcl</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_iwdg.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\queue_8bit.xcl</file>
             <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_gpio.h</file>
             <file>$PROJ_DIR$\Debug\Obj\STM8L101F3_FW.pbd</file>
-            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_it.o</file>
-            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\queue.o</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_wfe.h</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_itc.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_clk.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\i2c.xcl</file>
+            <file>$PROJ_DIR$\utils\queue\queue_8bit.c</file>
+            <file>$TOOLKIT_DIR$\lib\dlstm8smn.h</file>
+            <file>$PROJ_DIR$\Debug\Exe\STM8L101F3_FW.out</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_irtim.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
+            <file>$PROJ_DIR$\utils\queue\queue.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\queue.xcl</file>
+            <file>$PROJ_DIR$\system\stm8l10x_it.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\system.__cstat.et</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_clk.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$PROJ_DIR$\drivers\i2c\i2c.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\Gpio.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_i2c.h</file>
+            <file>$PROJ_DIR$\utils\queue\QueueCpp.h</file>
+            <file>$PROJ_DIR$\tests\i2c\i2c_tests.h</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_tim4.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\i2c.o</file>
+            <file>$PROJ_DIR$\system\stm8l10x_conf.h</file>
+            <file>$PROJ_DIR$\utils\queue\QueueCpp.cpp</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_it.__cstat.et</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_flash.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_i2c.xcl</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\i2c_tests.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.xcl</file>
+            <file>$PROJ_DIR$\utils\queue\queue.hpp</file>
+            <file>$PROJ_DIR$\utils\queue\queue_8bit.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_i2c.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Obj\i2c_tests.__cstat.et</file>
+            <file>$PROJ_DIR$\drivers\gpio\Gpio.c</file>
+            <file>$PROJ_DIR$\system\stm8l10x_it.c</file>
+            <file>$PROJ_DIR$\tests\i2c\i2c_tests.c</file>
+            <file>$PROJ_DIR$\utils\queue\queue.c</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_spi.h</file>
+            <file>$PROJ_DIR$\drivers\i2c\i2c.c</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_awu.h</file>
+            <file>$PROJ_DIR$\drivers\gpio\Gpio.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\QueueCpp.xcl</file>
+            <file>$TOOLKIT_DIR$\lib\dbgstm8smd.a</file>
+            <file>$PROJ_DIR$\Debug\Obj\stm8l10x_clk.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Exe\STM8L101F3_FW.hex</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_tim2.h</file>
+            <file>$PROJ_DIR$\utils\queue\queue.cpp</file>
+            <file>$PROJ_DIR$\system\system.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\queue.__cstat.et</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_rst.h</file>
+            <file>$PROJ_DIR$\system\system.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\Gpio.xcl</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\system.o</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_tim3.h</file>
+            <file>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\inc\stm8l10x_beep.h</file>
         </outputs>
+        <file>
+            <name>$PROJ_DIR$\app\main.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 61</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 33</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 35</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 81 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7 74 45 36 51</file>
+                </tool>
+            </inputs>
+        </file>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 74 37</file>
+                    <file> 3 30</file>
                 </tool>
             </outputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\utils\queue\queue.c</name>
+            <name>$PROJ_DIR$\utils\queue\queue_8bit.c</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
-                    <file> 89</file>
-                </tool>
-                <tool>
                     <name>BICOMP</name>
-                    <file> 35</file>
+                    <file> 21</file>
                 </tool>
                 <tool>
-                    <name>__cstat</name>
-                    <file> 15</file>
+                    <name>ICCSTM8</name>
+                    <file> 2</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 41 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68</file>
+                    <file> 63 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\tests\i2c\i2c_tests.c</name>
+            <name>$PROJ_DIR$\Debug\Exe\STM8L101F3_FW.out</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
-                    <file> 17</file>
+                    <name>ILINK</name>
+                    <file> 3</file>
                 </tool>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 78</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 15 47 53 60 33 17 26 12 16 87 10 76</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\utils\queue\QueueCpp.cpp</name>
+            <outputs>
                 <tool>
                     <name>BICOMP</name>
                     <file> 75</file>
                 </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 26</file>
-                </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 46 31 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68 27 44 41 53 51 13 34 48 54 59 49 45 38 65</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 76</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 62</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 25</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 56 88 50 12 9 42 78 77 57 85 55 83 66 19 18 23 11 52 72 81 68</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\system\stm8l10x_it.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 87</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 67</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 39</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 47 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68 31 27 44 41 46</file>
+                    <file> 50 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7</file>
                 </tool>
             </inputs>
         </file>
@@ -201,35 +185,81 @@
             <name>$PROJ_DIR$\drivers\gpio\Gpio.c</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
-                    <file> 43</file>
+                    <name>BICOMP</name>
+                    <file> 85</file>
                 </tool>
                 <tool>
-                    <name>BICOMP</name>
-                    <file> 14</file>
+                    <name>ICCSTM8</name>
+                    <file> 47</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 64</file>
+                    <file> 6</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 31 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68 27 44 41 46</file>
+                    <file> 81 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7 74 45 36 51</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\drivers\i2c\i2c.c</name>
+            <name>$PROJ_DIR$\system\stm8l10x_it.c</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
-                    <file> 61</file>
+                    <name>BICOMP</name>
+                    <file> 18</file>
                 </tool>
                 <tool>
+                    <name>ICCSTM8</name>
+                    <file> 16</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 56</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 40 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7 81 74 45 36 51</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\tests\i2c\i2c_tests.c</name>
+            <outputs>
+                <tool>
                     <name>BICOMP</name>
-                    <file> 63</file>
+                    <file> 9</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 60</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 65</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 51 81 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7 74 45 36 48 46 59 44 29 38 34 43 31 37 20</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\utils\queue\queue.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 39</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 17</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
@@ -239,76 +269,53 @@
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 44 31 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68 27 46 41</file>
+                    <file> 36 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c</name>
+            <name>$PROJ_DIR$\drivers\i2c\i2c.c</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
-                    <file> 70</file>
+                    <name>BICOMP</name>
+                    <file> 27</file>
                 </tool>
                 <tool>
-                    <name>BICOMP</name>
-                    <file> 80</file>
+                    <name>ICCSTM8</name>
+                    <file> 53</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 29</file>
+                    <file> 11</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 42 88 50 12 9 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68</file>
+                    <file> 45 81 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7 74 51 36</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\app\main.c</name>
+            <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_i2c.c</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
+                    <name>BICOMP</name>
                     <file> 58</file>
                 </tool>
                 <tool>
-                    <name>BICOMP</name>
-                    <file> 20</file>
+                    <name>ICCSTM8</name>
+                    <file> 12</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 33</file>
+                    <file> 64</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 31 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68 27 44 41 46</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\system\system.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 10</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 69</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 32</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 31 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68 27 44 41 46</file>
+                    <file> 49 1 54 73 89 42 14 13 57 22 32 25 19 83 70 79 88 52 8 24 7</file>
                 </tool>
             </inputs>
         </file>
@@ -316,75 +323,68 @@
             <name>$PROJ_DIR$\utils\queue\queue.cpp</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
-                    <file> 89</file>
+                    <name>BICOMP</name>
+                    <file> 39</file>
                 </tool>
                 <tool>
-                    <name>BICOMP</name>
-                    <file> 35</file>
+                    <name>ICCSTM8</name>
+                    <file> 17</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 15</file>
+                    <file> 82</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 21 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68</file>
+                    <file> 62 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\utils\queue\queue_8bit.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 71</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 73</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 22 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\Debug\Exe\STM8L101F3_FW.out</name>
-            <outputs>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 74</file>
-                </tool>
-                <tool>
-                    <name>OBJCOPY</name>
-                    <file> 24</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 84 43 61 17 58 89 70 76 87 10 79 28</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\utils\queue\QueueCpp.cpp</name>
+            <name>$PROJ_DIR$\system\system.c</name>
             <outputs>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 16</file>
+                    <file> 5</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 87</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 41</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 60 88 50 12 9 42 78 77 57 85 56 55 83 66 19 18 23 11 52 72 81 68</file>
+                    <file> 81 1 54 73 89 42 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7 74 45 36 51</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\STM8L10x_StdPeriph_Driver\src\stm8l10x_clk.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 4</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 26</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 77</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 42 1 54 73 89 14 13 57 22 49 32 25 19 83 70 79 88 52 8 24 7</file>
                 </tool>
             </inputs>
         </file>
