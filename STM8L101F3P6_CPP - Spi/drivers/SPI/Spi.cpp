@@ -338,6 +338,7 @@ namespace HAL
       return m_SpiStatus; 
     } 
     
+
     void Spi::ISR()
     {
       if( SPI_RXNE(SPI) )

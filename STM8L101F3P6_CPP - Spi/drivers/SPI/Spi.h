@@ -188,8 +188,6 @@ namespace HAL
   
 #define SPI_WAIT_FOR_RXNE_FLAG_TO_SET(_SPI_,TIMEOUT) WaitOnFlag(&_SPI_->SR, SPI_SR_RXNE, 0, TIMEOUT)
   
-#define SPI_GET_EVENT(_SPI_)    POSITION_VAL(_SPI_->SR)
-  
 #define SPI_TXE(_SPI_) _SPI_->SR & SPI_SR_TXE
   
 #define SPI_RXNE(_SPI_) _SPI_->SR & SPI_SR_RXNE
@@ -198,12 +196,6 @@ namespace HAL
   
 #define SPI_BYTE_OUT_8_BIT(__BUF)     SPI->DR = *__BUF.TxBuf++; __BUF.TxLen--
   
-#define SPI_BYTE_IN_16_BIT(__BUF)      *((uint16_t*)__BUF.RxBuf) = SPI->DR; __BUF.RxBuf += sizeof(uint16_t);  __BUF.RxLen--
-  
-#define SPI_BYTE_OUT_16_BIT(__BUF)     SPI->DR = *((uint16_t*)__BUF.TxBuf); __BUF.TxBuf += sizeof(uint16_t); __BUF.TxLen--
-  
-#define SPI_DMA_DISABLE(_SPI_)  
-  
 #define SPI_CS_LOW()     //(((GPIO_TypeDef*)m_Transaction.ChipSelectPort)->ODR |= 1 << m_Transaction.ChipSelectPin)
   
 #define SPI_CS_HIGH()    //(((GPIO_TypeDef*)m_Transaction.ChipSelectPort)->ODR &= ~(1 << m_Transaction.ChipSelectPin))
@@ -211,3 +203,13 @@ namespace HAL
   
 }
 #endif //SPI_h
+
+
+/*
+SPI Driver Facts:
+
+1. In Spi slave mode Spi driver needs atleast 13 micro seconds for the Spi ISR to process one byte.
+   So, Spi Master shall wait for 13us to send next byte to this SPI splave
+
+
+*/

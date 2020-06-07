@@ -304,13 +304,16 @@ INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 25)
   * @param  None
   * @retval None
   */
+extern DigitalOut<B1> PB1;
 INTERRUPT_HANDLER(SPI_IRQHandler, 26)
 {
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
      // Spi::Spi_ISR();
+  PB1.High();
   m_Spi_ISR->ISR();
+  PB1.Low();
 }
 
 /**

@@ -16,7 +16,7 @@
         <ShowSource>1</ShowSource>
     </Trace1>
     <DebugChecksum>
-        <Checksum>826052713</Checksum>
+        <Checksum>1579731097</Checksum>
     </DebugChecksum>
     <Disassembly>
         <InstrCount>0</InstrCount>
@@ -101,7 +101,7 @@
     <Breakpoints>
         <Bp0>_ "STD_DATA" "Buf" 0 0 0 3 0 "" 0 ""</Bp0>
         <Bp1>_ "STD_DATA" "CmdSvr_TxBuf.Buf" 0 0 0 2 0 "CmdSvr_TxBuf.Buf = 0x41" 0 ""</Bp1>
-        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\app\main.c}.82.5" 1 0 0 0 "" 0 ""</Bp2>
+        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\system\stm8l10x_it.c}.315.3" 1 0 0 0 "" 0 ""</Bp2>
         <Count>3</Count>
     </Breakpoints>
     <Aliases>
