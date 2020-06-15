@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working fine tune1\settings\STM8L101F3_FW_CPP.Debug.general.xcl" --backend -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working fine tune1\settings\STM8L101F3_FW_CPP.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working RxTx\settings\STM8L101F3_FW_CPP.Debug.general.xcl" --backend -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working RxTx\settings\STM8L101F3_FW_CPP.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working fine tune1\settings\STM8L101F3_FW_CPP.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working fine tune1\settings\STM8L101F3_FW_CPP.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working RxTx\settings\STM8L101F3_FW_CPP.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Amit_Chaudhary\STM8\STM8L101\code\STM8L101F3_FW\STM8L101F3P6_CPP - Spi - Slave working RxTx\settings\STM8L101F3_FW_CPP.Debug.driver.xcl" 
 
 @echo off 
 :end

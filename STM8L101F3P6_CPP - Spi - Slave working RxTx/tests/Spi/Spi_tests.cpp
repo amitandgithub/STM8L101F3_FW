@@ -62,7 +62,7 @@ void SpiCallback(Spi::SpiStatus_t Status)
   //spi.SrartListeningRXIntr8bit(SPI_RxBuf,SPI_RX_SIZE);
 }
 uint32_t Pc_Count;
-void Spi_Master_Tests()
+void Spi_Tests()
 {
   uint8_t test_id = SLAVE_INTR_INIT;//w25qxx_POLL_TX;
   Spi::Transaction_t Transaction;

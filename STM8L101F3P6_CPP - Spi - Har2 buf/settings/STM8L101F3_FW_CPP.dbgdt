@@ -857,7 +857,7 @@
                     <item>SpiTxnCount</item>
                     <item>SPI_RxBuf</item>
                     <item>m_Transaction</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

@@ -209,7 +209,7 @@ namespace HAL
   
 #define LL_SPI_ClearFlag_OVR() SPI->DR = SPI->DR; SPI->SR = SPI->SR
   
-#define SPI_DISABLE_INTERRUPTS(Interrupt_Flags)  SPI->ICR &= (uint8_t)(~Interrupt_Flags)
+#define SPI_DISABLE_ALL_INTERRUPTS(Interrupt_Flags)  SPI->ICR = 0
   
 #define SPI_ENABLE_INTERRUPTS(Interrupt_Flags)  SPI->ICR |= (uint8_t)Interrupt_Flags
   

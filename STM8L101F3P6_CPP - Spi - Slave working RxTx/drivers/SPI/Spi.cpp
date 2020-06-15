@@ -71,21 +71,6 @@ namespace HAL
       Miso.SetOutputMode();
     }    
     
-//    void Spi::LL_SPI_ClearFlag_OVR()
-//    {
-//      volatile uint8_t tmpreg;
-//      tmpreg = SPI->DR;
-//      (void) tmpreg;
-//      tmpreg = SPI->SR;
-//      (void) tmpreg;
-//    }
-
-//    uint8_t Spi::WaitOnFlag(volatile uint8_t* reg, uint8_t bitmask, uint8_t status, uint16_t timeout) // 35(0x25)bytes
-//    {
-//      while( ((*reg & bitmask) == status) && timeout-- );    
-//      return ((*reg & bitmask) == status);
-//    }
-    
     Spi::SpiStatus_t Spi::Tx(uint8_t data)
     {     
       if(SPI_WAIT_FOR_TXE_FLAG_TO_SET(SPI,SPI_TIMEOUT)) return SPI_TXE_TIMEOUT;    

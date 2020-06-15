@@ -318,7 +318,8 @@ INTERRUPT_HANDLER(SPI_IRQHandler, 26)
       {             
         HAL::Spi::m_Transaction.SPIState = HAL::Spi::SPI_TX_DONE;
         //SPI_DISABLE_INTERRUPTS(SPI_ICR_TXIE | SPI_ICR_RXIE | SPI_ICR_ERRIE );
-        SPI->ICR = 0;
+        //SPI->ICR = 0;
+        SPI_DISABLE_ALL_INTERRUPTS();
         if(HAL::Spi::m_Transaction.XferDoneCallback) HAL::Spi::m_Transaction.XferDoneCallback(HAL::Spi::SPI_SLAVE_TX_DONE);     
       }   
     } 
@@ -329,20 +330,21 @@ INTERRUPT_HANDLER(SPI_IRQHandler, 26)
       if(HAL::Spi::m_Transaction.RxLen == 0)
       {               
         //SPI_DISABLE_INTERRUPTS(SPI_ICR_TXIE | SPI_ICR_RXIE | SPI_ICR_ERRIE );
-        SPI->ICR = 0;
+        //SPI->ICR = 0;
+        SPI_DISABLE_ALL_INTERRUPTS();
         HAL::Spi::m_Transaction.SPIState = HAL::Spi::SPI_RX_DONE;
         if(HAL::Spi::m_Transaction.XferDoneCallback) HAL::Spi::m_Transaction.XferDoneCallback(HAL::Spi::SPI_SLAVE_RX_DONE);     
       }   
     }
           
   }
-  else
-  {
-    if((SPI->SR & SPI_FLAG_OVR) == SPI_FLAG_OVR)
-    {
-      LL_SPI_ClearFlag_OVR();
-    }
-  }
+//  else
+//  {
+//    if((SPI->SR & SPI_FLAG_OVR) == SPI_FLAG_OVR)
+//    {
+//      LL_SPI_ClearFlag_OVR();
+//    }
+//  }
   PB1.Low();
 }
 
