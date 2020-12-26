@@ -34994,11 +34994,209 @@
     "display": "void assert_failed(uint8_t *, uint32_t)",
     "location": {
       "column": "6",
-      "line": "79",
+      "line": "80",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\app\\main.c"
     },
     "name": "assert_failed",
     "origin": "project_file",
+    "scope": null
+  },
+  {
+    "ID": "c:DigitalOut.h@198@macro@DigitalOut_h",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "DigitalOut_h",
+    "location": {
+      "column": "9",
+      "line": "12",
+      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+    },
+    "name": "DigitalOut_h",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut",
+    "What": "ClassTemplate",
+    "defdec": "Def",
+    "display": "DigitalOut<Port, Pin, Mode>",
+    "location": {
+      "column": "7",
+      "line": "19",
+      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+    },
+    "members": [
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@HwInit#",
+        "What": "CXXMethod",
+        "defdec": "Def",
+        "display": "void HwInit(void)",
+        "location": {
+          "column": "10",
+          "line": "24",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "HwInit",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@HwInit#",
+        "What": "CXXMethod",
+        "defdec": "Dec",
+        "display": "void HwInit(void)",
+        "location": {
+          "column": "10",
+          "line": "24",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "HwInit",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
+        "What": "CXXMethod",
+        "defdec": "Dec",
+        "display": "void SetOutputMode(void)",
+        "location": {
+          "column": "10",
+          "line": "26",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "SetOutputMode",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
+        "What": "CXXMethod",
+        "defdec": "Dec",
+        "display": "void SetOutputMode(void)",
+        "location": {
+          "column": "10",
+          "line": "26",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "SetOutputMode",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Read#",
+        "What": "CXXMethod",
+        "defdec": "Dec",
+        "display": "bool Read(void)",
+        "location": {
+          "column": "10",
+          "line": "28",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "Read",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@High#",
+        "What": "CXXMethod",
+        "defdec": "Def",
+        "display": "void High(void)",
+        "location": {
+          "column": "10",
+          "line": "30",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "High",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@High#",
+        "What": "CXXMethod",
+        "defdec": "Dec",
+        "display": "void High(void)",
+        "location": {
+          "column": "10",
+          "line": "30",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "High",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Low#",
+        "What": "CXXMethod",
+        "defdec": "Def",
+        "display": "void Low(void)",
+        "location": {
+          "column": "10",
+          "line": "32",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "Low",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Low#",
+        "What": "CXXMethod",
+        "defdec": "Dec",
+        "display": "void Low(void)",
+        "location": {
+          "column": "10",
+          "line": "32",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "Low",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      },
+      {
+        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Toggle#",
+        "What": "CXXMethod",
+        "defdec": "Dec",
+        "display": "void Toggle(void)",
+        "location": {
+          "column": "10",
+          "line": "34",
+          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+        },
+        "name": "Toggle",
+        "origin": "user_include",
+        "scope": "DigitalOut"
+      }
+    ],
+    "name": "DigitalOut",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
+    "What": "CXXMethod",
+    "defdec": "Def",
+    "display": "void SetOutputMode(void)",
+    "location": {
+      "column": "33",
+      "line": "38",
+      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+    },
+    "name": "SetOutputMode",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
+    "What": "CXXMethod",
+    "defdec": "Dec",
+    "display": "void SetOutputMode(void)",
+    "location": {
+      "column": "33",
+      "line": "38",
+      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
+    },
+    "name": "SetOutputMode",
+    "origin": "user_include",
     "scope": null
   },
   {
@@ -37756,204 +37954,6 @@
     "scope": null
   },
   {
-    "ID": "c:DigitalOut.h@198@macro@DigitalOut_h",
-    "What": "MacroDef",
-    "defdec": "Def",
-    "display": "DigitalOut_h",
-    "location": {
-      "column": "9",
-      "line": "12",
-      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-    },
-    "name": "DigitalOut_h",
-    "origin": "user_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut",
-    "What": "ClassTemplate",
-    "defdec": "Def",
-    "display": "DigitalOut<Port, Pin, Mode>",
-    "location": {
-      "column": "7",
-      "line": "19",
-      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-    },
-    "members": [
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@HwInit#",
-        "What": "CXXMethod",
-        "defdec": "Def",
-        "display": "void HwInit(void)",
-        "location": {
-          "column": "10",
-          "line": "24",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "HwInit",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@HwInit#",
-        "What": "CXXMethod",
-        "defdec": "Dec",
-        "display": "void HwInit(void)",
-        "location": {
-          "column": "10",
-          "line": "24",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "HwInit",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
-        "What": "CXXMethod",
-        "defdec": "Dec",
-        "display": "void SetOutputMode(void)",
-        "location": {
-          "column": "10",
-          "line": "26",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "SetOutputMode",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
-        "What": "CXXMethod",
-        "defdec": "Dec",
-        "display": "void SetOutputMode(void)",
-        "location": {
-          "column": "10",
-          "line": "26",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "SetOutputMode",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Read#",
-        "What": "CXXMethod",
-        "defdec": "Dec",
-        "display": "bool Read(void)",
-        "location": {
-          "column": "10",
-          "line": "28",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "Read",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@High#",
-        "What": "CXXMethod",
-        "defdec": "Def",
-        "display": "void High(void)",
-        "location": {
-          "column": "10",
-          "line": "30",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "High",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@High#",
-        "What": "CXXMethod",
-        "defdec": "Dec",
-        "display": "void High(void)",
-        "location": {
-          "column": "10",
-          "line": "30",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "High",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Low#",
-        "What": "CXXMethod",
-        "defdec": "Def",
-        "display": "void Low(void)",
-        "location": {
-          "column": "10",
-          "line": "32",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "Low",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Low#",
-        "What": "CXXMethod",
-        "defdec": "Dec",
-        "display": "void Low(void)",
-        "location": {
-          "column": "10",
-          "line": "32",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "Low",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      },
-      {
-        "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@Toggle#",
-        "What": "CXXMethod",
-        "defdec": "Dec",
-        "display": "void Toggle(void)",
-        "location": {
-          "column": "10",
-          "line": "34",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-        },
-        "name": "Toggle",
-        "origin": "user_include",
-        "scope": "DigitalOut"
-      }
-    ],
-    "name": "DigitalOut",
-    "origin": "user_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
-    "What": "CXXMethod",
-    "defdec": "Def",
-    "display": "void SetOutputMode(void)",
-    "location": {
-      "column": "33",
-      "line": "38",
-      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-    },
-    "name": "SetOutputMode",
-    "origin": "user_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@ST>3#N$@EA@Port_t#N$@EA@PIN_t#N$@EA@Mode_t@DigitalOut@F@SetOutputMode#",
-    "What": "CXXMethod",
-    "defdec": "Dec",
-    "display": "void SetOutputMode(void)",
-    "location": {
-      "column": "33",
-      "line": "38",
-      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\drivers\\gpio\\DigitalOut.h"
-    },
-    "name": "SetOutputMode",
-    "origin": "user_include",
-    "scope": null
-  },
-  {
     "ID": "c:stm8l10x_clk.h@1302@macro@__STM8L10X_CLK_H",
     "What": "MacroDef",
     "defdec": "Def",
@@ -38929,27 +38929,13 @@
     },
     "members": [
       {
-        "ID": "c:@SA@RTF_Context_t@FI@State",
-        "What": "FieldDecl",
-        "defdec": "Def",
-        "display": "State",
-        "location": {
-          "column": "17",
-          "line": "46",
-          "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
-        },
-        "name": "State",
-        "origin": "user_include",
-        "scope": "_anonymous_RTF_h_44_9"
-      },
-      {
         "ID": "c:@SA@RTF_Context_t@FI@RequestBuf",
         "What": "FieldDecl",
         "defdec": "Def",
         "display": "RequestBuf",
         "location": {
           "column": "17",
-          "line": "47",
+          "line": "46",
           "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
         },
         "name": "RequestBuf",
@@ -38963,7 +38949,7 @@
         "display": "ReplyBuf",
         "location": {
           "column": "17",
-          "line": "48",
+          "line": "47",
           "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
         },
         "name": "ReplyBuf",
@@ -38977,7 +38963,7 @@
         "display": "RequestLen",
         "location": {
           "column": "17",
-          "line": "49",
+          "line": "48",
           "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
         },
         "name": "RequestLen",
@@ -38991,7 +38977,7 @@
         "display": "ReplyLen",
         "location": {
           "column": "17",
-          "line": "50",
+          "line": "49",
           "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
         },
         "name": "ReplyLen",
@@ -39005,7 +38991,7 @@
         "display": "struct RTF_Context_t",
         "location": {
           "column": "2",
-          "line": "51",
+          "line": "50",
           "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
         },
         "name": "RTF_Context_t",
@@ -39024,7 +39010,7 @@
     "display": "RTFStatus_t RTF_Init(void)",
     "location": {
       "column": "13",
-      "line": "54",
+      "line": "53",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_Init",
@@ -39038,7 +39024,7 @@
     "display": "RTFStatus_t RTF_Init(void)",
     "location": {
       "column": "13",
-      "line": "54",
+      "line": "53",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_Init",
@@ -39052,7 +39038,7 @@
     "display": "RTFState_t RTF_GetState(void)",
     "location": {
       "column": "12",
-      "line": "56",
+      "line": "55",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_GetState",
@@ -39066,7 +39052,7 @@
     "display": "RTFState_t RTF_GetState(void)",
     "location": {
       "column": "12",
-      "line": "56",
+      "line": "55",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_GetState",
@@ -39080,7 +39066,7 @@
     "display": "void RTF_SetState(RTFState_t)",
     "location": {
       "column": "6",
-      "line": "58",
+      "line": "57",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_SetState",
@@ -39094,7 +39080,7 @@
     "display": "void RTF_SetState(RTFState_t)",
     "location": {
       "column": "6",
-      "line": "58",
+      "line": "57",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_SetState",
@@ -39108,7 +39094,7 @@
     "display": "void RTF_Run(void)",
     "location": {
       "column": "6",
-      "line": "60",
+      "line": "59",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_Run",
@@ -39122,7 +39108,7 @@
     "display": "void RTF_Run(void)",
     "location": {
       "column": "6",
-      "line": "60",
+      "line": "59",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_Run",
@@ -39136,7 +39122,7 @@
     "display": "RTFStatus_t RTF_ReceiveCmd(void)",
     "location": {
       "column": "13",
-      "line": "62",
+      "line": "61",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_ReceiveCmd",
@@ -39150,7 +39136,7 @@
     "display": "RTFStatus_t RTF_ReceiveCmd(void)",
     "location": {
       "column": "13",
-      "line": "62",
+      "line": "61",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_ReceiveCmd",
@@ -39164,7 +39150,7 @@
     "display": "RTFStatus_t RTF_AuthenticateCmd(void)",
     "location": {
       "column": "13",
-      "line": "64",
+      "line": "63",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_AuthenticateCmd",
@@ -39178,7 +39164,7 @@
     "display": "RTFStatus_t RTF_AuthenticateCmd(void)",
     "location": {
       "column": "13",
-      "line": "64",
+      "line": "63",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_AuthenticateCmd",
@@ -39192,7 +39178,7 @@
     "display": "RTFStatus_t RTF_ProcessCmd(void)",
     "location": {
       "column": "13",
-      "line": "66",
+      "line": "65",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_ProcessCmd",
@@ -39206,7 +39192,7 @@
     "display": "RTFStatus_t RTF_ProcessCmd(void)",
     "location": {
       "column": "13",
-      "line": "66",
+      "line": "65",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_ProcessCmd",
@@ -39220,7 +39206,7 @@
     "display": "RTFStatus_t RTF_SendCmdResponse(void)",
     "location": {
       "column": "13",
-      "line": "68",
+      "line": "67",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_SendCmdResponse",
@@ -39234,11 +39220,207 @@
     "display": "RTFStatus_t RTF_SendCmdResponse(void)",
     "location": {
       "column": "13",
-      "line": "68",
+      "line": "67",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.h"
     },
     "name": "RTF_SendCmdResponse",
     "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:intrinsics.h@239@macro@__INTRINSICS_H",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "__INTRINSICS_H",
+    "location": {
+      "column": "9",
+      "line": "12",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__INTRINSICS_H",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:intrinsics.h@T@__istate_t",
+    "What": "Typedef",
+    "defdec": "Def",
+    "display": "unsigned char",
+    "location": {
+      "column": "23",
+      "line": "26",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__istate_t",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__enable_interrupt",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __enable_interrupt(void)",
+    "location": {
+      "column": "20",
+      "line": "33",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__enable_interrupt",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__disable_interrupt",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __disable_interrupt(void)",
+    "location": {
+      "column": "20",
+      "line": "34",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__disable_interrupt",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__get_interrupt_state",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "__istate_t __get_interrupt_state(void)",
+    "location": {
+      "column": "26",
+      "line": "36",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__get_interrupt_state",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__set_interrupt_state",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __set_interrupt_state(__istate_t)",
+    "location": {
+      "column": "26",
+      "line": "37",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__set_interrupt_state",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__no_operation",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __no_operation(void)",
+    "location": {
+      "column": "20",
+      "line": "40",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__no_operation",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__halt",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __halt(void)",
+    "location": {
+      "column": "20",
+      "line": "41",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__halt",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__trap",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __trap(void)",
+    "location": {
+      "column": "20",
+      "line": "42",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__trap",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__wait_for_event",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __wait_for_event(void)",
+    "location": {
+      "column": "20",
+      "line": "43",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__wait_for_event",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__wait_for_interrupt",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __wait_for_interrupt(void)",
+    "location": {
+      "column": "20",
+      "line": "44",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__wait_for_interrupt",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__BCPL",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __BCPL(unsigned char *, unsigned char)",
+    "location": {
+      "column": "20",
+      "line": "47",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__BCPL",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__BRES",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __BRES(unsigned char *, unsigned char)",
+    "location": {
+      "column": "20",
+      "line": "48",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__BRES",
+    "origin": "system_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@__BSET",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void __BSET(unsigned char *, unsigned char)",
+    "location": {
+      "column": "20",
+      "line": "49",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
+    },
+    "name": "__BSET",
+    "origin": "system_include",
     "scope": null
   },
   {
@@ -39736,202 +39918,6 @@
     "scope": null
   },
   {
-    "ID": "c:intrinsics.h@239@macro@__INTRINSICS_H",
-    "What": "MacroDef",
-    "defdec": "Def",
-    "display": "__INTRINSICS_H",
-    "location": {
-      "column": "9",
-      "line": "12",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__INTRINSICS_H",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:intrinsics.h@T@__istate_t",
-    "What": "Typedef",
-    "defdec": "Def",
-    "display": "unsigned char",
-    "location": {
-      "column": "23",
-      "line": "26",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__istate_t",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__enable_interrupt",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __enable_interrupt(void)",
-    "location": {
-      "column": "20",
-      "line": "33",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__enable_interrupt",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__disable_interrupt",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __disable_interrupt(void)",
-    "location": {
-      "column": "20",
-      "line": "34",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__disable_interrupt",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__get_interrupt_state",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "__istate_t __get_interrupt_state(void)",
-    "location": {
-      "column": "26",
-      "line": "36",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__get_interrupt_state",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__set_interrupt_state",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __set_interrupt_state(__istate_t)",
-    "location": {
-      "column": "26",
-      "line": "37",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__set_interrupt_state",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__no_operation",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __no_operation(void)",
-    "location": {
-      "column": "20",
-      "line": "40",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__no_operation",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__halt",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __halt(void)",
-    "location": {
-      "column": "20",
-      "line": "41",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__halt",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__trap",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __trap(void)",
-    "location": {
-      "column": "20",
-      "line": "42",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__trap",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__wait_for_event",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __wait_for_event(void)",
-    "location": {
-      "column": "20",
-      "line": "43",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__wait_for_event",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__wait_for_interrupt",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __wait_for_interrupt(void)",
-    "location": {
-      "column": "20",
-      "line": "44",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__wait_for_interrupt",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__BCPL",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __BCPL(unsigned char *, unsigned char)",
-    "location": {
-      "column": "20",
-      "line": "47",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__BCPL",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__BRES",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __BRES(unsigned char *, unsigned char)",
-    "location": {
-      "column": "20",
-      "line": "48",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__BRES",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@__BSET",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void __BSET(unsigned char *, unsigned char)",
-    "location": {
-      "column": "20",
-      "line": "49",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\intrinsics.h"
-    },
-    "name": "__BSET",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
     "ID": "c:gpio_tests.h@81@macro@LED",
     "What": "MacroDef",
     "defdec": "Def",
@@ -40086,31 +40072,17 @@
     "scope": null
   },
   {
-    "ID": "c:@F@Spi_Tests#",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void Spi_Tests(void)",
+    "ID": "c:dlstm8smn.h@140@macro@_DLIB_CONFIG_H",
+    "What": "MacroDef",
+    "defdec": "Def",
+    "display": "_DLIB_CONFIG_H",
     "location": {
-      "column": "6",
-      "line": "9",
-      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\tests\\Spi\\Spi_tests.h"
+      "column": "9",
+      "line": "5",
+      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\lib\\dlstm8smn.h"
     },
-    "name": "Spi_Tests",
-    "origin": "user_include",
-    "scope": null
-  },
-  {
-    "ID": "c:@F@Spi_Tests#",
-    "What": "Function",
-    "defdec": "Dec",
-    "display": "void Spi_Tests(void)",
-    "location": {
-      "column": "6",
-      "line": "9",
-      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\tests\\Spi\\Spi_tests.h"
-    },
-    "name": "Spi_Tests",
-    "origin": "user_include",
+    "name": "_DLIB_CONFIG_H",
+    "origin": "system_include",
     "scope": null
   },
   {
@@ -40422,6 +40394,34 @@
     "scope": null
   },
   {
+    "ID": "c:@F@Spi_Tests#",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void Spi_Tests(void)",
+    "location": {
+      "column": "6",
+      "line": "9",
+      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\tests\\Spi\\Spi_tests.h"
+    },
+    "name": "Spi_Tests",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@Spi_Tests#",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void Spi_Tests(void)",
+    "location": {
+      "column": "6",
+      "line": "9",
+      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\tests\\Spi\\Spi_tests.h"
+    },
+    "name": "Spi_Tests",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
     "ID": "c:cstring@95@macro@_CSTRING_",
     "What": "MacroDef",
     "defdec": "Def",
@@ -40432,20 +40432,6 @@
       "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\inc\\c\\cstring"
     },
     "name": "_CSTRING_",
-    "origin": "system_include",
-    "scope": null
-  },
-  {
-    "ID": "c:dlstm8smn.h@140@macro@_DLIB_CONFIG_H",
-    "What": "MacroDef",
-    "defdec": "Def",
-    "display": "_DLIB_CONFIG_H",
-    "location": {
-      "column": "9",
-      "line": "5",
-      "path": "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.3\\stm8\\lib\\dlstm8smn.h"
-    },
-    "name": "_DLIB_CONFIG_H",
     "origin": "system_include",
     "scope": null
   },
@@ -43532,13 +43518,27 @@
     "scope": null
   },
   {
+    "ID": "c:RTF.c@RTFState",
+    "What": "Variable",
+    "defdec": "Def",
+    "display": "RTFState",
+    "location": {
+      "column": "23",
+      "line": "11",
+      "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
+    },
+    "name": "RTFState",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
     "ID": "c:@F@RTF_Init#",
     "What": "Function",
     "defdec": "Def",
     "display": "RTFStatus_t RTF_Init(void)",
     "location": {
       "column": "13",
-      "line": "12",
+      "line": "13",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_Init",
@@ -43552,7 +43552,7 @@
     "display": "RTFState_t RTF_GetState(void)",
     "location": {
       "column": "12",
-      "line": "23",
+      "line": "24",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_GetState",
@@ -43566,7 +43566,7 @@
     "display": "void RTF_SetState(RTFState_t)",
     "location": {
       "column": "6",
-      "line": "28",
+      "line": "29",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_SetState",
@@ -43580,7 +43580,7 @@
     "display": "void RTF_Run(void)",
     "location": {
       "column": "6",
-      "line": "33",
+      "line": "34",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_Run",
@@ -43588,13 +43588,13 @@
     "scope": null
   },
   {
-    "ID": "c:RTF.c@657@F@RTF_Run#@Current_state",
+    "ID": "c:RTF.c@672@F@RTF_Run#@Current_state",
     "What": "Variable",
     "defdec": "Def",
     "display": "Current_state",
     "location": {
       "column": "14",
-      "line": "35",
+      "line": "36",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "Current_state",
@@ -43602,13 +43602,13 @@
     "scope": null
   },
   {
-    "ID": "c:RTF.c@703@F@RTF_Run#@Current_status",
+    "ID": "c:RTF.c@718@F@RTF_Run#@Current_status",
     "What": "Variable",
     "defdec": "Def",
     "display": "Current_status",
     "location": {
       "column": "15",
-      "line": "36",
+      "line": "37",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "Current_status",
@@ -43622,7 +43622,7 @@
     "display": "RTFStatus_t RTF_ReceiveCmd(void)",
     "location": {
       "column": "13",
-      "line": "83",
+      "line": "84",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_ReceiveCmd",
@@ -43636,7 +43636,7 @@
     "display": "RTFStatus_t RTF_AuthenticateCmd(void)",
     "location": {
       "column": "13",
-      "line": "88",
+      "line": "89",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_AuthenticateCmd",
@@ -43650,7 +43650,7 @@
     "display": "RTFStatus_t RTF_ProcessCmd(void)",
     "location": {
       "column": "13",
-      "line": "93",
+      "line": "94",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_ProcessCmd",
@@ -43664,7 +43664,7 @@
     "display": "RTFStatus_t RTF_SendCmdResponse(void)",
     "location": {
       "column": "13",
-      "line": "98",
+      "line": "99",
       "path": "C:\\Amit_Chaudhary\\STM8\\STM8L101\\code\\STM8L101F3_FW\\STM8L101F3P6_CPP - Spi - RTF Minimal\\utils\\RTF\\RTF.c"
     },
     "name": "RTF_SendCmdResponse",

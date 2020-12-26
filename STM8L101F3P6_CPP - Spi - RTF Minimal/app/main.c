@@ -35,8 +35,9 @@ void main(void)
       //CmdSvr_Run();     
       // gpio_tests();
       //I2c_Master_Tests();
-       //Spi_Tests();
-       RTF_Run();
+       Spi_Tests();
+      // RTF_Run();
+      // delay_ms(1000);
         
     }
 }
