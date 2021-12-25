@@ -16,7 +16,7 @@
         <ShowSource>1</ShowSource>
     </Trace1>
     <DebugChecksum>
-        <Checksum>1022161228</Checksum>
+        <Checksum>2081851698</Checksum>
     </DebugChecksum>
     <Disassembly>
         <InstrCount>0</InstrCount>
@@ -75,6 +75,9 @@
         <FreqHi>0</FreqHi>
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
+    <RecentFlashDownload>
+        <Path>C:\Amit_Chaudhary\STM8\STM8AL3189\code\STM8AL318x_FW - GpioExti\IAR\Debug\Exe\STM8AL318x_FW.out</Path>
+    </RecentFlashDownload>
     <struct_types>
         <Fmt0>i2c::i2cBuf_t-Buf	4	0</Fmt0>
     </struct_types>
@@ -84,7 +87,7 @@
         <Fmt2>uint16_t[16]	4	0</Fmt2>
         <Fmt3>uint16_t[18]	3	0</Fmt3>
         <Fmt4>uint8_t[10]	3	0</Fmt4>
-        <Fmt5>uint8_t[15]	3	0</Fmt5>
+        <Fmt5>uint8_t[15]	4	0</Fmt5>
         <Fmt6>uint8_t[18]	3	0</Fmt6>
         <Fmt7>uint8_t[20]	3	0</Fmt7>
         <Fmt8>uint8_t[256]	3	0</Fmt8>
@@ -108,7 +111,10 @@
         <Category>_ 0</Category>
     </LogFile>
     <Breakpoints>
-        <Count>0</Count>
+        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\app\main.c}.15.5" 1 0 0 0 "" 0 ""</Bp0>
+        <Bp1>_ "STD_CODE" "{$PROJ_DIR$\drivers\uart\UartTest.h}.44.5" 0 0 0 0 "" 0 ""</Bp1>
+        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\tests\i2c\i2c_tests.cpp}.29.3" 1 0 0 0 "" 0 ""</Bp2>
+        <Count>3</Count>
     </Breakpoints>
     <Aliases>
         <Count>0</Count>
